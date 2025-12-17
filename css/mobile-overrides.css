@@ -1,0 +1,118 @@
+/* Mobile & Tablet Optimization Overrides (Bootstrap‑aware)
+   Path: css/mobile-overrides.css
+   Load AFTER bootstrap.css and style.css
+*/
+
+/* Base + safety */
+:root { --aqua: aquamarine; }
+html { -webkit-text-size-adjust: 100%; }
+body { overflow-x: hidden; background-color: #090909; }
+
+/* Fix nested Bootstrap rows causing overflow */
+.row .row { margin-left: 0; margin-right: 0; }
+
+/* Fluid type */
+h1 { font-size: clamp(1.75rem, 4.5vw + 1rem, 3rem); line-height: 1.1; }
+h2 { font-size: clamp(1.25rem, 2.2vw + 1rem, 2rem); }
+p  { font-size: clamp(0.95rem, 1.2vw + 0.6rem, 1.0625rem); }
+
+/* HERO / COVER (override fixed 600px & parallax fixed) */
+#fh5co-header,
+.fh5co-cover {
+  min-height: 100svh; height: auto;
+  background-size: cover; background-position: center;
+  background-attachment: scroll !important;
+}
+@supports not (min-height: 100svh) {
+  #fh5co-header, .fh5co-cover { min-height: 100vh; }
+}
+/* Replace table layout with flex on small screens */
+@media (max-width: 991px){
+  .display-t{ display:flex; min-height: inherit; }
+  .display-tc{ display:block; height:auto !important; padding: clamp(40px, 8vh, 96px) 0; }
+}
+.profile-thumb {
+  width: clamp(120px, 28vw, 180px);
+  height: clamp(120px, 28vw, 180px);
+  background-size: cover; background-position: center;
+  border-radius: 50%;
+  box-shadow: 0 6px 20px rgba(0,0,0,.35);
+  margin: 0 auto 1rem;
+}
+
+/* ABOUT */
+#fh5co-about .fh5co-heading h2,
+#fh5co-about h2,
+#fh5co-about p { color: var(--aqua); }
+
+/* TIMELINE — fixed alignment + single column on small screens */
+@media (max-width: 991.98px) {
+  /* single-column layout with line + badge on the left */
+  .timeline:before { left: 28px; margin-left: 0; }
+  .timeline-badge { left: 28px; margin-left: -22px; }
+  .timeline > li .timeline-panel { width: calc(100% - 72px); float: none; margin-left: 44px; }
+  .timeline > li.timeline-inverted .timeline-panel { float: none; }
+}
+@media (min-width: 992px) {
+  /* two-column layout; pixel-perfect centering on high‑dpi tablets (e.g., 3:2) */
+  .timeline:before { left: 50%; margin-left: -1px; }
+  .timeline-badge { left: 50%; margin-left: -22px; }
+}
+
+/* 3:2 tablet fine‑tune: keep things crisp around aspect ratio ~1.5 */
+@media (min-width: 992px) and (min-aspect-ratio: 7/5) and (max-aspect-ratio: 8/5) {
+  /* slightly increase hit area to avoid overlap in dense entries */
+  .timeline > li { margin-bottom: 24px; }
+}
+
+/* TIMELINE — force left-aligned text on phones & tablets */
+@media (max-width: 1199.98px) {
+  .timeline > li .timeline-panel,
+  .timeline > li .timeline-panel * {
+    text-align: left !important;
+  }
+}
+
+/* SKILLS */
+.progress-wrap h3 {
+  display: flex; align-items: center; justify-content: space-between; gap: .75rem;
+  font-size: 1rem;
+}
+.progress { height: 10px; border-radius: 6px; overflow: hidden; }
+.progress .progress-bar { min-width: 2.5rem; }
+@media (max-width: 768px) { .progress-wrap { margin-bottom: 16px; } }
+
+/* PHOTOGRAPHY GRID — responsive columns & safe aspect ratio */
+.col-padding { padding: 8px; }
+.work {
+  display: block; position: relative; overflow: hidden;
+  background-size: cover; background-position: center; border-radius: 12px;
+  aspect-ratio: 4 / 5; /* keeps cards proportional on phones */
+}
+.work .desc {
+  position: absolute; inset: auto 0 0 0; padding: 10px 12px;
+  backdrop-filter: blur(2px);
+  background: linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(0,0,0,.45) 100%);
+}
+@media (max-width: 991px) { .col-md-3.col-padding { width: 33.3333%; float: left; } }
+@media (max-width: 767px) { .col-md-3.col-padding { width: 50%; float: left; } }
+@media (max-width: 460px) { .col-md-3.col-padding { width: 100%; } }
+
+/* PARALLAX & ANIMATIONS — be gentle on mobile */
+[data-stellar-background-ratio] { background-attachment: scroll; }
+@media (max-width: 991px) { .animated-fast { animation-duration: .6s; } }
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* TOUCH TWEAKS */
+a, button { -webkit-tap-highlight-color: rgba(255,255,255,0.1); }
+a.work { touch-action: manipulation; }
+
+/* UTILITIES */
+.aqua { color: var(--aqua) !important; }
