@@ -66,6 +66,7 @@
     var lastFocus = null;
 
     function openLightbox(tile) {
+      lbImg.decoding = "async";
       lbImg.src = tile.getAttribute("data-img");
       lbImg.alt = tile.getAttribute("data-title") || "";
       lbTitle.textContent = tile.getAttribute("data-title") || "";
