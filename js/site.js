@@ -144,7 +144,7 @@
       var hero = document.querySelector(".hero");
       if (hero) {
         var tl = gsap.timeline({ defaults: { ease: "power4.out" } });
-        tl.from(".hero-avatar", { y: 24, opacity: 0, duration: 0.7 })
+        tl.from("#hero-avatar", { y: 24, opacity: 0, duration: 0.7 })
           .from(".hero-status", { y: 16, opacity: 0, duration: 0.6 }, "-=0.4");
         var heroTitle = hero.querySelector("h1");
         var heroSplit = splitHeading(heroTitle);
@@ -155,6 +155,32 @@
         }
         tl.from(".hero-sub", { y: 24, opacity: 0, duration: 0.7 }, "-=0.5")
           .from(".hero-ctas", { y: 24, opacity: 0, duration: 0.7 }, "-=0.5");
+      }
+
+      // the avatar flies from the hero and docks below "Hello there."
+      var heroAvatar = document.getElementById("hero-avatar");
+      var dock = document.getElementById("avatar-dock");
+      if (heroAvatar && dock) {
+        var untransformedCenter = function (el) {
+          var r = el.getBoundingClientRect();
+          return {
+            x: r.left + r.width / 2 + window.pageXOffset - (parseFloat(gsap.getProperty(el, "x")) || 0),
+            y: r.top + r.height / 2 + window.pageYOffset - (parseFloat(gsap.getProperty(el, "y")) || 0)
+          };
+        };
+        gsap.to(heroAvatar, {
+          x: function () { return untransformedCenter(dock).x - untransformedCenter(heroAvatar).x; },
+          y: function () { return untransformedCenter(dock).y - untransformedCenter(heroAvatar).y; },
+          scale: function () { return dock.offsetWidth / heroAvatar.offsetWidth; },
+          ease: "none",
+          scrollTrigger: {
+            trigger: "#about",
+            start: "top bottom",
+            end: "top 40%",
+            scrub: 0.6,
+            invalidateOnRefresh: true
+          }
+        });
       }
 
       // section headings: lines rise out of a mask on scroll

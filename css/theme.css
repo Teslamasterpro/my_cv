@@ -54,6 +54,7 @@ html { scroll-behavior: smooth; }
 
 body {
   margin: 0;
+  overflow-x: clip;
   background: var(--bg);
   color: var(--text-70);
   font-family: var(--font-body);
@@ -182,7 +183,7 @@ button:focus-visible {
   align-items: center;
   text-align: center;
   position: relative;
-  overflow: hidden;
+  /* overflow stays visible so the avatar can fly out to #about */
   padding: 140px 0 80px;
 }
 
@@ -201,14 +202,59 @@ button:focus-visible {
 
 .hero .container { position: relative; }
 
+/* liquid glass ring around the portrait; the wrapper is what GSAP
+   flies down to the About dock, the img bobs idly inside it */
+.avatar-glass {
+  position: relative;
+  z-index: 40;
+  display: inline-block;
+  padding: 10px;
+  border-radius: 50%;
+  margin: 0 auto 28px;
+  background: linear-gradient(160deg, rgba(255, 255, 255, 0.18), rgba(255, 255, 255, 0.05) 45%, rgba(255, 255, 255, 0.1));
+  backdrop-filter: blur(20px) saturate(150%);
+  -webkit-backdrop-filter: blur(20px) saturate(150%);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  box-shadow:
+    0 18px 48px rgba(0, 0, 0, 0.45),
+    inset 0 1px 0 rgba(255, 255, 255, 0.22),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.05);
+  will-change: transform;
+}
+
+.avatar-glass::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(120% 60% at 25% -8%, rgba(255, 255, 255, 0.28), transparent 55%);
+  pointer-events: none;
+}
+
 .hero-avatar {
   width: 148px;
   height: 148px;
   border-radius: 50%;
   object-fit: cover;
-  margin: 0 auto 28px;
-  border: 1px solid var(--hairline-strong);
+  display: block;
+  animation: bob 4.5s ease-in-out infinite alternate;
 }
+
+@keyframes bob {
+  from { transform: translateY(3px); }
+  to { transform: translateY(-6px); }
+}
+
+/* landing slot under "Hello there." — only exists when GSAP flies
+   the avatar in */
+.avatar-dock {
+  display: none;
+  width: 128px;
+  height: 128px;
+  margin-top: 32px;
+}
+
+html.gsap-on .avatar-dock { display: block; }
 
 .hero-status {
   font-family: var(--font-mono);
@@ -917,6 +963,7 @@ html.gsap-on .blur-reveal { opacity: 0; filter: blur(12px); will-change: opacity
   .marquee-track { animation: none; }
   .reveal, .reveal-group > * { opacity: 1; transform: none; transition: none; }
   .lightbox.open, .lightbox.open figure { animation: none; }
+  .hero-avatar { animation: none; }
   .btn, .xp-card, .work-card, .work-card-img, .photo, .photo-img, .socials a { transition: none; }
   .work-track { transition: none; }
 }
