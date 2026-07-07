@@ -650,9 +650,9 @@ button:focus-visible {
   position: fixed;
   inset: 0;
   z-index: 100;
-  background: rgba(11, 11, 11, 0.66);
-  backdrop-filter: blur(9px) saturate(130%);
-  -webkit-backdrop-filter: blur(9px) saturate(130%);
+  background: rgba(11, 11, 11, 0.7);
+  backdrop-filter: blur(6px) saturate(130%);
+  -webkit-backdrop-filter: blur(6px) saturate(130%);
   display: none;
   align-items: center;
   justify-content: center;
@@ -673,9 +673,8 @@ button:focus-visible {
   padding: 20px 20px 22px;
   border-radius: 32px;
   background: linear-gradient(160deg, rgba(255, 255, 255, 0.16), rgba(255, 255, 255, 0.05) 45%, rgba(255, 255, 255, 0.1));
-  backdrop-filter: blur(28px) saturate(150%);
-  -webkit-backdrop-filter: blur(28px) saturate(150%);
-  backdrop-filter: url(#lg-lens) blur(2px) saturate(160%);
+  backdrop-filter: blur(20px) saturate(150%);
+  -webkit-backdrop-filter: blur(20px) saturate(150%);
   border: 1px solid rgba(255, 255, 255, 0.12);
   box-shadow:
     0 32px 90px rgba(0, 0, 0, 0.55),
@@ -714,13 +713,20 @@ button:focus-visible {
   pointer-events: none;
 }
 
-.lightbox img {
+.lb-clip {
   position: relative;
+  border-radius: 20px;
+  overflow: hidden;
+  display: inline-block;
+  max-width: 100%;
+}
+
+.lightbox img {
   max-height: 72vh;
   width: auto;
   max-width: 100%;
   margin: 0 auto;
-  border-radius: 20px;
+  filter: url(#lg-lens);
 }
 
 .lightbox figcaption { position: relative; margin-top: 14px; }

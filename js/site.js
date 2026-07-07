@@ -72,6 +72,7 @@
       lbTitle.textContent = tile.getAttribute("data-title") || "";
       lbCaption.textContent = tile.getAttribute("data-caption") || "";
       lightbox.classList.add("open");
+      if (lenis) lenis.stop();
       lastFocus = tile;
       lbClose.focus();
       document.body.style.overflow = "hidden";
@@ -79,6 +80,7 @@
 
     function closeLightbox() {
       lightbox.classList.remove("open");
+      if (lenis) lenis.start();
       lbImg.src = "";
       document.body.style.overflow = "";
       if (lastFocus) lastFocus.focus();
