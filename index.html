@@ -1,661 +1,402 @@
-<!DOCTYPE HTML>
-<html>
-	<head>
+<!DOCTYPE html>
+<html lang="en">
+<head>
 	<meta charset="utf-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title> Aditya_Patel</title>
-	
-	<!-- 
-	Aditya Patel's Personal Website
-	-->
-  	<!-- Facebook and Twitter integration -->
-	<meta property="og:title" content="Aditya Patel"/>
-	<meta property="og:image" content=""/>
-	<meta property="og:url" content=""/>
-	<meta property="og:site_name" content="Aditya Patel"/>
-	<meta property="og:description" content="Aditya Patel's Personal Website"/>
-	<meta name="twitter:title" content="Aditya Patel" />
-	<meta name="twitter:image" content="" />
-	<meta name="twitter:url" content="" />
-	<meta name="twitter:card" content="" />
+	<title>Aditya Patel — Mechatronics Engineer</title>
+	<meta name="description" content="Aditya Patel — mechatronics engineer in Schweinfurt, Germany. Machine vision, embedded firmware, and product development.">
 
-	<link href="https://fonts.googleapis.com/css?family=Space+Mono" rel="stylesheet">
-	<link href="https://fonts.googleapis.com/css?family=Kaushan+Script" rel="stylesheet">
-	
-	<!-- Animate.css -->
-	<link rel="stylesheet" href="css/animate.css">
-	<!-- Icomoon Icon Fonts-->
+	<meta property="og:title" content="Aditya Patel — Mechatronics Engineer">
+	<meta property="og:description" content="Machine vision, embedded firmware, and product development. Based in Schweinfurt, Germany.">
+	<meta property="og:image" content="images/Aditya1.jpg">
+	<meta property="og:type" content="website">
+
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Hedvig+Letters+Serif:opsz@12..24&family=Instrument+Sans:wght@400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+
 	<link rel="stylesheet" href="css/icomoon.css">
-	<!-- Bootstrap  -->
-	<link rel="stylesheet" href="css/bootstrap.css">
-	<link rel="stylesheet" href="css/style.css">
-	<link rel="stylesheet" href="css/mobile-overrides.css">
-
-	<!-- Theme style  -->
-	<link rel="stylesheet" href="css/style.css">
-
-	<!-- Modernizr JS -->
-	<script src="js/modernizr-2.6.2.min.js"></script>
-	<!-- FOR IE9 below -->
-	<!--[if lt IE 9]>
-	<script src="js/respond.min.js"></script>
-	<![endif]-->
-
-	
-	<!-- Photography overlay fixes -->
-	<style>
-	#fh5co-work .work .desc { opacity: 0 !important; background: transparent !important; }
-	#fh5co-work .work:hover .desc,
-	#fh5co-work .work:focus .desc,
-	#fh5co-work .work:focus-within .desc { opacity: 1 !important; background: rgba(0,0,0,0.25) !important; }
-	#fh5co-work .work.show-overlay .desc { opacity: 1 !important; background: rgba(0,0,0,0.25) !important; }
-	#fh5co-work .work .desc, #fh5co-work .work .desc h3, #fh5co-work .work .desc span { text-align: center !important; }
-	@media (hover: none) {
-	  #fh5co-work .work .desc,
-	  #fh5co-work .work:hover .desc,
-	  #fh5co-work .work:active .desc { opacity: 0 !important; background: transparent !important; }
-	  /* Allow overlay when explicitly requested by JS */
-	  #fh5co-work .work.show-overlay .desc { opacity: 1 !important; background: rgba(0,0,0,0.25) !important; }
-	}
-	</style>
-
+	<link rel="stylesheet" href="css/theme.css">
 </head>
-	<body>
-		
-	<div class="fh5co-loader"></div>
-	<!--this is the background colour--> 
-	<div id="page" style="background-color: rgb(9, 9, 9);">	
-	<header id="fh5co-header" class="fh5co-cover js-fullheight" role="banner" style="background-image:url(images/backdrop.jpg);" data-stellar-background-ratio="0.5">
-		<div class="overlay"></div>
+<body>
+
+	<!-- ===== Nav ===== -->
+	<nav class="nav" aria-label="Main">
+		<div class="nav-inner">
+			<a href="#top" class="nav-logo">Aditya Patel</a>
+			<ul class="nav-links">
+				<li><a href="#about">About</a></li>
+				<li><a href="#experience">Experience</a></li>
+				<li><a href="#skills">Skills</a></li>
+				<li><a href="#projects">Projects</a></li>
+				<li><a href="#photography">Photography</a></li>
+			</ul>
+			<a href="mailto:adityarpatel@outlook.com" class="btn btn-primary">Get in touch</a>
+		</div>
+	</nav>
+
+	<!-- ===== Hero ===== -->
+	<header class="hero" id="top">
 		<div class="container">
-			<div class="row">
-				<div class="col-md-8 col-md-offset-2 text-center">
-					<div class="display-t js-fullheight">
-						<div class="display-tc js-fullheight animate-box" data-animate-effect="fadeIn">
-						
-							<div class="profile-thumb" style="background: url(images/Aditya1.jpg); padding-top: 35px;"></div>
-							<h1 style="color:aquamarine;"><span style="color: aquamarine;">Aditya Patel</span></h1>
-					                        
-							
-						</div>
-					</div>
-				</div>
+			<img src="images/Aditya1.jpg" alt="Portrait of Aditya Patel" class="hero-avatar hero-seq">
+			<div class="hero-seq">
+				<span class="hero-status"><span class="status-dot" aria-hidden="true"></span>Mechatronics engineer · Schweinfurt, Germany</span>
+			</div>
+			<h1 class="hero-seq">Machines that <em>see</em>, move, and think.</h1>
+			<p class="hero-sub hero-seq">I build machine-vision systems, embedded firmware, and the hardware around them — currently researching at THWS with Fraunhofer.</p>
+			<div class="hero-ctas hero-seq">
+				<a href="#projects" class="btn btn-primary">See my work</a>
+				<a href="mailto:adityarpatel@outlook.com" class="btn btn-ghost">Email me</a>
 			</div>
 		</div>
 	</header>
 
-	<div id="fh5co-about" class="animate-box" >
+	<!-- ===== Stats ===== -->
+	<section class="section" aria-label="Highlights">
 		<div class="container">
-			<div class="row" >
-				
-				<div class="col-md-8 col-md-offset-2 text-center fh5co-heading " >
-					<h2 style="color: aquamarine; ">About Me</h2>
+			<div class="stats-grid reveal-group">
+				<div class="stat">
+					<span class="stat-number"><span data-count="4">0</span><sup>+</sup></span>
+					<span class="stat-label">Years of engineering</span>
 				</div>
-			</div >
-			<div class="row">
-				<div class="row">
-					
-					
-					
-				    <div allign="center" style="text-align: center;">
-					<h2 style="color: aquamarine; text-align: left;">Hello There!</h2>
-					<p style="color: aquamarine; text-align: left; margin-top: +35px;font-size: 18px;">I am Aditya Patel. I am a Mechatronic engineer studying and living in Germany.</p>
-					<p  style="color: aquamarine;text-align: left;font-size: 18px;">My daily motivation quote " The magic You are Looking is in the Work You are Avoiding "drives me.I love to travel and Hike different places.I am Master Gamer and Veteren raver. I love Guitar and Food :) .</p>
-					
+				<div class="stat">
+					<span class="stat-number"><span data-count="2">0</span></span>
+					<span class="stat-label">Fraunhofer projects</span>
+				</div>
+				<div class="stat">
+					<span class="stat-number"><span data-count="3">0</span></span>
+					<span class="stat-label">Detection models shipped</span>
+				</div>
+				<div class="stat">
+					<span class="stat-number"><span data-count="18">0</span></span>
+					<span class="stat-label">Cities photographed</span>
 				</div>
 			</div>
 		</div>
-	</div>
+	</section>
 
-	<div id="fh5co-resume" class="fh5co-bg-color">
+	<!-- ===== About ===== -->
+	<section class="section" id="about">
 		<div class="container">
-			<div class="row animate-box">
-				<div class="col-md-8 col-md-offset-2 text-center fh5co-heading">
-					<h2 style="color: aquamarine;">My Resume</h2>
+			<div class="about-grid">
+				<div class="section-head" style="margin-bottom: 0;">
+					<span class="eyebrow">01 — About</span>
+					<h2 data-split>Hello there.</h2>
 				</div>
-			</div>
-			<div class="row">
-				<div class="col-md-12 col-md-offset-0">
-					<ul class="timeline">
-						<li class="timeline-heading text-center animate-box">
-							<div><h3>Work Experience</h3></div>
-						</li>
-	                                        <li class="timeline-inverted animate-box">
-							<div class="timeline-badge"><i class="icon-suitcase"></i></div>
-							<div class="timeline-panel">
-								<div class="timeline-heading">
-									<h3 class="timeline-title" style=" color: beige;">Engineering Project</h3>
-									<span class="company " style=" color: beige">Fraunhofer & IMES Schweinfurt - October 2024 - November 2024</span>
-								</div>
-								<div class="timeline-body" style=" color: beige">
-									<p>Industry Project with collaboration with Fraunhofer ISC.Automation of EV-battery Cell using Machine vision.We implemented 3 separate finetuned objected-detection models with Live postprocessing for 3 stages of recycling. Which outputs coordinates for the robot</p>
-								</div>
-							</div>
-						</li>
-					
-
-						<br>
-						
-						<li class="animate-box timeline-unverted">
-							<div class="timeline-badge"><i class="icon-suitcase"></i></div>
-							<div class="timeline-panel">
-								<div class="timeline-heading">
-									<h3 class="timeline-title" style=" color: beige;">Lab automation Intern</h3>
-									<span class="company " style=" color: beige">Uniklinik wuerzburg , Fraunhofer & IMES Schweinfurt - March 2024 - August 2024</span>
-								</div>
-								<div class="timeline-body" style=" color: beige">
-									<p>Lab automation in the field of medical research.I am mechatronic intern contributing to development of a custom Nanoparticle Dialysis System. Mainly designing the firmware with Texas Instrument Hardware and hardware design.</p>
-								</div>
-							</div>
-						</li>
-					
-
-						<br>
-						<li class="timeline-heading text-center animate-box">
-							<div><h3>Education</h3></div>
-						</li>
-						<li class="animate-box timeline-unverted">
-							<div class="timeline-badge"><i class="icon-graduation-cap"></i></div>
-							<div class="timeline-panel">
-								<div class="timeline-heading">
-									<h3 class="timeline-title" style="color: beige;">Masters Degree</h3>
-									<span class="company" style="color: beige;">THWS Schweinfurt - 2025 - Present</span>
-								</div>
-								<div class="timeline-body" style="color: beige;">
-									<p>Masters in Electrical and Information Technology (MEng) Forschungs Masters</p>
-								</div>
-							</div>
-						</li>
-						<li class="timeline-inverted animate-box">
-							<div class="timeline-badge"><i class="icon-graduation-cap"></i></div>
-							<div class="timeline-panel">
-								<div class="timeline-heading">
-									<h3 class="timeline-title" style="color: beige;">Bachelors Degree</h3>
-									<span class="company" style="color: beige;">THWS Schweinfurt - 2021 - 2025</span>
-								</div>
-								<div class="timeline-body">
-									<p>Mechatronics Engineering (BEng)</p>
-								</div>
-							</div>
-						</li>
-						<li class="animate-box timeline-unverted">
-							<div class="timeline-badge"><i class="icon-graduation-cap"></i></div>
-							<div class="timeline-panel">
-								<div class="timeline-heading">
-									<h3 class="timeline-title" style="color: beige;">High School</h3>
-									<span class="company" style="color: beige;">Anand Vidya Vihar school - 2008 - 2020</span>
-								</div>
-								<div class="timeline-body" style="color: beige;">
-									<p>High school graduate</p>
-								</div>
-							</div>
-						</li>
-					
-			    	</ul>
+				<div class="about-copy reveal">
+					<p>I'm Aditya Patel, a mechatronics engineer studying and living in Germany. I work where software meets hardware: teaching robots to see, writing firmware for lab instruments, and designing the mechanical parts in between.</p>
+					<p>Away from the workbench I travel and hike, chase live music, play guitar, and take video games more seriously than I probably should.</p>
+					<p class="aside">Currently: research master's at THWS Schweinfurt, open to collaborations.</p>
 				</div>
 			</div>
 		</div>
-	</div>
-	
- <!--
-	<div id="fh5co-features" class="animate-box">
+	</section>
+
+	<!-- ===== Pull quote (signature) ===== -->
+	<figure class="pullquote">
+		<blockquote data-split>&ldquo;The magic you are looking for is in the <em>work</em> you are avoiding.&rdquo;</blockquote>
+		<figcaption>— the line that gets me up in the morning</figcaption>
+	</figure>
+
+	<!-- ===== Experience ===== -->
+	<section class="section" id="experience">
 		<div class="container">
-			<div class="services-padding">
-				<div class="row">
-					<div class="col-md-8 col-md-offset-2 text-center fh5co-heading">
-						<h2>My Services</h2>
+			<div class="section-head">
+				<span class="eyebrow">02 — Experience</span>
+				<h2 data-split>Where I've worked.</h2>
+			</div>
+			<div class="timeline-cards reveal-group">
+				<article class="xp-card">
+					<div class="xp-meta">
+						Oct — Nov 2024
+						<span class="where">Fraunhofer ISC · IMES Schweinfurt</span>
+					</div>
+					<div class="xp-body">
+						<h3>Machine vision for EV-battery recycling</h3>
+						<p>Industry project automating EV-battery cell disassembly. Built three fine-tuned object-detection models with live post-processing — one for each recycling stage — feeding pick coordinates directly to the robot.</p>
+					</div>
+				</article>
+				<article class="xp-card">
+					<div class="xp-meta">
+						Mar — Aug 2024
+						<span class="where">Uniklinik Würzburg · Fraunhofer · IMES</span>
+					</div>
+					<div class="xp-body">
+						<h3>Lab automation intern</h3>
+						<p>Contributed to a custom nanoparticle dialysis system for medical research — firmware development on Texas Instruments hardware plus supporting electronics and hardware design.</p>
+					</div>
+				</article>
+			</div>
+
+			<div class="section-head" style="margin-top: 72px;">
+				<span class="eyebrow">03 — Education</span>
+				<h2 data-split>Where I've studied.</h2>
+			</div>
+			<div class="timeline-cards reveal-group">
+				<article class="xp-card">
+					<div class="xp-meta">
+						2025 — Present
+						<span class="where">THWS Schweinfurt</span>
+					</div>
+					<div class="xp-body">
+						<h3>M.Eng. Electrical &amp; Information Technology</h3>
+						<p>Research master's (Forschungsmaster) with a focus on applied machine vision and automation.</p>
+					</div>
+				</article>
+				<article class="xp-card">
+					<div class="xp-meta">
+						2021 — 2025
+						<span class="where">THWS Schweinfurt</span>
+					</div>
+					<div class="xp-body">
+						<h3>B.Eng. Mechatronics</h3>
+						<p>Foundation across mechanics, electronics, and software — the full stack of physical products.</p>
+					</div>
+				</article>
+				<article class="xp-card">
+					<div class="xp-meta">
+						2008 — 2020
+						<span class="where">Anand Vidya Vihar School</span>
+					</div>
+					<div class="xp-body">
+						<h3>High school</h3>
+						<p>Graduated in Vadodara, India, before moving to Germany for engineering.</p>
+					</div>
+				</article>
+			</div>
+		</div>
+	</section>
+
+	<!-- ===== Skills ===== -->
+	<section class="section" id="skills">
+		<div class="container">
+			<div class="section-head">
+				<span class="eyebrow">04 — Skills</span>
+				<h2 data-split>What I work with.</h2>
+			</div>
+			<div class="skills-grid reveal-group">
+				<div class="skill-group">
+					<h3>Embedded &amp; control</h3>
+					<div class="tags">
+						<span class="tag">C / C++</span>
+						<span class="tag">Microcontrollers</span>
+						<span class="tag">TI hardware</span>
+						<span class="tag">PLC</span>
+						<span class="tag">Firmware</span>
 					</div>
 				</div>
-				<div class="row">
-					<div class="col-md-4 text-center">
-						<div class="feature-left">
-							<span class="icon">
-								<i class="icon-paintbrush"></i>
-							</span>
-							<div class="feature-copy">
-								<h3>Web Design</h3>
-								<p>Facilis ipsum reprehenderit nemo molestias. Aut cum mollitia reprehenderit.</p>
-							</div>
-						</div>
-					</div>
-
-					<div class="col-md-4 text-center">
-						<div class="feature-left">
-							<span class="icon">
-								<i class="icon-briefcase"></i>
-							</span>
-							<div class="feature-copy">
-								<h3>Branding</h3>
-								<p>Facilis ipsum reprehenderit nemo molestias. Aut cum mollitia reprehenderit.</p>
-							</div>
-						</div>
-
-					</div>
-					<div class="col-md-4 text-center">
-						<div class="feature-left">
-							<span class="icon">
-								<i class="icon-search"></i>
-							</span>
-							<div class="feature-copy">
-								<h3>Analytics</h3>
-								<p>Facilis ipsum reprehenderit nemo molestias. Aut cum mollitia reprehenderit.</p>
-							</div>
-						</div>
+				<div class="skill-group">
+					<h3>Software &amp; AI</h3>
+					<div class="tags">
+						<span class="tag">Python</span>
+						<span class="tag">Machine learning</span>
+						<span class="tag">Object detection</span>
+						<span class="tag">Data science</span>
+						<span class="tag">Databases</span>
 					</div>
 				</div>
-
-
-				<div class="row">
-					<div class="col-md-4 text-center">
-
-						<div class="feature-left">
-							<span class="icon">
-								<i class="icon-bargraph"></i>
-							</span>
-							<div class="feature-copy">
-								<h3>Web Developent</h3>
-								<p>Facilis ipsum reprehenderit nemo molestias. Aut cum mollitia reprehenderit.</p>
-							</div>
-						</div>
-
+				<div class="skill-group">
+					<h3>Mechanical design</h3>
+					<div class="tags">
+						<span class="tag">SolidWorks</span>
+						<span class="tag">Fusion 360</span>
+						<span class="tag">Creo</span>
+						<span class="tag">Product development</span>
 					</div>
-
-					<div class="col-md-4 text-center">
-						<div class="feature-left">
-							<span class="icon">
-								<i class="icon-genius"></i>
-							</span>
-							<div class="feature-copy">
-								<h3>Web Marketing</h3>
-								<p>Facilis ipsum reprehenderit nemo molestias. Aut cum mollitia reprehenderit.</p>
-							</div>
-						</div>
-
-					</div>
-					<div class="col-md-4 text-center">
-						<div class="feature-left">
-							<span class="icon">
-								<i class="icon-chat"></i>
-							</span>
-							<div class="feature-copy">
-								<h3>Support</h3>
-								<p>Facilis ipsum reprehenderit nemo molestias. Aut cum mollitia reprehenderit.</p>
-							</div>
-						</div>
+				</div>
+				<div class="skill-group">
+					<h3>Simulation &amp; tools</h3>
+					<div class="tags">
+						<span class="tag">MATLAB</span>
+						<span class="tag">Simulink</span>
+						<span class="tag">Git</span>
+						<span class="tag">Linux</span>
 					</div>
 				</div>
 			</div>
 		</div>
-	</div>
--->
-	<div id="fh5co-skills" class="animate-box">
-		<div class="container">
-			<div class="row">
-				<div class="col-md-8 col-md-offset-2 text-center fh5co-heading">
-					<h2 style="color: aquamarine;">Skills</h2>
-				</div>
-			</div>
-			<!--
-			<div class="row row-pb-md">
-				<div class="col-md-3 col-sm-6 col-xs-12 text-center">
-					<div class="chart" data-percent="95"><span><strong>HTML5</strong>95%</span></div>
-				</div>
-				<div class="col-md-3 col-sm-6 col-xs-12 text-center">
-					<div class="chart" data-percent="93"><span><strong>CSS3</strong>93%</span></div>
-				</div>
-				<div class="col-md-3 col-sm-6 col-xs-12 text-center">
-					<div class="chart" data-percent="90"><span><strong>C</strong>90%</span></div>
-				</div>
+	</section>
 
-				<div class="col-md-3 col-sm-6 col-xs-12 text-center">
-					<div class="chart" data-percent="89"><span><strong>PHP</strong>89%</span></div>
-				</div>
-				<div class="col-md-3 col-sm-6 col-xs-12 text-center">
-					<div class="chart" data-percent="85"><span><strong>MySQL</strong>85%</span></div>
-				</div>
-				<div class="col-md-3 col-sm-6 col-xs-12 text-center">
-					<div class="chart" data-percent="90"><span><strong>AngularJS</strong>90%</span></div>
-				</div>
-				<div class="col-md-3 col-sm-6 col-xs-12 text-center">
-					<div class="chart" data-percent="85"><span><strong>Ruby</strong>85%</span></div>
-				</div>
-				<div class="col-md-3 col-sm-6 col-xs-12 text-center">
-					<div class="chart" data-percent="90"><span><strong>Java</strong>90%</span></div>
-				</div>
-			</div>-->
-			<div class="row">
-				<div class="col-md-6" style="color: aquamarine;">
-					<div class="progress-wrap" >
-						<h3><span class="name-left" >C (embedded and general-purpose) and C++</span><span class="value-right">95%</span></h3>
-						<div class="progress">
-						  <div class="progress-bar progress-bar-1 progress-bar-striped active" role="progressbar"
-						  aria-valuenow="95" aria-valuemin="0" aria-valuemax="100" style="width:95%">
-						  </div>
-						</div>
-					</div>
-					<div class="progress-wrap">
-						<h3><span class="name-left">Product Development</span><span class="value-right">90%</span></h3>
-						<div class="progress">
-						  <div class="progress-bar progress-bar-2 progress-bar-striped active" role="progressbar"
-						  aria-valuenow="90" aria-valuemin="0" aria-valuemax="100" style="width:90%">
-						  </div>
-						</div>
-					</div>
-					<div class="progress-wrap">
-						<h3><span class="name-left">Python</span><span class="value-right">100%</span></h3>
-						<div class="progress">
-						  <div class="progress-bar progress-bar-3 progress-bar-striped active" role="progressbar"
-						  aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width:100%">
-						  </div>
-						</div>
-					</div>
-					<div class="progress-wrap">
-						<h3><span class="name-left">Machine Learning and AI</span><span class="value-right">95%</span></h3>
-						<div class="progress">
-						  <div class="progress-bar progress-bar-4 progress-bar-striped active" role="progressbar"
-						  aria-valuenow="95" aria-valuemin="0" aria-valuemax="100" style="width:95%">
-						  </div>
-						</div>
-					</div>
-				</div>
-				<div class="col-md-6" style="color: aquamarine;">
-					<div class="progress-wrap">
-						<h3><span class="name-left">MATLAB & Simulink</span><span class="value-right">80%</span></h3>
-						<div class="progress">
-						  <div class="progress-bar progress-bar-5 progress-bar-striped active" role="progressbar"
-						  aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" style="width:80%">
-						  </div>
-						</div>
-					</div>
-					<div class="progress-wrap">
-						<h3><span class="name-left">DataScience and Databses</span><span class="value-right">85%</span></h3>
-						<div class="progress">
-						  <div class="progress-bar progress-bar-striped active" role="progressbar"
-						  aria-valuenow="85" aria-valuemin="0" aria-valuemax="100" style="width:85%">
-						  </div>
-						</div>
-					</div>
-					<div class="progress-wrap">
-						<h3><span class="name-left">Microcontrollers and PLC </span><span class="value-right">100%</span></h3>
-						<div class="progress">
-						  <div class="progress-bar progress-bar-1 progress-bar-striped active" role="progressbar"
-						  aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width:100%">
-						  </div>
-						</div>
-					</div>
-					<div class="progress-wrap">
-						<h3><span class="name-left">CAD (solidworks & Fusion360)</span><span class="value-right">90%</span></h3>
-						<div class="progress">
-						  <div class="progress-bar progress-bar-3 progress-bar-striped active" role="progressbar"
-						  aria-valuenow="90" aria-valuemin="0" aria-valuemax="100" style="width:90%">
-						  </div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div> 
-	</div>
-
-
-	<div id="fh5co-work"  style="background-color:rgb(9, 9, 9);">
-		<div class="container">
-			<div class="row animate-box" style="color: aquamarine;">
-				<div class="col-md-8 col-md-offset-2 text-center fh5co-heading" >
-					<h2 style="color: aquamarine;">Photography</h2>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-md-3 text-center col-padding animate-box">
-					<a  class="work" style="background-image: url(images/amsterdam.jpg);">
-						<div class="desc">
-							<h3>Amsterdam</h3>
-							<span>Netherlands</span>
-						</div>
-					</a>
-				</div>
-				<div class="col-md-3 text-center col-padding animate-box">
-					<a  class="work" style="background-image: url(images/contact_festival.jpg);">
-						<div class="desc">
-							<h3>Contact-festival</h3>
-							<span>Munich</span>
-						</div>
-					</a>
-				</div>
-				<div class="col-md-3 text-center col-padding animate-box">
-					<a  class="work" style="background-image: url(images/Naples.jpg);">
-						<div class="desc">
-							<h3>Naples</h3>
-							<span>Italy</span>
-						</div>
-					</a>
-				</div>
-				<div class="col-md-3 text-center col-padding animate-box">
-					<a  class="work" style="background-image: url(images/versailles.jpg);">
-						<div class="desc">
-							<h3>Versailles</h3>
-							<span>France</span>
-						</div>
-					</a>
-				</div>
-				<div class="col-md-3 text-center col-padding animate-box">
-					<a class="work" style="background-image: url(images/Berlin.jpg);">
-						<div class="desc">
-							<h3>Berlin</h3>
-							<span>Germany</span>
-						</div>
-					</a>
-				</div>
-				<div class="col-md-3 text-center col-padding animate-box">
-					<a class="work" style="background-image: url(images/barcelona.jpg);">
-						<div class="desc">
-							<h3>Barcelona</h3>
-							<span>Spain</span>
-						</div>
-					</a>
-				</div>
-				<div class="col-md-3 text-center col-padding animate-box">
-					<a class="work" style="background-image: url(images/wertheim.jpg);">
-						<div class="desc">
-							<h3>Wertheim</h3>
-							<span>Bavaria</span>
-						</div>
-					</a>
-				</div>
-				<div class="col-md-3 text-center col-padding animate-box">
-					<a class="work" style="background-image: url(images/palma.jpg);">
-						<div class="desc">
-							<h3>Palma de mallorca</h3>
-							<span>Spain</span>
-						</div>
-					</a>
-				</div>
-				<div class="col-md-3 text-center col-padding animate-box">
-					<a class="work" style="background-image: url(images/friedricschafen.jpg);">
-						<div class="desc">
-							<h3>Lake Constance</h3>
-							<span>Friedrichshafen</span>
-						</div>
-					</a>
-				</div>
-			</div>
+	<!-- ===== Marquee ===== -->
+	<div class="marquee" aria-hidden="true">
+		<div class="marquee-track">
+			<span>Machine vision</span><i>◆</i>
+			<span>Embedded C</span><i>◆</i>
+			<span>Object detection</span><i>◆</i>
+			<span>SolidWorks</span><i>◆</i>
+			<span>Python</span><i>◆</i>
+			<span>Robotics</span><i>◆</i>
+			<span>Firmware</span><i>◆</i>
+			<span>Simulink</span><i>◆</i>
+			<span>Lab automation</span><i>◆</i>
+			<span>Fusion 360</span><i>◆</i>
 		</div>
-		     <div class="row" style="margin-top: 20px;">
-					<div class="col-md-12 text-center">
-						<a href="gallery.html" class="btn btn-lg" style="border:1px solid aquamarine;color:aquamarine;background:transparent;">See more &rarr;</a>
-					</div>
-				</div>
-	</div>
-
-	<div id="fh5co-blog">
-		<div class="container">
-			<div class="row animate-box">
-				<div class="col-md-8 col-md-offset-2 text-center fh5co-heading">
-					<h2 style="color: aquamarine;">Projects</h2>
-					
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-md-4">
-					<div class="fh5co-blog animate-box">
-						<a  class="blog-bg" style="background-image: url(images/1.jpg);"></a>
-						<div class="blog-text">
-							
-							<h3>Machine Learning</h3>
-							<p>I have worked with ML algorithms like Neural Networks , Decision tree etc. Object detection and classification is one of my top interest</p>
-							<ul class="stuff">
-								
-								<li><a href="https://drive.google.com/drive/u/2/folders/1l82yhzvQlmEFt8ONeV2Qy3cML_34AK08">Read More<i class="icon-arrow-right22"></i></a></li>
-							</ul>
-						</div> 
-					</div>
-				</div>
-				<div class="col-md-4">
-					<div class="fh5co-blog animate-box">
-						<a  class="blog-bg" style="background-image: url(images/2.jpg);"></a>
-						<div class="blog-text">
-							
-							<h3>CAD</h3>
-							<p style="padding-bottom: 55px;">One of my favourite Hobby and skill.I have experience with Solidworks , Fusion360 and Creo.                                             </p>
-							<ul class="stuff">
-								
-								<li><a href="https://drive.google.com/drive/u/2/folders/12E5SZ2R1PxXu1AYWWxtf3WPyh1brI498">Read More<i class="icon-arrow-right22"></i></a></li>
-							</ul>
-						</div> 
-					</div>
-				</div>
-				<div class="col-md-4">
-					<div class="fh5co-blog animate-box">
-						<a  class="blog-bg" style="background-image: url(images/3.jpg);"></a>
-						<div class="blog-text">
-							
-							<h3>Microcontrollers</h3>
-							<p style="padding-bottom: 82px;">Reach out to Aditya for collaborations, inquiries, or just to say hello..                                                               </p>
-							<ul class="stuff">
-								
-								<li><a href="#">coming soon<i class="icon-arrow-right22"></i></a></li>
-							</ul>
-						</div> 
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-	
-	<div id="fh5co-started" class="fh5co-bg-dark" style="background-color: aquamarine;">
-		<div class="overlay" ></div>
-		<div class="container">
-			<div class="row animate-box">
-				<div class="col-md-8 col-md-offset-2 text-center fh5co-heading">
-					<h2 style="color: black;">Get in Touch!</h2>
-					<p style="color: black;">Have an interesting conversation in mind. Contact me</p>
-					<p><a href=mailto:"adityarpatel@outlook.com" class="btn btn-default btn-lg">Email me</a></p>
-					<p>
-						<ul class="fh5co-social-icons">
-							<li><a href="https://www.instagram.com/adityalepremier?igsh=bmtidmsyMjM1emNl"><i class="icon-instagram"></i></a></li>
-							<li><a href="https://www.facebook.com/profile.php?id=100008875832473"><i class="icon-facebook2"></i></a></li>
-							<li><a href="https://www.linkedin.com/in/aditya-patel-314b661ba?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app"><i class="icon-linkedin2"></i></a></li>
-							<li><a href="https://steamcommunity.com/profiles/76561199033863348/"><i class="icon-steam"></i></a></li>
-						</ul>
-					</p>
-				</div>
-			</div>
+		<div class="marquee-track">
+			<span>Machine vision</span><i>◆</i>
+			<span>Embedded C</span><i>◆</i>
+			<span>Object detection</span><i>◆</i>
+			<span>SolidWorks</span><i>◆</i>
+			<span>Python</span><i>◆</i>
+			<span>Robotics</span><i>◆</i>
+			<span>Firmware</span><i>◆</i>
+			<span>Simulink</span><i>◆</i>
+			<span>Lab automation</span><i>◆</i>
+			<span>Fusion 360</span><i>◆</i>
 		</div>
 	</div>
 
-
-	
-
-	<div id="fh5co-footer">
+	<!-- ===== Projects ===== -->
+	<section class="section" id="projects">
 		<div class="container">
-			<div class="row">
-				<div class="col-md-12" style="text-align: right; color: aquamarine;">
-					<p>&copy; Website Experience <br>Designed by Aditya Patel 
+			<div class="section-head">
+				<span class="eyebrow">05 — Projects</span>
+				<h2 data-split>Selected work.</h2>
+			</div>
+			<div class="work-slider blur-reveal" id="work-slider">
+				<div class="work-viewport">
+					<div class="work-track">
+						<div class="work-slide">
+							<a class="work-card" href="https://drive.google.com/drive/u/2/folders/1l82yhzvQlmEFt8ONeV2Qy3cML_34AK08" target="_blank" rel="noopener">
+								<img class="work-card-img" src="images/1.jpg" alt="Machine learning visualisation" loading="lazy">
+								<div class="work-card-content">
+									<div class="work-tags">
+										<span class="work-tag">Object detection</span>
+										<span class="work-tag">Machine vision</span>
+									</div>
+									<div class="work-card-text">
+										<h3>Machine learning</h3>
+										<p>Neural networks, decision trees, and fine-tuned object-detection and classification models — my main research interest.</p>
+										<span class="work-cta">View work →</span>
+									</div>
+								</div>
+							</a>
+						</div>
+						<div class="work-slide">
+							<a class="work-card" href="https://drive.google.com/drive/u/2/folders/12E5SZ2R1PxXu1AYWWxtf3WPyh1brI498" target="_blank" rel="noopener">
+								<img class="work-card-img" src="images/2.jpg" alt="CAD model of a mechanical part" loading="lazy">
+								<div class="work-card-content">
+									<div class="work-tags">
+										<span class="work-tag">SolidWorks</span>
+										<span class="work-tag">Fusion 360</span>
+									</div>
+									<div class="work-card-text">
+										<h3>CAD</h3>
+										<p>Mechanical design in SolidWorks, Fusion 360, and Creo — from quick concept models to production-ready parts.</p>
+										<span class="work-cta">View work →</span>
+									</div>
+								</div>
+							</a>
+						</div>
+						<div class="work-slide">
+							<div class="work-card">
+								<img class="work-card-img" src="images/3.jpg" alt="Microcontroller development board" loading="lazy">
+								<div class="work-card-content">
+									<div class="work-tags">
+										<span class="work-tag">Firmware</span>
+										<span class="work-tag">TI hardware</span>
+									</div>
+									<div class="work-card-text">
+										<h3>Microcontrollers</h3>
+										<p>Firmware and electronics projects, from TI-based instrument control to hobby builds.</p>
+										<span class="work-cta soon">Write-up coming soon</span>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="work-controls">
+					<button class="slider-arrow" data-dir="-1" aria-label="Previous project">←</button>
+					<div class="slider-dots" role="tablist" aria-label="Project slides"></div>
+					<button class="slider-arrow" data-dir="1" aria-label="Next project">→</button>
 				</div>
 			</div>
 		</div>
+	</section>
+
+	<!-- ===== Photography ===== -->
+	<section class="section photo-section" id="photography">
+		<div class="container">
+			<div class="section-head">
+				<span class="eyebrow">06 — Photography</span>
+				<h2 data-split>Glimpses of my journeys.</h2>
+				<p>Places I've wandered with a camera — from Bavarian old towns to Southeast Asia.</p>
+			</div>
+			<div class="photo-grid reveal-group">
+				<button class="photo" style="background-image: url(images/amsterdam.jpg);" data-img="images/amsterdam.jpg" data-title="Amsterdam" data-caption="Netherlands">
+					<span class="photo-label"><strong>Amsterdam</strong><span>Netherlands</span></span>
+				</button>
+				<button class="photo" style="background-image: url(images/contact_festival.jpg);" data-img="images/contact_festival.jpg" data-title="Contact Festival" data-caption="Munich, Germany">
+					<span class="photo-label"><strong>Contact Festival</strong><span>Munich</span></span>
+				</button>
+				<button class="photo" style="background-image: url(images/Naples.jpg);" data-img="images/Naples.jpg" data-title="Naples" data-caption="Italy">
+					<span class="photo-label"><strong>Naples</strong><span>Italy</span></span>
+				</button>
+				<button class="photo" style="background-image: url(images/versailles.jpg);" data-img="images/versailles.jpg" data-title="Versailles" data-caption="France">
+					<span class="photo-label"><strong>Versailles</strong><span>France</span></span>
+				</button>
+				<button class="photo" style="background-image: url(images/Berlin.jpg);" data-img="images/Berlin.jpg" data-title="Berlin" data-caption="Germany">
+					<span class="photo-label"><strong>Berlin</strong><span>Germany</span></span>
+				</button>
+				<button class="photo" style="background-image: url(images/barcelona.jpg);" data-img="images/barcelona.jpg" data-title="Barcelona" data-caption="Spain">
+					<span class="photo-label"><strong>Barcelona</strong><span>Spain</span></span>
+				</button>
+				<button class="photo" style="background-image: url(images/wertheim.jpg);" data-img="images/wertheim.jpg" data-title="Wertheim" data-caption="Bavaria, Germany">
+					<span class="photo-label"><strong>Wertheim</strong><span>Bavaria</span></span>
+				</button>
+				<button class="photo" style="background-image: url(images/palma.jpg);" data-img="images/palma.jpg" data-title="Palma de Mallorca" data-caption="Spain">
+					<span class="photo-label"><strong>Palma de Mallorca</strong><span>Spain</span></span>
+				</button>
+				<button class="photo" style="background-image: url(images/friedricschafen.jpg);" data-img="images/friedricschafen.jpg" data-title="Lake Constance" data-caption="Friedrichshafen, Germany">
+					<span class="photo-label"><strong>Lake Constance</strong><span>Friedrichshafen</span></span>
+				</button>
+			</div>
+			<div class="photo-more reveal">
+				<a href="gallery.html" class="btn btn-ghost">See the full gallery →</a>
+			</div>
+		</div>
+	</section>
+
+	<!-- ===== Contact ===== -->
+	<section class="section contact" id="contact">
+		<div class="container">
+			<span class="eyebrow">07 — Contact</span>
+			<h2 data-split>Let's build something <em>together</em>.</h2>
+			<p>Collaborations, interesting problems, or just a good conversation.</p>
+			<a href="mailto:adityarpatel@outlook.com" class="btn btn-primary">adityarpatel@outlook.com</a>
+			<ul class="socials">
+				<li><a href="https://www.instagram.com/adityalepremier?igsh=bmtidmsyMjM1emNl" aria-label="Instagram"><i class="icon-instagram" aria-hidden="true"></i></a></li>
+				<li><a href="https://www.facebook.com/profile.php?id=100008875832473" aria-label="Facebook"><i class="icon-facebook2" aria-hidden="true"></i></a></li>
+				<li><a href="https://www.linkedin.com/in/aditya-patel-314b661ba" aria-label="LinkedIn"><i class="icon-linkedin2" aria-hidden="true"></i></a></li>
+				<li><a href="https://steamcommunity.com/profiles/76561199033863348/" aria-label="Steam"><i class="icon-steam" aria-hidden="true"></i></a></li>
+			</ul>
+		</div>
+	</section>
+
+	<!-- ===== Footer ===== -->
+	<footer class="footer">
+		<div class="container footer-inner">
+			<span>© 2026 Aditya Patel</span>
+			<span>Designed &amp; built by Aditya Patel</span>
+		</div>
+	</footer>
+
+	<!-- ===== Lightbox ===== -->
+	<div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Photo viewer">
+		<button class="lightbox-close" aria-label="Close photo">×</button>
+		<figure>
+			<img src="" alt="">
+			<figcaption>
+				<strong class="lb-title"></strong>
+				<span class="lb-caption"></span>
+			</figcaption>
+		</figure>
 	</div>
 
-	<div class="gototop js-top">
-		<a href="#" class="js-gotop"><i class="icon-arrow-up22"></i></a>
-	</div>
-	
-	<!-- jQuery -->
-	<script src="js/jquery.min.js"></script>
-	<!-- jQuery Easing -->
-	<script src="js/jquery.easing.1.3.js"></script>
-	<!-- Bootstrap -->
-	<script src="js/bootstrap.min.js"></script>
-	<!-- Waypoints -->
-	<script src="js/jquery.waypoints.min.js"></script>
-	<!-- Stellar Parallax -->
-	<script src="js/jquery.stellar.min.js"></script>
-	<!-- Easy PieChart -->
-	<script src="js/jquery.easypiechart.min.js"></script>
-	<!-- Google Map -->
-	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCefOgb1ZWqYtj7raVSmN4PL2WkTrc-KyA&sensor=false"></script>
-	<script src="js/google_map.js"></script>
-	
-	<!-- Main -->
-	<script src="js/main.js"></script>
-
-	
-<script>
-(function(){
-  var container = document.getElementById('fh5co-work');
-  if (!container) return;
-
-  function showOverlay(tile){
-    // Remove on others
-    container.querySelectorAll('a.work.show-overlay').forEach(function(el){
-      if (el !== tile) el.classList.remove('show-overlay');
-    });
-    // Add on current
-    tile.classList.add('show-overlay');
-  }
-  function clearOverlays(){
-    container.querySelectorAll('a.work.show-overlay').forEach(function(el){
-      el.classList.remove('show-overlay');
-    });
-  }
-
-  // Use Pointer Events if available (best on Android/Pixel)
-  var usePointer = 'onpointerup' in window;
-  if (usePointer) {
-    container.addEventListener('pointerup', function(e){
-      var tile = e.target.closest('a.work');
-      if (!tile) { clearOverlays(); return; }
-      // Only act on touch/pen (not mouse)
-      if (e.pointerType && e.pointerType !== 'mouse') {
-        e.preventDefault();
-        showOverlay(tile);
-      }
-    }, {passive:false});
-  } else {
-    // Fallback: touchstart/click
-    container.addEventListener('touchstart', function(e){
-      var tile = e.target.closest('a.work');
-      if (!tile) { clearOverlays(); return; }
-      showOverlay(tile);
-    }, {passive:true});
-    container.addEventListener('click', function(e){
-      var tile = e.target.closest('a.work');
-      if (!tile) { clearOverlays(); return; }
-      // On desktops, let hover handle it; prevent jump on anchors
-      e.preventDefault();
-    }, {passive:false});
-  }
-
-  // Tapping outside tiles should clear overlays
-  document.addEventListener('pointerup', function(e){
-    if (!container.contains(e.target)) clearOverlays();
-  }, {passive:true});
-  document.addEventListener('click', function(e){
-    if (!container.contains(e.target)) clearOverlays();
-  }, {passive:true});
-})();
-</script>
-
+	<script src="https://unpkg.com/lenis@1.2.3/dist/lenis.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/SplitText.min.js"></script>
+	<script src="js/site.js"></script>
 </body>
 </html>
-

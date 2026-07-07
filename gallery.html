@@ -1,226 +1,102 @@
-<!DOCTYPE HTML>
-<html>
-	<head>
+<!DOCTYPE html>
+<html lang="en">
+<head>
 	<meta charset="utf-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Photography Gallery - Aditya_Patel</title>
+	<title>Photography — Aditya Patel</title>
+	<meta name="description" content="Travel photography by Aditya Patel — Germany, India, Greece, Thailand, Indonesia, and beyond.">
 
-	<link href="https://fonts.googleapis.com/css?family=Space+Mono" rel="stylesheet">
-	<link href="https://fonts.googleapis.com/css?family=Kaushan+Script" rel="stylesheet">
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Hedvig+Letters+Serif:opsz@12..24&family=Instrument+Sans:wght@400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 
-	<!-- Animate.css -->
-	<link rel="stylesheet" href="css/animate.css">
-	<!-- Icomoon Icon Fonts-->
 	<link rel="stylesheet" href="css/icomoon.css">
-	<!-- Bootstrap  -->
-	<link rel="stylesheet" href="css/bootstrap.css">
+	<link rel="stylesheet" href="css/theme.css">
+</head>
+<body>
 
-	<!-- Theme style  -->
-	<link rel="stylesheet" href="css/style.css">
+	<!-- ===== Nav ===== -->
+	<nav class="nav" aria-label="Main">
+		<div class="nav-inner">
+			<a href="index.html" class="nav-logo">Aditya Patel</a>
+			<ul class="nav-links">
+				<li><a href="index.html#about">About</a></li>
+				<li><a href="index.html#experience">Experience</a></li>
+				<li><a href="index.html#skills">Skills</a></li>
+				<li><a href="index.html#projects">Projects</a></li>
+				<li><a href="index.html#photography">Photography</a></li>
+			</ul>
+			<a href="mailto:adityarpatel@outlook.com" class="btn btn-primary">Get in touch</a>
+		</div>
+	</nav>
 
-	<!-- Modernizr JS -->
-	<script src="js/modernizr-2.6.2.min.js"></script>
-	<!--[if lt IE 9]>
-	<script src="js/respond.min.js"></script>
-	<![endif]-->
-	<style>
-	/* Optional tiny tweaks scoped to this page */
-	.fh5co-cover .display-tc h1 span { background: rgba(0,0,0,0.35); border-radius: 6px; }
-	.btn-see-more { border:1px solid aquamarine; color:aquamarine; background:transparent; }
-	.btn-see-more:hover, .btn-see-more:focus { color:#101010; background:aquamarine; border-color:aquamarine; }
-	.gallery-note { color: aquamarine; opacity: .8; font-size: 14px; }
-	.modal-dark .modal-content { background:#101010; color:aquamarine; border:1px solid aquamarine; }
-	.modal-dark .close { color:aquamarine; opacity:1; }
-	.modal-dark .modal-header { border-bottom: 1px solid rgba(127,255,212,.25); }
-	.modal-dark .modal-footer { border-top: 1px solid rgba(127,255,212,.25); }
-	
-	/* Force center alignment for overlay text */
-	.work .desc, .work .desc h3, .work .desc span { text-align: center !important; }
-
-	/* --- Fix overlay behavior and tint --- */
-	/* Hide overlay by default and remove white tint */
-	.work .desc { opacity: 0 !important; background: transparent !important; }
-	/* Show on hover/focus with a subtle dark tint for readability (desktop/trackpad) */
-	.work:hover .desc, .work:focus .desc, .work:focus-within .desc { 
-	  opacity: 1 !important; background: rgba(0,0,0,0.25) !important; 
-	}
-	/* On touch devices, keep overlay hidden to avoid sticky hover */
-	@media (hover: none) {
-	  .work .desc,
-	  .work:hover .desc,
-	  .work:active .desc {
-	    opacity: 0 !important; background: transparent !important;
-	  }
-	}
-
-</style>
-
-	</head>
-	<body>
-	<div class="fh5co-loader"></div>
-	<div id="page" style="background-color: rgb(9, 9, 9);">
-		<div id="fh5co-work" style="background-color:rgb(9, 9, 9);">
-			<div class="container">
-				<div class="row animate-box" style="color: aquamarine;">
-					<div class="col-md-10 col-md-offset-1 text-center fh5co-heading">
-						<h2 style="color: aquamarine;">Glimpses Of My Journeys</h2>
-					</div>
-				</div>
-
-				<!-- Gallery Grid -->
-				<div class="row">
-					<!-- Item 1 -->
-					<div class="col-sm-6 col-md-4 text-center col-padding animate-box">
-						<a href="javascript:void(0)" class="work" style="background-image: url(images/corfu.jpg);"
-						   data-toggle="modal" data-target="#lightbox" data-img="images/corfu.jpg" data-title="Corfu" data-caption="Greece">
-							<div class="desc">
-								<h3>Corfu</h3>
-								<span>Greece</span>
-							</div>
-						</a>
-					</div>
-
-					<!-- Item 2 -->
-					<div class="col-sm-6 col-md-4 text-center col-padding animate-box">
-						<a href="javascript:void(0)" class="work" style="background-image: url(images/udaipur.jpg);"
-						   data-toggle="modal" data-target="#lightbox" data-img="images/udaipur.jpg" data-title="Udaipur" data-caption="Rajasthan, India">
-							<div class="desc">
-								<h3>Udaipur</h3>
-								<span>India</span>
-							</div>
-						</a>
-					</div>
-
-					<!-- Item 3 -->
-					<div class="col-sm-6 col-md-4 text-center col-padding animate-box">
-						<a href="javascript:void(0)" class="work" style="background-image: url(images/badkissingen.jpg);"
-						   data-toggle="modal" data-target="#lightbox" data-img="images/badkissingen.jpg" data-title="Bad Kissingen" data-caption="Bayern, Deutschland">
-							<div class="desc">
-								<h3>Bad Kissingen</h3>
-								<span>Deutschland</span>
-							</div>
-						</a>
-					</div>
-
-					<!-- Item 4 -->
-					<div class="col-sm-6 col-md-4 text-center col-padding animate-box">
-						<a href="javascript:void(0)" class="work" style="background-image: url(images/kreuzberg.jpg);"
-						   data-toggle="modal" data-target="#lightbox" data-img="images/kreuzberg.jpg" data-title="Kreuzberg" data-caption="Bayern, Deutschland">
-							<div class="desc">
-								<h3>Kreuzberg</h3>
-								<span>Deutschland</span>
-							</div>
-						</a>
-					</div>
-
-					<!-- Item 5 -->
-					<div class="col-sm-6 col-md-4 text-center col-padding animate-box">
-						<a href="javascript:void(0)" class="work" style="background-image: url(images/bangkok.jpg);"
-						   data-toggle="modal" data-target="#lightbox" data-img="images/bangkok.jpg" data-title="Bangkok" data-caption="Thailand">
-							<div class="desc">
-								<h3>Bangkok</h3>
-								<span>Thailand</span>
-							</div>
-						</a>
-					</div>
-
-					<!-- Item 6 -->
-					<div class="col-sm-6 col-md-4 text-center col-padding animate-box">
-						<a href="javascript:void(0)" class="work" style="background-image: url(images/rothenburg.jpg);"
-						   data-toggle="modal" data-target="#lightbox" data-img="images/rothenburg.jpg" data-title="Rothenburg" data-caption="Bayern,Deutschland">
-							<div class="desc">
-								<h3>Rothenburg</h3>
-								<span>Deutschland</span>
-							</div>
-						</a>
-					</div>
-					<!-- Item 7 -->
-					<div class="col-sm-6 col-md-4 text-center col-padding animate-box">
-						<a href="javascript:void(0)" class="work" style="background-image: url(images/ochsenfurt.jpg);"
-						   data-toggle="modal" data-target="#lightbox" data-img="images/ochsenfurt.jpg" data-title="Ochsenfurt" data-caption="Bayern, Deutschland">
-							<div class="desc">
-								<h3>Ochsenfurt</h3>
-								<span>Deutschland</span>
-							</div>
-						</a>
-					</div>
-					<!-- Item 8 -->
-					<div class="col-sm-6 col-md-4 text-center col-padding animate-box">
-						<a href="javascript:void(0)" class="work" style="background-image: url(images/bali.jpg);"
-						   data-toggle="modal" data-target="#lightbox" data-img="images/bali.jpg" data-title="Bali" data-caption="Ubud, Indonesia">
-							<div class="desc">
-								<h3>Bali</h3>
-								<span>Indonesia</span>
-							</div>
-						</a>
-					</div>
-					<!-- Item 9 -->
-					<div class="col-sm-6 col-md-4 text-center col-padding animate-box">
-						<a href="javascript:void(0)" class="work" style="background-image: url(images/gertelcreek.jpg);"
-						   data-toggle="modal" data-target="#lightbox" data-img="images/gertelcreek.jpg" data-title="Gertel Creek" data-caption="Baden-Württemberg, Deutschland">
-							<div class="desc">
-								<h3>Gertel Creek</h3>
-								<span>Deutschland</span>
-							</div>
-						</a>
-					</div>
-
-				<div class="row" style="margin-top: 20px;">
-					<div class="col-md-12 text-center">
-						<a href="index.html#fh5co-work" class="btn btn-see-more">← Back to homepage</a>
-					</div>
-				</div>
-
+	<!-- ===== Gallery ===== -->
+	<section class="section photo-section" style="padding-top: 160px;">
+		<div class="container">
+			<div class="section-head">
+				<span class="eyebrow">Photography</span>
+				<h2 data-split>Glimpses of my journeys.</h2>
+				<p>Tap any photo to view it full size.</p>
+			</div>
+			<div class="photo-grid reveal-group">
+				<button class="photo" style="background-image: url(images/corfu.jpg);" data-img="images/corfu.jpg" data-title="Corfu" data-caption="Greece">
+					<span class="photo-label"><strong>Corfu</strong><span>Greece</span></span>
+				</button>
+				<button class="photo" style="background-image: url(images/udaipur.jpg);" data-img="images/udaipur.jpg" data-title="Udaipur" data-caption="Rajasthan, India">
+					<span class="photo-label"><strong>Udaipur</strong><span>India</span></span>
+				</button>
+				<button class="photo" style="background-image: url(images/badkissingen.jpg);" data-img="images/badkissingen.jpg" data-title="Bad Kissingen" data-caption="Bavaria, Germany">
+					<span class="photo-label"><strong>Bad Kissingen</strong><span>Germany</span></span>
+				</button>
+				<button class="photo" style="background-image: url(images/kreuzberg.jpg);" data-img="images/kreuzberg.jpg" data-title="Kreuzberg" data-caption="Bavaria, Germany">
+					<span class="photo-label"><strong>Kreuzberg</strong><span>Germany</span></span>
+				</button>
+				<button class="photo" style="background-image: url(images/bangkok.jpg);" data-img="images/bangkok.jpg" data-title="Bangkok" data-caption="Thailand">
+					<span class="photo-label"><strong>Bangkok</strong><span>Thailand</span></span>
+				</button>
+				<button class="photo" style="background-image: url(images/rothenburg.jpg);" data-img="images/rothenburg.jpg" data-title="Rothenburg" data-caption="Bavaria, Germany">
+					<span class="photo-label"><strong>Rothenburg</strong><span>Germany</span></span>
+				</button>
+				<button class="photo" style="background-image: url(images/ochsenfurt.jpg);" data-img="images/ochsenfurt.jpg" data-title="Ochsenfurt" data-caption="Bavaria, Germany">
+					<span class="photo-label"><strong>Ochsenfurt</strong><span>Germany</span></span>
+				</button>
+				<button class="photo" style="background-image: url(images/bali.jpg);" data-img="images/bali.jpg" data-title="Bali" data-caption="Ubud, Indonesia">
+					<span class="photo-label"><strong>Bali</strong><span>Indonesia</span></span>
+				</button>
+				<button class="photo" style="background-image: url(images/gertelcreek.jpg);" data-img="images/gertelcreek.jpg" data-title="Gertel Creek" data-caption="Baden-Württemberg, Germany">
+					<span class="photo-label"><strong>Gertel Creek</strong><span>Germany</span></span>
+				</button>
+			</div>
+			<div class="photo-more reveal">
+				<a href="index.html#photography" class="btn btn-ghost">← Back to homepage</a>
 			</div>
 		</div>
+	</section>
 
-		<!-- Lightbox Modal -->
-		<div class="modal fade modal-dark" id="lightbox" tabindex="-1" role="dialog" aria-hidden="true">
-		  <div class="modal-dialog modal-lg">
-			<div class="modal-content">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-					<h4 class="modal-title" id="lightboxTitle"></h4>
-				</div>
-				<div class="modal-body text-center">
-					<img id="lightboxImage" src="" alt="" class="img-responsive" style="margin:0 auto; border-radius: 6px;" />
-					<p id="lightboxCaption" style="margin-top:10px;"></p>
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-see-more" data-dismiss="modal">Close</button>
-				</div>
-			</div>
-		  </div>
+	<!-- ===== Footer ===== -->
+	<footer class="footer">
+		<div class="container footer-inner">
+			<span>© 2026 Aditya Patel</span>
+			<span>Designed &amp; built by Aditya Patel</span>
 		</div>
+	</footer>
 
-	</div><!-- #page -->
+	<!-- ===== Lightbox ===== -->
+	<div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Photo viewer">
+		<button class="lightbox-close" aria-label="Close photo">×</button>
+		<figure>
+			<img src="" alt="">
+			<figcaption>
+				<strong class="lb-title"></strong>
+				<span class="lb-caption"></span>
+			</figcaption>
+		</figure>
+	</div>
 
-	<!-- jQuery -->
-	<script src="js/jquery.min.js"></script>
-	<!-- jQuery Easing -->
-	<script src="js/jquery.easing.1.3.js"></script>
-	<!-- Bootstrap -->
-	<script src="js/bootstrap.min.js"></script>
-	<!-- Waypoints -->
-	<script src="js/jquery.waypoints.min.js"></script>
-	<!-- Stellar Parallax -->
-	<script src="js/jquery.stellar.min.js"></script>
-	<!-- Main JS -->
-	<script src="js/main.js"></script>
-	<script>
-	// When a tile is clicked, populate and show the modal
-	$('#lightbox').on('show.bs.modal', function (event) {
-	  var link = $(event.relatedTarget);
-	  if (!link || !link.length) { link = $('a.work.last-clicked'); }
-	  var imgSrc = link && link.data ? (link.data('img') || '') : '';
-	  var title = link && link.data ? (link.data('title') || '') : '';
-	  var caption = link && link.data ? (link.data('caption') || '') : '';
-	  var modal = $(this);
-	  modal.find('#lightboxImage').attr('src', imgSrc);
-	  modal.find('#lightboxTitle').text(title);
-	  modal.find('#lightboxCaption').text(caption);
-	});
-	</script>
-	</body>
+	<script src="https://unpkg.com/lenis@1.2.3/dist/lenis.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/SplitText.min.js"></script>
+	<script src="js/site.js"></script>
+</body>
 </html>
