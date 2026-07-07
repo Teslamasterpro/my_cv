@@ -868,6 +868,20 @@ button:focus-visible {
 .reveal-group.in-view > *:nth-child(8) { transition-delay: 0.56s; }
 .reveal-group.in-view > *:nth-child(9) { transition-delay: 0.64s; }
 
+/* once revealed, xp-cards take their motion back from the reveal
+   system — otherwise its transform:none and stagger delays override
+   the hover pop and lag its response */
+.reveal-group.in-view > .xp-card {
+  transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+              border-color 0.35s ease, background-color 0.35s ease,
+              box-shadow 0.35s ease;
+  transition-delay: 0s;
+}
+
+.reveal-group.in-view > .xp-card:hover {
+  transform: translateY(-6px) scale(1.025);
+}
+
 /* ---------- responsive ---------- */
 @media (max-width: 900px) {
   .nav-links { display: none; }
