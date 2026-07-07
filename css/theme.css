@@ -26,9 +26,9 @@
   --green-dim: rgba(36, 216, 97, 0.15);
   --pink: #ff79fd;
   --pink-dim: rgba(255, 121, 253, 0.14);
-  --blue: #93b8dc;
-  --blue-70: rgba(147, 184, 220, 0.75);
-  --blue-50: rgba(147, 184, 220, 0.55);
+  --blue: #58a6ff;
+  --blue-70: rgba(88, 166, 255, 0.8);
+  --blue-50: rgba(88, 166, 255, 0.6);
 
   /* type */
   --font-display: "Hedvig Letters Serif", Georgia, serif;
