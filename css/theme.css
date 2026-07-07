@@ -992,8 +992,9 @@ button:focus-visible {
 
 /* ---------- responsive ---------- */
 @media (max-width: 900px) {
-  /* displaced backdrops are too heavy for mobile GPUs — plain frost */
-  .nav, .photo {
+  /* photo-frame warp is too heavy for mobile GPUs (10 elements) —
+     plain frost there; the nav island keeps its warp per user request */
+  .photo {
     backdrop-filter: blur(14px) saturate(140%);
     -webkit-backdrop-filter: blur(14px) saturate(140%);
   }
