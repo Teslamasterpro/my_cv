@@ -26,6 +26,9 @@
   --green-dim: rgba(36, 216, 97, 0.15);
   --pink: #ff79fd;
   --pink-dim: rgba(255, 121, 253, 0.14);
+  --blue: #93b8dc;
+  --blue-70: rgba(147, 184, 220, 0.75);
+  --blue-50: rgba(147, 184, 220, 0.55);
 
   /* type */
   --font-display: "Hedvig Letters Serif", Georgia, serif;
@@ -261,7 +264,7 @@ html.gsap-on .avatar-dock { display: block; }
   font-size: var(--mono-label);
   letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: var(--text-70);
+  color: var(--blue);
   display: inline-flex;
   align-items: center;
   gap: 10px;
@@ -347,7 +350,7 @@ html.gsap-on .avatar-dock { display: block; }
   font-size: var(--mono-label);
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: var(--text-40);
+  color: var(--blue-50);
 }
 
 /* ---------- about + pull quote ---------- */
@@ -359,7 +362,7 @@ html.gsap-on .avatar-dock { display: block; }
 }
 
 .about-copy p { color: var(--text-70); }
-.about-copy .aside { color: var(--text-40); font-size: var(--small); }
+.about-copy .aside { color: var(--blue-50); font-size: var(--small); }
 
 /* the signature: his motto set enormous */
 .pullquote {
@@ -385,7 +388,7 @@ html.gsap-on .avatar-dock { display: block; }
   font-size: var(--mono-label);
   letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: var(--text-40);
+  color: var(--blue-50);
 }
 
 /* ---------- experience / education cards ---------- */
@@ -416,7 +419,7 @@ html.gsap-on .avatar-dock { display: block; }
   font-size: var(--mono-label);
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: var(--text-40);
+  color: var(--blue-50);
   line-height: 1.9;
 }
 
@@ -547,7 +550,7 @@ html.gsap-on .avatar-dock { display: block; }
 .work-tag {
   font-family: var(--font-mono);
   font-size: 12px;
-  color: var(--text-100);
+  color: var(--blue);
   padding: 8px 14px;
   border-radius: 10px;
   background: rgba(0, 0, 0, 0.18);
@@ -670,7 +673,7 @@ html.gsap-on .avatar-dock { display: block; }
   font-size: 11px;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: var(--text-100);
+  color: var(--blue);
   padding: 7px 12px;
   border-radius: 10px;
   background: rgba(0, 0, 0, 0.18);
@@ -797,7 +800,7 @@ html.gsap-on .avatar-dock { display: block; }
   font-size: var(--mono-label);
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: var(--text-70);
+  color: var(--blue-70);
 }
 
 .lightbox-close {
@@ -880,10 +883,10 @@ html.gsap-on .avatar-dock { display: block; }
   font-size: var(--mono-label);
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: var(--text-40);
+  color: var(--blue-50);
 }
 
-.footer a { color: var(--text-70); }
+.footer a { color: var(--blue-70); }
 .footer a:hover { color: var(--text-100); }
 
 /* ---------- scroll reveal ---------- */
