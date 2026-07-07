@@ -99,6 +99,22 @@
     });
   }
 
+  /* ---------- mobile nav menu ---------- */
+  var navEl = document.querySelector(".nav");
+  var navToggle = document.querySelector(".nav-toggle");
+  if (navEl && navToggle) {
+    navToggle.addEventListener("click", function () {
+      var open = navEl.classList.toggle("menu-open");
+      navToggle.setAttribute("aria-expanded", open ? "true" : "false");
+    });
+    navEl.querySelectorAll(".nav-links a").forEach(function (a) {
+      a.addEventListener("click", function () {
+        navEl.classList.remove("menu-open");
+        navToggle.setAttribute("aria-expanded", "false");
+      });
+    });
+  }
+
   /* ---------- Lenis smooth scroll ---------- */
   var lenis = null;
   if (window.Lenis && !reducedMotion) {
@@ -168,18 +184,22 @@
             y: r.top + r.height / 2 + window.pageYOffset - (parseFloat(gsap.getProperty(el, "y")) || 0)
           };
         };
-        gsap.to(heroAvatar, {
-          x: function () { return untransformedCenter(dock).x - untransformedCenter(heroAvatar).x; },
-          y: function () { return untransformedCenter(dock).y - untransformedCenter(heroAvatar).y; },
-          scale: function () { return dock.offsetWidth / heroAvatar.offsetWidth; },
-          ease: "none",
-          scrollTrigger: {
-            trigger: "#about",
-            start: "top bottom",
-            end: "top 40%",
-            scrub: 0.6,
-            invalidateOnRefresh: true
-          }
+        // the dock only renders >=769px (see CSS); match that here so
+        // phones keep the avatar in the hero
+        gsap.matchMedia().add("(min-width: 769px)", function () {
+          gsap.to(heroAvatar, {
+            x: function () { return untransformedCenter(dock).x - untransformedCenter(heroAvatar).x; },
+            y: function () { return untransformedCenter(dock).y - untransformedCenter(heroAvatar).y; },
+            scale: function () { return dock.offsetWidth / heroAvatar.offsetWidth; },
+            ease: "none",
+            scrollTrigger: {
+              trigger: "#about",
+              start: "top bottom",
+              end: "top 40%",
+              scrub: 0.6,
+              invalidateOnRefresh: true
+            }
+          });
         });
       }
 

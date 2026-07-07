@@ -53,7 +53,9 @@
 /* ---------- reset ---------- */
 *, *::before, *::after { box-sizing: border-box; }
 
-html { scroll-behavior: smooth; }
+html { scroll-behavior: smooth; -webkit-tap-highlight-color: transparent; }
+
+a, button { touch-action: manipulation; }
 
 body {
   margin: 0;
@@ -161,6 +163,33 @@ button:focus-visible {
     inset 0 -1px 0 rgba(255, 255, 255, 0.05);
 }
 
+.nav-toggle {
+  display: none;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 1px solid var(--hairline-strong);
+  background: rgba(255, 255, 255, 0.06);
+  cursor: pointer;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  flex-shrink: 0;
+}
+
+.nav-toggle span {
+  display: block;
+  width: 18px;
+  height: 2px;
+  border-radius: 2px;
+  background: var(--text-100);
+  transition: transform 0.3s ease;
+}
+
+.nav.menu-open .nav-toggle span:first-child { transform: translateY(3.5px) rotate(45deg); }
+.nav.menu-open .nav-toggle span:last-child { transform: translateY(-3.5px) rotate(-45deg); }
+
 /* specular sweep across the island */
 .nav::before {
   content: "";
@@ -205,21 +234,10 @@ button:focus-visible {
   align-items: center;
   text-align: center;
   position: relative;
-  /* overflow stays visible so the avatar can fly out to #about */
+  /* overflow stays visible so the avatar can fly out to #about;
+     the ambient glow is a background so it can't overflow layout */
+  background: radial-gradient(560px 560px at 50% 18%, rgba(36, 216, 97, 0.07) 0%, transparent 70%);
   padding: 140px 0 80px;
-}
-
-/* single ambient glow, nothing louder */
-.hero::before {
-  content: "";
-  position: absolute;
-  top: -30%;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 900px;
-  height: 900px;
-  background: radial-gradient(circle, rgba(36, 216, 97, 0.07) 0%, transparent 62%);
-  pointer-events: none;
 }
 
 .hero .container { position: relative; }
@@ -276,7 +294,9 @@ button:focus-visible {
   margin-top: 32px;
 }
 
-html.gsap-on .avatar-dock { display: block; }
+@media (min-width: 769px) {
+  html.gsap-on .avatar-dock { display: block; }
+}
 
 .hero-status {
   font-family: var(--font-mono);
@@ -972,7 +992,45 @@ html.gsap-on .avatar-dock { display: block; }
 
 /* ---------- responsive ---------- */
 @media (max-width: 900px) {
+  /* displaced backdrops are too heavy for mobile GPUs — plain frost */
+  .nav, .photo {
+    backdrop-filter: blur(14px) saturate(140%);
+    -webkit-backdrop-filter: blur(14px) saturate(140%);
+  }
+
   .nav-links { display: none; }
+  .nav-toggle { display: flex; }
+  .nav-inner { padding: 10px 10px 10px 22px; gap: 12px; }
+
+  /* glass dropdown panel under the island */
+  .nav.menu-open .nav-links {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    position: absolute;
+    top: calc(100% + 12px);
+    left: 0;
+    right: 0;
+    padding: 12px;
+    border-radius: 24px;
+    background: linear-gradient(160deg, rgba(30, 30, 30, 0.96), rgba(18, 18, 18, 0.96));
+    backdrop-filter: blur(18px) saturate(140%);
+    -webkit-backdrop-filter: blur(18px) saturate(140%);
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    box-shadow: 0 24px 60px rgba(0, 0, 0, 0.55), inset 0 1px 0 rgba(255, 255, 255, 0.16);
+  }
+
+  .nav.menu-open .nav-links a {
+    display: block;
+    padding: 13px 16px;
+    font-size: 17px;
+    text-align: center;
+    border-radius: 14px;
+    color: var(--text-100);
+  }
+
+  .nav.menu-open .nav-links a:hover,
+  .nav.menu-open .nav-links a:active { background: rgba(255, 255, 255, 0.07); }
   .stats-grid { grid-template-columns: repeat(2, 1fr); }
   .about-grid { grid-template-columns: 1fr; }
   .skills-grid { grid-template-columns: 1fr; }
@@ -985,6 +1043,34 @@ html.gsap-on .avatar-dock { display: block; }
   .stats-grid { grid-template-columns: 1fr 1fr; }
   .photo-grid { grid-template-columns: 1fr; }
   .stat { padding: 28px 16px; }
+
+  .nav { top: 10px; width: calc(100% - 20px); }
+  .nav .btn { padding: 9px 16px; font-size: 14px; }
+  .nav-logo { font-size: 19px; }
+
+  .hero { padding: 120px 0 64px; }
+  .hero-status {
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    white-space: normal;
+    line-height: 1.7;
+    max-width: 90%;
+  }
+
+  .work-card { height: 440px; }
+  .work-card-text h3 { font-size: 23px; }
+  .work-controls { gap: 14px; }
+
+  .marquee span { font-size: 20px; }
+  .marquee-track { gap: 40px; padding-right: 40px; }
+
+  .lightbox { padding: 14px; }
+  .lightbox figure { padding: 12px 12px 16px; border-radius: 24px; }
+  .lightbox img { max-height: 66vh; }
+  .lightbox-close { top: 14px; right: 14px; }
+
+  .xp-card { padding: 24px 22px; }
+  .skill-group { padding: 26px 24px; }
 }
 
 /* ---------- GSAP / Lenis handoff ----------
