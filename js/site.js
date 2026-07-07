@@ -96,33 +96,6 @@
     });
   }
 
-  /* ---------- touch: first tap shows the overlay label ----------
-     On hover-less devices a tap goes straight to the lightbox, which
-     hides the place name entirely; show the label on first tap and
-     open on the second. */
-  var touchOnly = window.matchMedia("(hover: none)").matches;
-  if (touchOnly) {
-    document.querySelectorAll(".photo").forEach(function (tile) {
-      tile.addEventListener("click", function (e) {
-        if (!tile.classList.contains("show-overlay")) {
-          e.preventDefault();
-          e.stopImmediatePropagation();
-          document.querySelectorAll(".photo.show-overlay").forEach(function (el) {
-            el.classList.remove("show-overlay");
-          });
-          tile.classList.add("show-overlay");
-        }
-      }, true);
-    });
-    document.addEventListener("click", function (e) {
-      if (!e.target.closest(".photo")) {
-        document.querySelectorAll(".photo.show-overlay").forEach(function (el) {
-          el.classList.remove("show-overlay");
-        });
-      }
-    });
-  }
-
   /* ---------- Lenis smooth scroll ---------- */
   var lenis = null;
   if (window.Lenis && !reducedMotion) {

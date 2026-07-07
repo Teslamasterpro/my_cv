@@ -38,33 +38,51 @@
 				<h2 data-split>Glimpses of my journeys.</h2>
 				<p>Tap any photo to view it full size.</p>
 			</div>
-			<div class="photo-grid reveal-group">
-				<button class="photo" style="background-image: url(images/corfu.jpg);" data-img="images/corfu.jpg" data-title="Corfu" data-caption="Greece">
-					<span class="photo-label"><strong>Corfu</strong><span>Greece</span></span>
+			<div class="photo-grid blur-reveal">
+				<button class="photo" data-img="images/corfu.jpg" data-title="Corfu" data-caption="Greece">
+					<img class="photo-img" src="images/corfu.jpg" alt="Corfu" loading="lazy">
+					<span class="photo-tag">Greece</span>
+					<span class="photo-label"><strong>Corfu</strong></span>
 				</button>
-				<button class="photo" style="background-image: url(images/udaipur.jpg);" data-img="images/udaipur.jpg" data-title="Udaipur" data-caption="Rajasthan, India">
-					<span class="photo-label"><strong>Udaipur</strong><span>India</span></span>
+				<button class="photo" data-img="images/udaipur.jpg" data-title="Udaipur" data-caption="Rajasthan, India">
+					<img class="photo-img" src="images/udaipur.jpg" alt="Udaipur" loading="lazy">
+					<span class="photo-tag">India</span>
+					<span class="photo-label"><strong>Udaipur</strong></span>
 				</button>
-				<button class="photo" style="background-image: url(images/badkissingen.jpg);" data-img="images/badkissingen.jpg" data-title="Bad Kissingen" data-caption="Bavaria, Germany">
-					<span class="photo-label"><strong>Bad Kissingen</strong><span>Germany</span></span>
+				<button class="photo" data-img="images/badkissingen.jpg" data-title="Bad Kissingen" data-caption="Bavaria, Germany">
+					<img class="photo-img" src="images/badkissingen.jpg" alt="Bad Kissingen" loading="lazy">
+					<span class="photo-tag">Germany</span>
+					<span class="photo-label"><strong>Bad Kissingen</strong></span>
 				</button>
-				<button class="photo" style="background-image: url(images/kreuzberg.jpg);" data-img="images/kreuzberg.jpg" data-title="Kreuzberg" data-caption="Bavaria, Germany">
-					<span class="photo-label"><strong>Kreuzberg</strong><span>Germany</span></span>
+				<button class="photo" data-img="images/kreuzberg.jpg" data-title="Kreuzberg" data-caption="Bavaria, Germany">
+					<img class="photo-img" src="images/kreuzberg.jpg" alt="Kreuzberg" loading="lazy">
+					<span class="photo-tag">Germany</span>
+					<span class="photo-label"><strong>Kreuzberg</strong></span>
 				</button>
-				<button class="photo" style="background-image: url(images/bangkok.jpg);" data-img="images/bangkok.jpg" data-title="Bangkok" data-caption="Thailand">
-					<span class="photo-label"><strong>Bangkok</strong><span>Thailand</span></span>
+				<button class="photo" data-img="images/bangkok.jpg" data-title="Bangkok" data-caption="Thailand">
+					<img class="photo-img" src="images/bangkok.jpg" alt="Bangkok" loading="lazy">
+					<span class="photo-tag">Thailand</span>
+					<span class="photo-label"><strong>Bangkok</strong></span>
 				</button>
-				<button class="photo" style="background-image: url(images/rothenburg.jpg);" data-img="images/rothenburg.jpg" data-title="Rothenburg" data-caption="Bavaria, Germany">
-					<span class="photo-label"><strong>Rothenburg</strong><span>Germany</span></span>
+				<button class="photo" data-img="images/rothenburg.jpg" data-title="Rothenburg" data-caption="Bavaria, Germany">
+					<img class="photo-img" src="images/rothenburg.jpg" alt="Rothenburg" loading="lazy">
+					<span class="photo-tag">Germany</span>
+					<span class="photo-label"><strong>Rothenburg</strong></span>
 				</button>
-				<button class="photo" style="background-image: url(images/ochsenfurt.jpg);" data-img="images/ochsenfurt.jpg" data-title="Ochsenfurt" data-caption="Bavaria, Germany">
-					<span class="photo-label"><strong>Ochsenfurt</strong><span>Germany</span></span>
+				<button class="photo" data-img="images/ochsenfurt.jpg" data-title="Ochsenfurt" data-caption="Bavaria, Germany">
+					<img class="photo-img" src="images/ochsenfurt.jpg" alt="Ochsenfurt" loading="lazy">
+					<span class="photo-tag">Germany</span>
+					<span class="photo-label"><strong>Ochsenfurt</strong></span>
 				</button>
-				<button class="photo" style="background-image: url(images/bali.jpg);" data-img="images/bali.jpg" data-title="Bali" data-caption="Ubud, Indonesia">
-					<span class="photo-label"><strong>Bali</strong><span>Indonesia</span></span>
+				<button class="photo" data-img="images/bali.jpg" data-title="Bali" data-caption="Ubud, Indonesia">
+					<img class="photo-img" src="images/bali.jpg" alt="Bali" loading="lazy">
+					<span class="photo-tag">Indonesia</span>
+					<span class="photo-label"><strong>Bali</strong></span>
 				</button>
-				<button class="photo" style="background-image: url(images/gertelcreek.jpg);" data-img="images/gertelcreek.jpg" data-title="Gertel Creek" data-caption="Baden-Württemberg, Germany">
-					<span class="photo-label"><strong>Gertel Creek</strong><span>Germany</span></span>
+				<button class="photo" data-img="images/gertelcreek.jpg" data-title="Gertel Creek" data-caption="Baden-Württemberg, Germany">
+					<img class="photo-img" src="images/gertelcreek.jpg" alt="Gertel Creek" loading="lazy">
+					<span class="photo-tag">Germany</span>
+					<span class="photo-label"><strong>Gertel Creek</strong></span>
 				</button>
 			</div>
 			<div class="photo-more reveal">
@@ -93,10 +111,10 @@
 		</figure>
 	</div>
 
-	<script src="https://unpkg.com/lenis@1.2.3/dist/lenis.min.js"></script>
-	<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
-	<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js"></script>
-	<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/SplitText.min.js"></script>
+	<script src="js/vendor/lenis.min.js"></script>
+	<script src="js/vendor/gsap.min.js"></script>
+	<script src="js/vendor/ScrollTrigger.min.js"></script>
+	<script src="js/vendor/SplitText.min.js"></script>
 	<script src="js/site.js"></script>
 </body>
 </html>

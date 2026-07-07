@@ -322,33 +322,51 @@
 				<h2 data-split>Glimpses of my journeys.</h2>
 				<p>Places I've wandered with a camera — from Bavarian old towns to Southeast Asia.</p>
 			</div>
-			<div class="photo-grid reveal-group">
-				<button class="photo" style="background-image: url(images/amsterdam.jpg);" data-img="images/amsterdam.jpg" data-title="Amsterdam" data-caption="Netherlands">
-					<span class="photo-label"><strong>Amsterdam</strong><span>Netherlands</span></span>
+			<div class="photo-grid blur-reveal">
+				<button class="photo" data-img="images/amsterdam.jpg" data-title="Amsterdam" data-caption="Netherlands">
+					<img class="photo-img" src="images/amsterdam.jpg" alt="Amsterdam" loading="lazy">
+					<span class="photo-tag">Netherlands</span>
+					<span class="photo-label"><strong>Amsterdam</strong></span>
 				</button>
-				<button class="photo" style="background-image: url(images/contact_festival.jpg);" data-img="images/contact_festival.jpg" data-title="Contact Festival" data-caption="Munich, Germany">
-					<span class="photo-label"><strong>Contact Festival</strong><span>Munich</span></span>
+				<button class="photo" data-img="images/contact_festival.jpg" data-title="Contact Festival" data-caption="Munich, Germany">
+					<img class="photo-img" src="images/contact_festival.jpg" alt="Contact Festival" loading="lazy">
+					<span class="photo-tag">Munich</span>
+					<span class="photo-label"><strong>Contact Festival</strong></span>
 				</button>
-				<button class="photo" style="background-image: url(images/Naples.jpg);" data-img="images/Naples.jpg" data-title="Naples" data-caption="Italy">
-					<span class="photo-label"><strong>Naples</strong><span>Italy</span></span>
+				<button class="photo" data-img="images/Naples.jpg" data-title="Naples" data-caption="Italy">
+					<img class="photo-img" src="images/Naples.jpg" alt="Naples" loading="lazy">
+					<span class="photo-tag">Italy</span>
+					<span class="photo-label"><strong>Naples</strong></span>
 				</button>
-				<button class="photo" style="background-image: url(images/versailles.jpg);" data-img="images/versailles.jpg" data-title="Versailles" data-caption="France">
-					<span class="photo-label"><strong>Versailles</strong><span>France</span></span>
+				<button class="photo" data-img="images/versailles.jpg" data-title="Versailles" data-caption="France">
+					<img class="photo-img" src="images/versailles.jpg" alt="Versailles" loading="lazy">
+					<span class="photo-tag">France</span>
+					<span class="photo-label"><strong>Versailles</strong></span>
 				</button>
-				<button class="photo" style="background-image: url(images/Berlin.jpg);" data-img="images/Berlin.jpg" data-title="Berlin" data-caption="Germany">
-					<span class="photo-label"><strong>Berlin</strong><span>Germany</span></span>
+				<button class="photo" data-img="images/Berlin.jpg" data-title="Berlin" data-caption="Germany">
+					<img class="photo-img" src="images/Berlin.jpg" alt="Berlin" loading="lazy">
+					<span class="photo-tag">Germany</span>
+					<span class="photo-label"><strong>Berlin</strong></span>
 				</button>
-				<button class="photo" style="background-image: url(images/barcelona.jpg);" data-img="images/barcelona.jpg" data-title="Barcelona" data-caption="Spain">
-					<span class="photo-label"><strong>Barcelona</strong><span>Spain</span></span>
+				<button class="photo" data-img="images/barcelona.jpg" data-title="Barcelona" data-caption="Spain">
+					<img class="photo-img" src="images/barcelona.jpg" alt="Barcelona" loading="lazy">
+					<span class="photo-tag">Spain</span>
+					<span class="photo-label"><strong>Barcelona</strong></span>
 				</button>
-				<button class="photo" style="background-image: url(images/wertheim.jpg);" data-img="images/wertheim.jpg" data-title="Wertheim" data-caption="Bavaria, Germany">
-					<span class="photo-label"><strong>Wertheim</strong><span>Bavaria</span></span>
+				<button class="photo" data-img="images/wertheim.jpg" data-title="Wertheim" data-caption="Bavaria, Germany">
+					<img class="photo-img" src="images/wertheim.jpg" alt="Wertheim" loading="lazy">
+					<span class="photo-tag">Bavaria</span>
+					<span class="photo-label"><strong>Wertheim</strong></span>
 				</button>
-				<button class="photo" style="background-image: url(images/palma.jpg);" data-img="images/palma.jpg" data-title="Palma de Mallorca" data-caption="Spain">
-					<span class="photo-label"><strong>Palma de Mallorca</strong><span>Spain</span></span>
+				<button class="photo" data-img="images/palma.jpg" data-title="Palma de Mallorca" data-caption="Spain">
+					<img class="photo-img" src="images/palma.jpg" alt="Palma de Mallorca" loading="lazy">
+					<span class="photo-tag">Spain</span>
+					<span class="photo-label"><strong>Palma de Mallorca</strong></span>
 				</button>
-				<button class="photo" style="background-image: url(images/friedricschafen.jpg);" data-img="images/friedricschafen.jpg" data-title="Lake Constance" data-caption="Friedrichshafen, Germany">
-					<span class="photo-label"><strong>Lake Constance</strong><span>Friedrichshafen</span></span>
+				<button class="photo" data-img="images/friedricschafen.jpg" data-title="Lake Constance" data-caption="Friedrichshafen, Germany">
+					<img class="photo-img" src="images/friedricschafen.jpg" alt="Lake Constance" loading="lazy">
+					<span class="photo-tag">Friedrichshafen</span>
+					<span class="photo-label"><strong>Lake Constance</strong></span>
 				</button>
 			</div>
 			<div class="photo-more reveal">
@@ -393,10 +411,10 @@
 		</figure>
 	</div>
 
-	<script src="https://unpkg.com/lenis@1.2.3/dist/lenis.min.js"></script>
-	<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
-	<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js"></script>
-	<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/SplitText.min.js"></script>
+	<script src="js/vendor/lenis.min.js"></script>
+	<script src="js/vendor/gsap.min.js"></script>
+	<script src="js/vendor/ScrollTrigger.min.js"></script>
+	<script src="js/vendor/SplitText.min.js"></script>
 	<script src="js/site.js"></script>
 </body>
 </html>

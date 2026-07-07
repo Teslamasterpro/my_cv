@@ -566,47 +566,69 @@ button:focus-visible {
   gap: 12px;
 }
 
+/* photo tiles share the Aluro work-card anatomy: full-bleed image,
+   bottom gradient, frosted tag, always-visible label, hover zoom */
 .photo {
   position: relative;
   aspect-ratio: 4 / 3;
+  border: 2px solid rgba(255, 255, 255, 0.06);
   border-radius: 16px;
   overflow: hidden;
-  background-size: cover;
-  background-position: center;
   cursor: pointer;
-  border: 0;
   padding: 0;
   display: block;
   width: 100%;
+  background: var(--surface-2);
+  transition: border-color 0.3s ease;
 }
+
+.photo:hover { border-color: var(--hairline-strong); }
+
+.photo-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transform: scale(1.01);
+  transition: transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.photo:hover .photo-img,
+.photo:focus-visible .photo-img { transform: scale(1.06); }
 
 .photo::after {
   content: "";
   position: absolute;
   inset: 0;
-  background: linear-gradient(to top, rgba(0, 0, 0, 0.65), transparent 55%);
-  opacity: 0;
-  transition: opacity 0.3s ease;
+  background: linear-gradient(0deg, rgba(0, 0, 0, 0.82), rgba(0, 0, 0, 0.32) 38%, transparent 60%);
 }
 
-.photo .photo-label {
+.photo-tag {
+  position: absolute;
+  top: 14px;
+  left: 14px;
+  z-index: 1;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-100);
+  padding: 7px 12px;
+  border-radius: 10px;
+  background: rgba(0, 0, 0, 0.18);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--hairline);
+}
+
+.photo-label {
   position: absolute;
   left: 18px;
   bottom: 14px;
   z-index: 1;
   text-align: left;
-  opacity: 0;
-  transform: translateY(8px);
-  transition: opacity 0.3s ease, transform 0.3s ease;
 }
-
-.photo:hover::after,
-.photo:focus-visible::after,
-.photo.show-overlay::after { opacity: 1; }
-
-.photo:hover .photo-label,
-.photo:focus-visible .photo-label,
-.photo.show-overlay .photo-label { opacity: 1; transform: translateY(0); }
 
 .photo-label strong {
   display: block;
@@ -614,14 +636,6 @@ button:focus-visible {
   font-weight: 400;
   font-size: 20px;
   color: var(--text-100);
-}
-
-.photo-label span {
-  font-family: var(--font-mono);
-  font-size: 11px;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--pink);
 }
 
 .photo-more { margin-top: 40px; text-align: center; }
@@ -820,6 +834,6 @@ html.gsap-on .blur-reveal { opacity: 0; filter: blur(12px); will-change: opacity
   .status-dot { animation: none; }
   .marquee-track { animation: none; }
   .reveal, .reveal-group > * { opacity: 1; transform: none; transition: none; }
-  .btn, .xp-card, .work-card, .work-card-img, .socials a { transition: none; }
+  .btn, .xp-card, .work-card, .work-card-img, .photo, .photo-img, .socials a { transition: none; }
   .work-track { transition: none; }
 }
