@@ -643,29 +643,48 @@ html.gsap-on .avatar-dock { display: block; }
   gap: 12px;
 }
 
-/* photo tiles share the Aluro work-card anatomy: full-bleed image,
-   bottom gradient, frosted tag, always-visible label, hover zoom */
+/* photo tiles: Aluro card anatomy inside the same liquid-glass
+   frame as the nav island (gradient, warp backdrop, rim lights) */
 .photo {
   position: relative;
   aspect-ratio: 4 / 3;
-  border: 2px solid rgba(255, 255, 255, 0.06);
-  border-radius: 16px;
+  padding: 10px;
+  border-radius: 20px;
   overflow: hidden;
   cursor: pointer;
-  padding: 0;
   display: block;
   width: 100%;
-  background: var(--surface-2);
+  background: linear-gradient(160deg, rgba(255, 255, 255, 0.14), rgba(255, 255, 255, 0.04) 45%, rgba(255, 255, 255, 0.09));
+  backdrop-filter: blur(16px) saturate(150%);
+  -webkit-backdrop-filter: blur(16px) saturate(150%);
+  backdrop-filter: url(#nav-warp) blur(3px) saturate(160%);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  box-shadow:
+    0 16px 48px rgba(0, 0, 0, 0.45),
+    inset 0 1px 0 rgba(255, 255, 255, 0.22),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.05);
   transition: border-color 0.3s ease;
 }
 
-.photo:hover { border-color: var(--hairline-strong); }
+.photo:hover { border-color: rgba(255, 255, 255, 0.28); }
+
+/* specular sweep across the glass, same as the nav island */
+.photo::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(70% 90% at 18% -20%, rgba(255, 255, 255, 0.2), transparent 55%);
+  pointer-events: none;
+  z-index: 2;
+}
 
 .photo-img {
   position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
+  inset: 10px;
+  width: calc(100% - 20px);
+  height: calc(100% - 20px);
+  border-radius: 12px;
   object-fit: cover;
   will-change: transform;
   backface-visibility: hidden;
@@ -679,14 +698,15 @@ html.gsap-on .avatar-dock { display: block; }
 .photo::after {
   content: "";
   position: absolute;
-  inset: 0;
+  inset: 10px;
+  border-radius: 12px;
   background: linear-gradient(0deg, rgba(0, 0, 0, 0.82), rgba(0, 0, 0, 0.32) 38%, transparent 60%);
 }
 
 .photo-tag {
   position: absolute;
-  top: 14px;
-  left: 14px;
+  top: 20px;
+  left: 20px;
   z-index: 1;
   font-family: var(--font-mono);
   font-size: 12px;
@@ -695,7 +715,7 @@ html.gsap-on .avatar-dock { display: block; }
   color: var(--blue);
   padding: 7px 12px;
   border-radius: 10px;
-  background: rgba(0, 0, 0, 0.18);
+  background: rgba(0, 0, 0, 0.42);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   border: 1px solid var(--hairline);
@@ -703,8 +723,8 @@ html.gsap-on .avatar-dock { display: block; }
 
 .photo-label {
   position: absolute;
-  left: 18px;
-  bottom: 14px;
+  left: 22px;
+  bottom: 20px;
   z-index: 1;
   text-align: left;
 }
