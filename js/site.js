@@ -121,7 +121,7 @@
         var target = document.querySelector(a.getAttribute("href"));
         if (target) {
           e.preventDefault();
-          lenis.scrollTo(target, { offset: -64 });
+          lenis.scrollTo(target, { offset: -96 });
         }
       });
     });
