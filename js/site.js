@@ -76,9 +76,16 @@
     for (var fb = 0; fb < F_LEVELS; fb++) fBuckets.push([]);
 
     var sizeField = function () {
-      var dpr = Math.min(window.devicePixelRatio || 1, 2);
+      /* the field runs from the hero down through the pullquote */
+      var fieldEnd = document.querySelector(".pullquote");
       fw = fieldHero.clientWidth;
-      fh = fieldHero.clientHeight;
+      fh = fieldEnd
+        ? Math.round(fieldEnd.getBoundingClientRect().bottom - fieldHero.getBoundingClientRect().top)
+        : fieldHero.clientHeight;
+      var dpr = Math.min(window.devicePixelRatio || 1, 2);
+      /* cap the backing store so the tall canvas stays light */
+      if (fw * fh * dpr * dpr > 12e6) dpr = Math.max(1, Math.sqrt(12e6 / (fw * fh)));
+      fieldCanvas.style.height = fh + "px";
       fieldCanvas.width = Math.round(fw * dpr);
       fieldCanvas.height = Math.round(fh * dpr);
       fctx.setTransform(dpr, 0, 0, dpr, 0, 0);
@@ -98,8 +105,18 @@
         if (pulses[p].r > pulses[p].max) pulses.splice(p, 1);
       }
 
+      /* only draw rows near the viewport — the canvas is tall but the
+         per-frame work stays one screen's worth (skipped under reduced
+         motion, where the single static frame must cover everything) */
+      var jStart = 0, jEnd = fRows;
+      if (!reducedMotion) {
+        var vTop = fieldCanvas.getBoundingClientRect().top;
+        jStart = Math.max(0, Math.floor((-vTop - 30) / F_SPACING));
+        jEnd = Math.min(fRows, Math.ceil((-vTop + window.innerHeight + 30) / F_SPACING));
+      }
+
       for (var i = 0; i < fCols; i++) {
-        for (var j = 0; j < fRows; j++) {
+        for (var j = jStart; j < jEnd; j++) {
           var x = i * F_SPACING, y = j * F_SPACING;
 
           /* base flow: two drifting waves */
@@ -144,7 +161,7 @@
         var seg = fBuckets[L];
         if (!seg.length) continue;
         var g = (L + 0.5) / F_LEVELS;
-        fctx.strokeStyle = "rgba(36, 216, 97, " + (0.11 + g * 0.52).toFixed(3) + ")";
+        fctx.strokeStyle = "rgba(88, 166, 255, " + (0.11 + g * 0.52).toFixed(3) + ")";
         fctx.lineWidth = 1 + g * 1.2;
         fctx.beginPath();
         for (var s = 0; s < seg.length; s += 4) {
@@ -167,9 +184,13 @@
       /* one calm static frame, no animation, no interaction */
       fieldTime = 2;
       drawField();
-      window.addEventListener("resize", function () { sizeField(); drawField(); });
+      var redrawStatic = function () { sizeField(); drawField(); };
+      window.addEventListener("resize", redrawStatic);
+      window.addEventListener("load", redrawStatic);
     } else {
       window.addEventListener("resize", sizeField);
+      /* fonts/images landing can move the pullquote's bottom edge */
+      window.addEventListener("load", sizeField);
 
       window.addEventListener("pointermove", function (e) {
         var r = fieldCanvas.getBoundingClientRect();
@@ -183,10 +204,12 @@
         tx = -1e4; ty = -1e4;
       });
 
-      fieldHero.addEventListener("pointerdown", function (e) {
-        if (e.target.closest("a, button")) return;
+      document.addEventListener("pointerdown", function (e) {
+        if (e.target.closest("a, button, input, select, textarea")) return;
         var r = fieldCanvas.getBoundingClientRect();
-        pulses.push({ x: e.clientX - r.left, y: e.clientY - r.top, r: 0, max: Math.max(fw, fh) * 0.8 });
+        var px = e.clientX - r.left, py = e.clientY - r.top;
+        if (px < 0 || px > r.width || py < 0 || py > r.height) return;
+        pulses.push({ x: px, y: py, r: 0, max: Math.max(fw, window.innerHeight) * 0.8 });
       });
 
       /* only burn frames while the hero is on screen */
@@ -199,7 +222,7 @@
             cancelAnimationFrame(fieldRaf);
             fieldRaf = 0;
           }
-        }).observe(fieldHero);
+        }).observe(fieldCanvas);
       } else {
         fieldRaf = requestAnimationFrame(fieldTick);
       }
