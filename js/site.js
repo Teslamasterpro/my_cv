@@ -99,6 +99,51 @@
     });
   }
 
+  /* ---------- app window (embedded project demos) ---------- */
+  var appModal = document.getElementById("app-modal");
+  if (appModal) {
+    var appFrame = appModal.querySelector("iframe");
+    var appTitle = appModal.querySelector(".app-title");
+    var appNewTab = appModal.querySelector(".app-newtab");
+    var appClose = appModal.querySelector(".app-close");
+    var appLastFocus = null;
+
+    function openApp(url, title, trigger) {
+      /* only (re)load if it's a different app — keeps state on reopen */
+      if (appFrame.src !== url) appFrame.src = url;
+      appTitle.textContent = title;
+      appFrame.title = title;
+      appNewTab.href = url;
+      appModal.classList.add("open");
+      if (lenis) lenis.stop();
+      appLastFocus = trigger;
+      appClose.focus();
+      document.body.style.overflow = "hidden";
+    }
+
+    function closeApp() {
+      appModal.classList.remove("open");
+      if (lenis) lenis.start();
+      document.body.style.overflow = "";
+      if (appLastFocus) appLastFocus.focus();
+    }
+
+    document.querySelectorAll("[data-app]").forEach(function (card) {
+      card.addEventListener("click", function (e) {
+        e.preventDefault();
+        openApp(card.getAttribute("data-app"), card.getAttribute("data-app-title") || "", card);
+      });
+    });
+
+    appClose.addEventListener("click", closeApp);
+    appModal.addEventListener("click", function (e) {
+      if (e.target === appModal) closeApp();
+    });
+    document.addEventListener("keydown", function (e) {
+      if (e.key === "Escape" && appModal.classList.contains("open")) closeApp();
+    });
+  }
+
   /* ---------- mobile nav menu ---------- */
   var navEl = document.querySelector(".nav");
   var navToggle = document.querySelector(".nav-toggle");
