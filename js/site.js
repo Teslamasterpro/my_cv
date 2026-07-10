@@ -56,6 +56,156 @@
     }
   }
 
+  /* ---------- hero vector force field ----------
+     Grid of field vectors on a 2d canvas: a slow flow drifts them,
+     the pointer bends them away from itself (force field), and a
+     click sends an expanding shockwave through the grid. No deps. */
+  var fieldCanvas = document.getElementById("hero-field");
+  if (fieldCanvas && fieldCanvas.getContext) {
+    var fctx = fieldCanvas.getContext("2d");
+    var fieldHero = fieldCanvas.parentElement;
+    var F_SPACING = 38;
+    var fw = 0, fh = 0, fCols = 0, fRows = 0;
+    var mx = -1e4, my = -1e4, tx = -1e4, ty = -1e4;
+    var pulses = [];
+    var fieldRaf = 0, fieldTime = 0, fieldVisible = false;
+    /* segments are bucketed by brightness so each frame needs only
+       a dozen stroke() calls instead of one per vector */
+    var F_LEVELS = 12;
+    var fBuckets = [];
+    for (var fb = 0; fb < F_LEVELS; fb++) fBuckets.push([]);
+
+    var sizeField = function () {
+      var dpr = Math.min(window.devicePixelRatio || 1, 2);
+      fw = fieldHero.clientWidth;
+      fh = fieldHero.clientHeight;
+      fieldCanvas.width = Math.round(fw * dpr);
+      fieldCanvas.height = Math.round(fh * dpr);
+      fctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      fCols = Math.ceil(fw / F_SPACING) + 1;
+      fRows = Math.ceil(fh / F_SPACING) + 1;
+    };
+
+    var drawField = function () {
+      fieldTime += 0.0045;
+      mx += (tx - mx) * 0.12;
+      my += (ty - my) * 0.12;
+      fctx.clearRect(0, 0, fw, fh);
+      fctx.lineCap = "round";
+
+      for (var p = pulses.length - 1; p >= 0; p--) {
+        pulses[p].r += 7;
+        if (pulses[p].r > pulses[p].max) pulses.splice(p, 1);
+      }
+
+      for (var i = 0; i < fCols; i++) {
+        for (var j = 0; j < fRows; j++) {
+          var x = i * F_SPACING, y = j * F_SPACING;
+
+          /* base flow: two drifting waves */
+          var angle = Math.sin(x * 0.006 + fieldTime) +
+                      Math.cos(y * 0.006 - fieldTime * 0.8) +
+                      Math.sin((x + y) * 0.003 + fieldTime * 0.5);
+
+          /* pointer: bend away with gaussian falloff (~170px) */
+          var dx = x - mx, dy = y - my;
+          var inf = Math.exp(-(dx * dx + dy * dy) / 28000);
+          if (inf > 0.01) {
+            var away = Math.atan2(dy, dx);
+            angle += Math.atan2(Math.sin(away - angle), Math.cos(away - angle)) * inf;
+          }
+
+          /* click shockwaves: a bright expanding band */
+          var pInf = 0;
+          for (var k = 0; k < pulses.length; k++) {
+            var pdx = x - pulses[k].x, pdy = y - pulses[k].y;
+            var dist = Math.sqrt(pdx * pdx + pdy * pdy);
+            var band = Math.exp(-Math.pow(dist - pulses[k].r, 2) / 1400) *
+                       (1 - pulses[k].r / pulses[k].max);
+            if (band > pInf) {
+              pInf = band;
+              if (band > 0.05) {
+                var out = Math.atan2(pdy, pdx);
+                angle += Math.atan2(Math.sin(out - angle), Math.cos(out - angle)) * band;
+              }
+            }
+          }
+
+          var glow = Math.max(inf, pInf);
+          var len = 8 + glow * 13;
+          var cx2 = Math.cos(angle) * len * 0.5;
+          var cy2 = Math.sin(angle) * len * 0.5;
+          var lvl = Math.min(F_LEVELS - 1, Math.floor(glow * F_LEVELS));
+          fBuckets[lvl].push(x - cx2, y - cy2, x + cx2, y + cy2);
+        }
+      }
+
+      for (var L = 0; L < F_LEVELS; L++) {
+        var seg = fBuckets[L];
+        if (!seg.length) continue;
+        var g = (L + 0.5) / F_LEVELS;
+        fctx.strokeStyle = "rgba(36, 216, 97, " + (0.11 + g * 0.52).toFixed(3) + ")";
+        fctx.lineWidth = 1 + g * 1.2;
+        fctx.beginPath();
+        for (var s = 0; s < seg.length; s += 4) {
+          fctx.moveTo(seg[s], seg[s + 1]);
+          fctx.lineTo(seg[s + 2], seg[s + 3]);
+        }
+        fctx.stroke();
+        seg.length = 0;
+      }
+    };
+
+    var fieldTick = function () {
+      drawField();
+      fieldRaf = requestAnimationFrame(fieldTick);
+    };
+
+    sizeField();
+
+    if (reducedMotion) {
+      /* one calm static frame, no animation, no interaction */
+      fieldTime = 2;
+      drawField();
+      window.addEventListener("resize", function () { sizeField(); drawField(); });
+    } else {
+      window.addEventListener("resize", sizeField);
+
+      window.addEventListener("pointermove", function (e) {
+        var r = fieldCanvas.getBoundingClientRect();
+        tx = e.clientX - r.left;
+        ty = e.clientY - r.top;
+        /* snap on first entry so the glow doesn't glide in from the sentinel */
+        if (mx < -9000) { mx = tx; my = ty; }
+      }, { passive: true });
+
+      document.addEventListener("pointerleave", function () {
+        tx = -1e4; ty = -1e4;
+      });
+
+      fieldHero.addEventListener("pointerdown", function (e) {
+        if (e.target.closest("a, button")) return;
+        var r = fieldCanvas.getBoundingClientRect();
+        pulses.push({ x: e.clientX - r.left, y: e.clientY - r.top, r: 0, max: Math.max(fw, fh) * 0.8 });
+      });
+
+      /* only burn frames while the hero is on screen */
+      if ("IntersectionObserver" in window) {
+        new IntersectionObserver(function (entries) {
+          fieldVisible = entries[0].isIntersecting;
+          if (fieldVisible && !fieldRaf) {
+            fieldRaf = requestAnimationFrame(fieldTick);
+          } else if (!fieldVisible && fieldRaf) {
+            cancelAnimationFrame(fieldRaf);
+            fieldRaf = 0;
+          }
+        }).observe(fieldHero);
+      } else {
+        fieldRaf = requestAnimationFrame(fieldTick);
+      }
+    }
+  }
+
   /* ---------- lightbox ---------- */
   var lightbox = document.getElementById("lightbox");
   if (lightbox) {
