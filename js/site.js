@@ -370,7 +370,7 @@
 
     function startAutoplay() {
       if (reducedMotion) return;
-      autoplayTimer = setInterval(function () { goTo(current + 1); }, 3500);
+      autoplayTimer = setInterval(function () { goTo(current + 1); }, 4250);
     }
     function stopAutoplay() { clearInterval(autoplayTimer); }
     function restartAutoplay() { stopAutoplay(); startAutoplay(); }
