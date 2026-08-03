@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>CAD — 3D models · Aditya Patel</title>
+	<meta name="description" content="Interactive 3D CAD models by Aditya Patel — parts and assemblies from SolidWorks, Fusion 360 and Creo.">
+	<meta name="theme-color" content="#0b0b0b">
+
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Hedvig+Letters+Serif:opsz@12..24&family=Instrument+Sans:wght@400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+
+	<link rel="stylesheet" href="../css/theme.css">
+	<style>
+		body { overflow-x: hidden; }
+
+		.cad-page {
+			max-width: 1180px;
+			margin: 0 auto;
+			padding: clamp(28px, 5vw, 56px) clamp(18px, 4vw, 40px) clamp(48px, 8vw, 90px);
+		}
+
+		.cad-head { margin-bottom: clamp(28px, 4vw, 44px); }
+
+		.cad-head .eyebrow {
+			display: inline-block;
+			font-family: var(--font-mono);
+			font-size: var(--mono-label);
+			letter-spacing: 0.08em;
+			text-transform: uppercase;
+			color: var(--green);
+			margin-bottom: 14px;
+		}
+
+		.cad-head h1 {
+			font-family: var(--font-display);
+			font-weight: 400;
+			font-size: clamp(32px, 5.2vw, 54px);
+			line-height: 1.08;
+			color: var(--text-100);
+			margin: 0 0 12px;
+		}
+
+		.cad-head p {
+			max-width: 62ch;
+			margin: 0;
+			color: var(--text-50);
+			font-size: var(--small);
+		}
+
+		/* ---------- grid of models ---------- */
+		.cad-grid {
+			display: grid;
+			grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+			gap: clamp(16px, 2vw, 24px);
+		}
+
+		.cad-card {
+			display: flex;
+			flex-direction: column;
+			text-align: left;
+			padding: 0;
+			border: 1px solid var(--hairline);
+			border-radius: var(--radius-card);
+			background: var(--surface-2);
+			overflow: hidden;
+			cursor: pointer;
+			color: inherit;
+			font: inherit;
+			transition: border-color 0.25s ease, transform 0.25s ease, background 0.25s ease;
+		}
+
+		.cad-card:hover,
+		.cad-card:focus-visible {
+			border-color: var(--green);
+			background: var(--surface-3);
+			transform: translateY(-4px);
+			outline: none;
+		}
+
+		.cad-thumb {
+			position: relative;
+			aspect-ratio: 4 / 3;
+			overflow: hidden;
+			background: #d8dce3;
+		}
+
+		.cad-thumb img {
+			width: 100%;
+			height: 100%;
+			object-fit: cover;
+			display: block;
+			transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+		}
+
+		.cad-card:hover .cad-thumb img { transform: scale(1.05); }
+
+		.cad-badge {
+			position: absolute;
+			left: 12px;
+			top: 12px;
+			font-family: var(--font-mono);
+			font-size: 11px;
+			letter-spacing: 0.08em;
+			text-transform: uppercase;
+			color: var(--text-100);
+			background: rgba(11, 11, 11, 0.72);
+			backdrop-filter: blur(6px);
+			-webkit-backdrop-filter: blur(6px);
+			border: 1px solid var(--hairline);
+			border-radius: var(--radius-pill);
+			padding: 5px 11px;
+		}
+
+		.cad-card-body {
+			display: flex;
+			flex-direction: column;
+			gap: 8px;
+			padding: 20px 20px 22px;
+			flex: 1;
+		}
+
+		.cad-card-body h2 {
+			font-family: var(--font-display);
+			font-weight: 400;
+			font-size: 22px;
+			line-height: 1.2;
+			color: var(--text-100);
+			margin: 0;
+		}
+
+		.cad-card-body p {
+			margin: 0;
+			font-size: 14.5px;
+			line-height: 1.55;
+			color: var(--text-50);
+			flex: 1;
+		}
+
+		.cad-tags { display: flex; flex-wrap: wrap; gap: 7px; }
+
+		.cad-tag {
+			font-family: var(--font-mono);
+			font-size: 11px;
+			letter-spacing: 0.06em;
+			text-transform: uppercase;
+			color: var(--text-70);
+			border: 1px solid var(--hairline);
+			border-radius: var(--radius-pill);
+			padding: 4px 10px;
+		}
+
+		.cad-open {
+			font-family: var(--font-mono);
+			font-size: var(--mono-label);
+			letter-spacing: 0.06em;
+			text-transform: uppercase;
+			color: var(--green);
+			margin-top: 4px;
+		}
+
+		/* ---------- 3D viewer ---------- */
+		.cad-viewer {
+			position: fixed;
+			inset: 0;
+			z-index: 50;
+			display: none;
+			flex-direction: column;
+			background: var(--bg);
+		}
+
+		.cad-viewer.open { display: flex; animation: fadein 0.2s ease; }
+
+		.cad-viewer-bar {
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			gap: 14px;
+			padding: 12px clamp(14px, 3vw, 24px);
+			border-bottom: 1px solid var(--hairline);
+			background: var(--surface-1);
+			flex-shrink: 0;
+		}
+
+		.cad-back {
+			display: inline-flex;
+			align-items: center;
+			gap: 8px;
+			font-family: var(--font-mono);
+			font-size: var(--mono-label);
+			letter-spacing: 0.06em;
+			text-transform: uppercase;
+			color: var(--text-100);
+			background: transparent;
+			border: 1px solid var(--hairline);
+			border-radius: var(--radius-pill);
+			padding: 9px 16px;
+			cursor: pointer;
+			flex-shrink: 0;
+			transition: border-color 0.2s ease, color 0.2s ease;
+		}
+
+		.cad-back:hover { border-color: var(--green); color: var(--green); }
+
+		.cad-viewer-title {
+			font-family: var(--font-display);
+			font-size: 19px;
+			color: var(--text-100);
+			white-space: nowrap;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			text-align: center;
+			flex: 1;
+		}
+
+		.cad-viewer-newtab {
+			font-family: var(--font-mono);
+			font-size: var(--mono-label);
+			letter-spacing: 0.08em;
+			text-transform: uppercase;
+			color: var(--blue);
+			text-decoration: none;
+			border: 1px solid var(--hairline);
+			border-radius: var(--radius-pill);
+			padding: 9px 15px;
+			flex-shrink: 0;
+			transition: border-color 0.2s ease;
+		}
+
+		.cad-viewer-newtab:hover { border-color: var(--blue); }
+
+		.cad-stage { position: relative; flex: 1; background: #eef0f3; }
+
+		.cad-stage iframe {
+			width: 100%;
+			height: 100%;
+			border: 0;
+			display: block;
+		}
+
+		.cad-loading {
+			position: absolute;
+			inset: 0;
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			justify-content: center;
+			gap: 16px;
+			background: var(--bg);
+			font-family: var(--font-mono);
+			font-size: var(--mono-label);
+			letter-spacing: 0.08em;
+			text-transform: uppercase;
+			color: var(--text-50);
+		}
+
+		.cad-loading[hidden] { display: none; }
+
+		.cad-spinner {
+			width: 34px;
+			height: 34px;
+			border: 2px solid rgba(255, 255, 255, 0.14);
+			border-top-color: var(--green);
+			border-radius: 50%;
+			animation: cad-spin 0.9s linear infinite;
+		}
+
+		@keyframes cad-spin { to { transform: rotate(360deg); } }
+
+		.cad-hint {
+			margin-top: 18px;
+			font-family: var(--font-mono);
+			font-size: 12px;
+			letter-spacing: 0.05em;
+			color: var(--text-40);
+			text-align: center;
+		}
+
+		@media (max-width: 640px) {
+			.cad-grid { grid-template-columns: 1fr; }
+			.cad-viewer-title { display: none; }
+		}
+
+		@media (prefers-reduced-motion: reduce) {
+			.cad-card, .cad-thumb img { transition: none; }
+			.cad-card:hover { transform: none; }
+			.cad-viewer.open { animation: none; }
+			.cad-spinner { animation-duration: 3s; }
+		}
+	</style>
+</head>
+<body>
+
+	<main class="cad-page">
+		<header class="cad-head">
+			<span class="eyebrow">CAD — 3D models</span>
+			<h1>Parts &amp; assemblies, in 3D.</h1>
+			<p>A selection of my mechanical design work, exported straight from CAD. Pick a model to open it in the interactive viewer — rotate, pan, zoom and explode it right in the browser.</p>
+		</header>
+
+		<div class="cad-grid" id="cad-grid"></div>
+
+		<p class="cad-hint">Models are eDrawings exports (~7&nbsp;MB each) — the first load of a model takes a moment.</p>
+	</main>
+
+	<!-- ===== 3D viewer ===== -->
+	<div class="cad-viewer" id="cad-viewer" aria-hidden="true">
+		<div class="cad-viewer-bar">
+			<button class="cad-back" id="cad-back" type="button">← All models</button>
+			<span class="cad-viewer-title" id="cad-viewer-title"></span>
+			<a class="cad-viewer-newtab" id="cad-newtab" href="#" target="_blank" rel="noopener">Open full ↗</a>
+		</div>
+		<div class="cad-stage">
+			<div class="cad-loading" id="cad-loading">
+				<div class="cad-spinner" aria-hidden="true"></div>
+				<span>Loading 3D model…</span>
+			</div>
+			<iframe id="cad-frame" src="about:blank" title="3D CAD viewer" allowfullscreen></iframe>
+		</div>
+	</div>
+
+	<script>
+	(function () {
+		"use strict";
+
+		/* Edit titles / descriptions / tags here — the gallery builds itself from this list. */
+		var MODELS = [
+			{
+				id: "titanium-spiral-bender",
+				file: "models/titanium_spiral_bending.html",
+				thumb: "thumbs/titanium_spiral_bender.jpg",
+				title: "Titanium spiral bending jig",
+				kind: "Tooling",
+				desc: "Forming plate with a spiral groove that bends titanium wire to a fixed radius in one pass.",
+				tags: ["Fusion 360", "Tooling"]
+			},
+			{
+				id: "cell-section",
+				file: "models/cell2.html",
+				thumb: "thumbs/cell2.jpg",
+				title: "Flow cell — section view",
+				kind: "Section",
+				desc: "Cut-away through the cell body showing the central shaft and the tapered flow channels either side of it.",
+				tags: ["SolidWorks", "Section view"]
+			},
+			{
+				id: "cell-assembly",
+				file: "models/assembly_cell.html",
+				thumb: "thumbs/cell_assembly.jpg",
+				title: "Cell housing assembly",
+				kind: "Assembly",
+				desc: "Cylindrical housing with a threaded gland, slotted barrel and end plug — shown pulled apart.",
+				tags: ["SolidWorks", "Assembly"]
+			},
+			{
+				id: "tube-connector",
+				file: "models/connector_tube.html",
+				thumb: "thumbs/tube_connector.jpg",
+				title: "Barbed elbow connector",
+				kind: "Part",
+				desc: "90° connector with a barbed spigot for push-on lab tubing.",
+				tags: ["Fusion 360", "Part"]
+			},
+			{
+				id: "piston",
+				file: "models/piston.html",
+				thumb: "thumbs/piston.jpg",
+				title: "Piston",
+				kind: "Part",
+				desc: "Ring-grooved piston with the gudgeon-pin bore and a dished crown.",
+				tags: ["SolidWorks", "Part"]
+			},
+			{
+				id: "connecting-arm",
+				file: "models/par_shaft.html",
+				thumb: "thumbs/part_shaft.jpg",
+				title: "Connecting arm",
+				kind: "Part",
+				desc: "Lever arm with a bolted flange hub at one end and a small-end eye at the other.",
+				tags: ["SolidWorks", "Part"]
+			},
+			{
+				id: "drill-press-vise",
+				file: "models/Assem2.html",
+				thumb: "thumbs/assem2.jpg",
+				title: "Drill-press vise",
+				kind: "Assembly",
+				desc: "Base, sliding jaw and lead screw with a T-handle — a full working assembly with mates.",
+				tags: ["SolidWorks", "Assembly"]
+			},
+			{
+				id: "screw-clamp",
+				file: "models/Assem3.html",
+				thumb: "thumbs/assem3.jpg",
+				title: "Screw clamp",
+				kind: "Assembly",
+				desc: "Angle-plate clamp driven by a T-handle screw, mounted on a bolted base.",
+				tags: ["SolidWorks", "Assembly"]
+			},
+			{
+				id: "yoke-clamp",
+				file: "models/Assem1.html",
+				thumb: "thumbs/assem1.jpg",
+				title: "Yoke clamp",
+				kind: "Assembly",
+				desc: "Arched yoke and clamping screw on a stepped base — the same clamp family, seen from above.",
+				tags: ["SolidWorks", "Assembly"]
+			}
+		];
+
+		var grid = document.getElementById("cad-grid");
+		var viewer = document.getElementById("cad-viewer");
+		var frame = document.getElementById("cad-frame");
+		var loading = document.getElementById("cad-loading");
+		var titleEl = document.getElementById("cad-viewer-title");
+		var newTab = document.getElementById("cad-newtab");
+		var backBtn = document.getElementById("cad-back");
+		var lastFocus = null;
+
+		/* ---------- build the grid ---------- */
+		MODELS.forEach(function (m) {
+			var card = document.createElement("button");
+			card.type = "button";
+			card.className = "cad-card";
+			card.setAttribute("data-id", m.id);
+			card.setAttribute("aria-label", "Open " + m.title + " in the 3D viewer");
+			card.innerHTML =
+				'<div class="cad-thumb">' +
+					'<img src="' + m.thumb + '" alt="' + m.title + '" loading="lazy" decoding="async">' +
+					'<span class="cad-badge">' + m.kind + '</span>' +
+				'</div>' +
+				'<div class="cad-card-body">' +
+					'<h2></h2>' +
+					'<p></p>' +
+					'<div class="cad-tags">' + m.tags.map(function (t) {
+						return '<span class="cad-tag"></span>';
+					}).join("") + '</div>' +
+					'<span class="cad-open">Open 3D view →</span>' +
+				'</div>';
+			card.querySelector("h2").textContent = m.title;
+			card.querySelector("p").textContent = m.desc;
+			card.querySelectorAll(".cad-tag").forEach(function (el, i) {
+				el.textContent = m.tags[i];
+			});
+			card.addEventListener("click", function () {
+				lastFocus = card;
+				openModel(m);
+			});
+			grid.appendChild(card);
+		});
+
+		/* ---------- viewer ---------- */
+		function findModel(id) {
+			for (var i = 0; i < MODELS.length; i++) {
+				if (MODELS[i].id === id) return MODELS[i];
+			}
+			return null;
+		}
+
+		/* The gallery usually runs inside an iframe (the project modal on the
+		   home page), so it never pushes history entries — a browser Back
+		   would otherwise navigate the page hosting us. The URL is kept in
+		   sync with replaceState purely so "Open full ↗" deep-links work. */
+		function setUrl(hash) {
+			if (!history.replaceState) return;
+			try {
+				history.replaceState(null, "", hash ? "#" + hash : location.pathname + location.search);
+			} catch (err) { /* file:// in some browsers — harmless */ }
+		}
+
+		function openModel(m) {
+			titleEl.textContent = m.title;
+			newTab.href = m.file;
+			/* only reload when it's a different model — keeps the view on re-open */
+			if (frame.getAttribute("data-loaded") !== m.id) {
+				loading.hidden = false;
+				frame.setAttribute("data-loaded", m.id);
+				frame.src = m.file;
+			} else {
+				loading.hidden = true;
+			}
+			frame.title = m.title + " — 3D viewer";
+			viewer.classList.add("open");
+			viewer.setAttribute("aria-hidden", "false");
+			document.body.style.overflow = "hidden";
+			setUrl(m.id);
+			backBtn.focus();
+		}
+
+		function closeViewer() {
+			viewer.classList.remove("open");
+			viewer.setAttribute("aria-hidden", "true");
+			document.body.style.overflow = "";
+			setUrl("");
+			if (lastFocus) lastFocus.focus();
+		}
+
+		frame.addEventListener("load", function () {
+			if (frame.getAttribute("src") !== "about:blank") loading.hidden = true;
+		});
+
+		backBtn.addEventListener("click", closeViewer);
+
+		document.addEventListener("keydown", function (e) {
+			if (e.key === "Escape" && viewer.classList.contains("open")) {
+				e.stopPropagation();
+				closeViewer();
+			}
+		});
+
+		/* deep link: /cad/#piston opens straight into that model */
+		var deepLink = findModel(location.hash.replace(/^#/, ""));
+		if (deepLink) openModel(deepLink);
+	})();
+	</script>
+</body>
+</html>

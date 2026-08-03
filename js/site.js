@@ -282,8 +282,12 @@
     var appLastFocus = null;
 
     function openApp(url, title, trigger) {
+      /* resolve first: appFrame.src always reads back absolute, so a relative
+         data-app would never compare equal and would reload on every open */
+      var abs = url;
+      try { abs = new URL(url, location.href).href; } catch (e) { /* older browser */ }
       /* only (re)load if it's a different app — keeps state on reopen */
-      if (appFrame.src !== url) appFrame.src = url;
+      if (appFrame.src !== abs) appFrame.src = abs;
       appTitle.textContent = title;
       appFrame.title = title;
       appNewTab.href = url;
