@@ -27,6 +27,26 @@
 		}
 	}
 
+	/* ---------- scaled live embeds ----------
+	   Some tools only lay out properly at desktop width, so the iframe is
+	   given its real size and the whole frame is scaled to fit the column. */
+	document.querySelectorAll(".liveapp.is-scaled").forEach(function (app) {
+		var stage = app.querySelector(".liveapp-stage");
+		var w = parseInt(app.dataset.embedWidth, 10) || 1400;
+		var h = parseInt(app.dataset.embedHeight, 10) || 900;
+
+		function fit() {
+			var scale = Math.min(1, stage.clientWidth / w);
+			stage.style.setProperty("--embed-w", w + "px");
+			stage.style.setProperty("--embed-h", h + "px");
+			stage.style.setProperty("--embed-scale", scale);
+			stage.style.height = Math.round(h * scale) + "px";
+		}
+
+		fit();
+		window.addEventListener("resize", fit);
+	});
+
 	/* ---------- image lightbox ---------- */
 	var box = document.getElementById("pp-lightbox");
 	if (!box) return;

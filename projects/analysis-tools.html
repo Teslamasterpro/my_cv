@@ -32,6 +32,7 @@
 			<p class="lede">Measurement work produces spreadsheets nobody wants to read. These are the small interfaces I build around that data — plan the experiment, see the design space, catch the runs that were never going to work before the lab time is spent.</p>
 			<ul class="pp-jump">
 				<li><a href="#eis-doe">01 — EIS electrolyte DoE visualiser</a></li>
+				<li><a href="#variance-analysis">02 — Impedance variance analysis</a></li>
 			</ul>
 		</header>
 
@@ -91,7 +92,76 @@
 			</div>
 		</article>
 
-		<p class="note">More tools sit in this category than are published here — the Python measurement GUIs from my thesis work (a 24-sample impedance rig on an EVAL-AD5940ELCZ front end, and the automation around it) belong to the labs they were built for. Write-ups are in progress.</p>
+		<article class="proj" id="variance-analysis">
+			<div class="proj-head">
+				<span class="proj-num">02 / Live app</span>
+				<h2>Impedance variance analysis — drift, or just noise?</h2>
+				<p class="proj-sub">Measure the same cell twenty times over and no two spectra land on top of each other. Part of that spread is the instrument, part of it is the cell genuinely changing — and only the second kind is a result. This tool estimates the noise floor from the measurements themselves and judges every run against it.</p>
+				<div class="tags">
+					<span class="tag is-accent">EIS repeatability</span>
+					<span class="tag">Drift inference</span>
+					<span class="tag">Noise floor</span>
+					<span class="tag">Runs in-browser</span>
+					<span class="tag">Live app</span>
+				</div>
+			</div>
+
+			<div class="liveapp is-scaled" data-embed-width="1500" data-embed-height="980">
+				<div class="liveapp-bar">
+					<span>varianceanalysis-demo.vercel.app</span>
+					<a href="https://varianceanalysis-demo.vercel.app/" target="_blank" rel="noopener">Open full ↗</a>
+				</div>
+				<div class="liveapp-stage">
+					<iframe src="https://varianceanalysis-demo.vercel.app/" title="Impedance variance analysis tool" loading="lazy"></iframe>
+				</div>
+			</div>
+			<p class="figure-caption embed-note">The tool itself, running in the page at desktop width — press <strong>Load Sample &amp; Run</strong> to put the built-in dataset through it. Reading your own folder of measurements works best in its own tab.</p>
+			<p class="note only-small">The analyser wants a desktop-sized window — <a href="https://varianceanalysis-demo.vercel.app/" target="_blank" rel="noopener">open it in its own tab</a> to try it. Below is a run it produced.</p>
+
+			<div class="shots is-wide is-plot">
+				<figure class="shot">
+					<img src="../media/analysis/variance-drift.webp" alt="Step-wise difference plot: two measurement series sit inside a green noise band while two others climb steadily out of it and are flagged as drift" loading="lazy" width="1200" height="1184">
+					<figcaption><b>What comes out</b>One of the eight figures from the sample set. The −200&nbsp;mV runs stay inside the green noise band; the two −400&nbsp;mV protocols foul the electrode and climb out of it, so they are called drift rather than scatter. The threshold drawn across the band is √2·σ_η = 2.305&nbsp;Ω, estimated from the runs themselves.</figcaption>
+				</figure>
+			</div>
+
+			<div class="cols">
+				<div class="prose">
+					<h3>What it does</h3>
+					<ul>
+						<li><strong>Takes a folder of runs.</strong> CSV or XLSX, picked by glob pattern and narrowed by channel — or the built-in set of 40 legacy runs (two bias protocols × two DC levels × two channels) to try it on.</li>
+						<li><strong>Works in the domain the question lives in.</strong> Impedance Z, admittance Y or capacitance C, over a frequency window you set — 0.1&nbsp;Hz to 10&nbsp;kHz by default.</li>
+						<li><strong>Slides a window of k ≥ 2 runs</strong> across the series, turning it into step-wise differences and change rates, which is what separates a slow drift from run-to-run scatter.</li>
+						<li><strong>Estimates the noise floor from the data</strong> — σ_η, the √2·σ_η threshold that E_n and CR_n are judged against, and the variance threshold σ²_η — with a percentile control for where the floor is taken.</li>
+						<li><strong>Builds eight interactive figures:</strong> step-wise difference E_n and change rate CR_n with drift inference, their weighted forms, relative errors, grand variance across real and imaginary parts, and the mega grand variance Mσ² — plus a 3D surface for the per-frequency picture.</li>
+						<li><strong>Exports everything</strong> as standalone HTML figures, with a log of each stage of the run.</li>
+						<li><strong>Never uploads anything.</strong> The whole analysis runs in the browser — measurement data stays on the machine it was measured on.</li>
+					</ul>
+				</div>
+				<div class="prose">
+					<h3>Why it exists</h3>
+					<p>A spectrum that differs from the last one is only worth interpreting if the difference is larger than the instrument's own scatter. Deciding that by eye, across forty runs and a few hundred frequencies, is exactly the kind of judgement that gets made inconsistently at 6&nbsp;pm.</p>
+					<p>So the threshold is computed instead of guessed, and every run is drawn against it. It pairs with the <a href="#eis-doe">DoE visualiser</a> above: that one decides which electrolytes are worth measuring, this one decides whether what came back is a real change.</p>
+
+					<h3>Context</h3>
+					<dl class="spec">
+						<div><dt>Built for</dt><dd>M.Eng. thesis — EIS repeatability &amp; drift inference</dd></div>
+						<div><dt>Input</dt><dd>Folders of CSV/XLSX runs, glob and channel filters</dd></div>
+						<div><dt>Domains</dt><dd>Z, Y or C over a chosen frequency window</dd></div>
+						<div><dt>Statistics</dt><dd>σ_η · √2·σ_η · σ²_η, E_n, CR_n, weighted and relative forms, grand and mega grand variance</dd></div>
+						<div><dt>Output</dt><dd>8 interactive figures, a 3D per-frequency surface, standalone HTML export</dd></div>
+						<div><dt>Privacy</dt><dd>Entirely client-side — nothing is uploaded</dd></div>
+						<div><dt>Deployed</dt><dd>Static web app on Vercel</dd></div>
+					</dl>
+				</div>
+			</div>
+
+			<div class="cta-row">
+				<a class="cta" href="https://varianceanalysis-demo.vercel.app/" target="_blank" rel="noopener">Open the tool ↗</a>
+			</div>
+		</article>
+
+		<p class="note">Both of these are the public end of the same thesis work. The Python measurement GUIs behind them — a 24-sample impedance rig on an EVAL-AD5940ELCZ front end and the automation around it — belong to the labs they were built for, so they stay unpublished.</p>
 
 		<footer class="pp-foot">
 			<a href="../index.html#projects">← Back to all projects</a>
@@ -101,6 +171,12 @@
 			</nav>
 		</footer>
 	</main>
+
+	<!-- image lightbox -->
+	<div class="pp-lightbox" id="pp-lightbox" role="dialog" aria-modal="true" aria-label="Image viewer">
+		<button class="pp-lightbox-close" type="button" aria-label="Close">✕</button>
+		<img src="" alt="">
+	</div>
 
 	<script src="../js/project-page.js"></script>
 

@@ -686,3 +686,34 @@ body { overflow-x: hidden; }
 .shot.is-link { cursor: default; }
 .shot.is-link a { display: block; }
 .shot.is-link:hover { border-color: var(--green); }
+
+/* app screenshots keep their own proportions instead of being cropped */
+.shots.is-wide { grid-template-columns: 1fr; }
+.shots.is-wide .shot img { height: auto; object-fit: contain; }
+
+/* a denser app needs more room than a single-panel one */
+.liveapp.is-tall iframe { height: clamp(460px, 72vw, 820px); }
+
+/* a live app that only makes sense at desktop width: render it at its own
+   size and scale the whole frame down to fit the column (js sets the factor) */
+.liveapp-stage { position: relative; width: 100%; overflow: hidden; }
+
+.liveapp.is-scaled iframe {
+	width: var(--embed-w, 1500px);
+	height: var(--embed-h, 980px);
+	transform: scale(var(--embed-scale, 1));
+	transform-origin: 0 0;
+	border: 0;
+	display: block;
+}
+
+.only-small { display: none; }
+
+@media (max-width: 760px) {
+	/* scaled to phone width it would be unreadable — send them to the tab */
+	.liveapp.is-scaled, .embed-note { display: none; }
+	.only-small { display: block; }
+}
+
+/* a single square-ish plot shouldn't run the full column width */
+.shots.is-plot .shot { max-width: 760px; margin-inline: auto; }
