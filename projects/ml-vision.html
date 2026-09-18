@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Machine learning &amp; vision — Aditya Patel</title>
+	<meta name="description" content="Machine-learning and computer-vision work by Aditya Patel — a YOLOv11 cutting-line system for EV battery-cell disassembly, a squeeze-and-excitation CNN for hand-sign recognition, and a decision-tree salary predictor.">
+	<meta name="theme-color" content="#0b0b0b">
+
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Hedvig+Letters+Serif:opsz@12..24&family=Instrument+Sans:wght@400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+
+	<link rel="stylesheet" href="../css/theme.css">
+	<link rel="stylesheet" href="../css/projects.css">
+</head>
+<body>
+
+	<div class="pp-bar">
+		<a class="pp-back" href="../index.html#projects">← All projects</a>
+		<span class="pp-bar-title">01 — Machine learning &amp; vision</span>
+		<a class="pp-bar-link" href="embedded-cad.html">Embedded &amp; CAD →</a>
+	</div>
+
+	<main class="pp-page">
+		<header class="pp-head">
+			<span class="eyebrow">Category 01</span>
+			<h1>Machine learning &amp; vision applications.</h1>
+			<p class="lede">Models that have to work on real hardware, not just in a notebook: object detection that hands cutting coordinates to a robot cell, a convolutional classifier built up milestone by milestone, and a decision tree you can poke at live in the browser.</p>
+			<ul class="pp-jump">
+				<li><a href="#battery-vision">01 — Battery-cell cutting lines</a></li>
+				<li><a href="#handsign-cnn">02 — Hand-sign CNN</a></li>
+				<li><a href="#salary-tree">03 — Salary decision tree</a></li>
+			</ul>
+		</header>
+
+		<!-- ============ 01 — battery vision ============ -->
+		<article class="proj" id="battery-vision">
+			<div class="proj-head">
+				<span class="proj-num">01 / Industry project</span>
+				<h2>Cutting lines for lithium-ion cell disassembly.</h2>
+				<p class="proj-sub">Dismantling lithium-ion cells for recycling is normally done with sensors and actuators — slow, error-prone, and wasteful. The brief was to replace that with a machine-learning vision system that finds the exact lines a robot should cut along, in three stages of the teardown.</p>
+				<div class="tags">
+					<span class="tag is-accent">YOLOv11</span>
+					<span class="tag">Oriented bounding boxes</span>
+					<span class="tag">Raspberry Pi 5</span>
+					<span class="tag">TCP / PLC</span>
+					<span class="tag">OpenCV</span>
+				</div>
+			</div>
+
+			<div class="media-grid">
+				<figure class="vid">
+					<video src="../media/vision/outercase.mp4" poster="../media/vision/outercase.jpg" controls loop muted playsinline preload="none"></video>
+					<figcaption>
+						<b>Focus 1 — housing</b>
+						<span>A cut line placed just under the top edge of the metal casing, 3–5&nbsp;mm clear of the terminals, with its two end points printed in pixel coordinates.</span>
+					</figcaption>
+				</figure>
+				<figure class="vid">
+					<video src="../media/vision/electrode_joint.mp4" poster="../media/vision/electrode_joint.jpg" controls loop muted playsinline preload="none"></video>
+					<figcaption>
+						<b>Focus 2 — electrodes</b>
+						<span>Copper and aluminium foils told apart by class and confidence, then separated by oriented cut lines — as few cuts as the geometry allows.</span>
+					</figcaption>
+				</figure>
+				<figure class="vid">
+					<video src="../media/vision/tape_end1.mp4" poster="../media/vision/tape_end1.jpg" controls loop muted playsinline preload="none"></video>
+					<figcaption>
+						<b>Focus 3 — tape, end view</b>
+						<span>Adhesive strips holding the wound layers together are located on the roll and given short cut segments.</span>
+					</figcaption>
+				</figure>
+				<figure class="vid">
+					<video src="../media/vision/tape_end2.mp4" poster="../media/vision/tape_end2.jpg" controls loop muted playsinline preload="none"></video>
+					<figcaption>
+						<b>Focus 3 — tape, rotating</b>
+						<span>The same detector tracking tape as the cell is turned by hand, so the cuts follow the strip rather than the graphite underneath.</span>
+					</figcaption>
+				</figure>
+			</div>
+			<p class="figure-caption">Live inference on a Raspberry&nbsp;Pi 5 — green overlays are the proposed cut lines, magenta text the coordinates sent on to the controller.</p>
+
+			<div class="cols">
+				<div class="prose">
+					<h3>The three focuses</h3>
+					<ul>
+						<li><strong>Focus 1 — battery housing.</strong> Find a cut line just below the top edge of the metal casing so the terminals and electrodes can be sawn off without damaging what is inside. The camera sits 350–400&nbsp;mm above the cell and the line should land 3–5&nbsp;mm from the terminals.</li>
+						<li><strong>Focus 2 — electrodes.</strong> Detect the copper (anode) and aluminium (cathode) sections and define cut lines that separate them in as few pieces as possible.</li>
+						<li><strong>Focus 3 — adhesive tape.</strong> Locate the tape strips holding the layers together, even when they are partly hidden, and return cuts that do not reach the graphite underneath.</li>
+					</ul>
+					<p>The success criteria set for the work were a detection error inside 1&nbsp;mm, robustness to different backgrounds and tape positions, and a working link into the plant's PLC.</p>
+
+					<h3>How it runs</h3>
+					<p>Everything runs on a Raspberry&nbsp;Pi 5 with a Pi camera. A TCP server accepts two text commands from a PLC or PC — <strong>inference</strong> runs detection on a fresh image, <strong>coordinates</strong> returns the cut-line points — which we exercised with the Hercules TCP client before the plant link existed. Live video inference scripts were delivered alongside it. YOLO model sizes n through x were compared; the practical difference was inference time rather than accuracy.</p>
+				</div>
+
+				<div class="prose">
+					<h3>Models and tooling</h3>
+					<p>Ultralytics <strong>YOLOv11</strong>, trained 100 epochs from pre-trained weights on an Nvidia A100 in Google Colab. Focus&nbsp;1 uses the medium model with ordinary upright boxes — several objects, orientation irrelevant. Focuses&nbsp;2 and&nbsp;3 use <strong>YOLOv11m-obb</strong>, the rotated-box variant, because there the cut line <em>is</em> an orientation.</p>
+					<p>Datasets were annotated in Roboflow with five classes: big face, terminal, copper, aluminium and adhesive tape. Post-processing is NumPy vector maths on the box corners; OpenCV and Matplotlib draw the overlays; Picamera grabs frames and a plain socket server carries the results.</p>
+
+					<h3>Where it falls short</h3>
+					<ul>
+						<li>Sensitive to lighting and texture changes, which occasionally flips the material identified in Focus&nbsp;2.</li>
+						<li>Overlapping or partly hidden tapes remain hard.</li>
+						<li>It detects geometry, not defects or flaws.</li>
+						<li>It was never tested against the actual robot — only the TCP interface it would speak to.</li>
+					</ul>
+					<p>The recommendations that came out of it: faster hardware such as an Nvidia Jetson, and a more varied dataset.</p>
+				</div>
+			</div>
+
+			<div class="stats">
+				<div class="stat"><b>3</b><span>Teardown stages</span></div>
+				<div class="stat"><b>5</b><span>Annotated classes</span></div>
+				<div class="stat"><b>100</b><span>Training epochs</span></div>
+				<div class="stat"><b>≤ 1 mm</b><span>Target cut error</span></div>
+			</div>
+
+			<dl class="spec">
+				<div><dt>Models</dt><dd>YOLOv11m (upright boxes) · YOLOv11m-obb (rotated boxes)</dd></div>
+				<div><dt>Annotation</dt><dd>Roboflow — big face, terminal, copper, aluminium, adhesive tape</dd></div>
+				<div><dt>Training</dt><dd>Google Colab, Nvidia A100, 100 epochs from pre-trained weights</dd></div>
+				<div><dt>Libraries</dt><dd>Ultralytics, NumPy, OpenCV, Matplotlib, Picamera, socket</dd></div>
+				<div><dt>Hardware</dt><dd>Raspberry Pi 5, Pi Camera 2, router/switch, customer PLC</dd></div>
+				<div><dt>Interface</dt><dd>TCP/IP to a Siemens PLC — <code>inference</code> and <code>coordinates</code> commands</dd></div>
+			</dl>
+		</article>
+
+		<!-- ============ 02 — hand-sign CNN ============ -->
+		<article class="proj" id="handsign-cnn">
+			<div class="proj-head">
+				<span class="proj-num">02 / Deep learning</span>
+				<h2>A squeeze-and-excitation CNN that labels hand signs.</h2>
+				<p class="proj-sub">A sign-language interpreter has a large but quirky labelled archive and a small handful of labelled examples from a second, different-looking camera — plus 7,029 images nobody has labelled at all. The task: train a classifier on the archive that still works on the new images, and auto-label the rest.</p>
+				<div class="tags">
+					<span class="tag is-accent">PyTorch</span>
+					<span class="tag">CNN</span>
+					<span class="tag">Squeeze-and-excitation</span>
+					<span class="tag">Transfer / fine-tuning</span>
+					<span class="tag">Mixed precision</span>
+				</div>
+			</div>
+
+			<div class="stats">
+				<div class="stat"><b>93.1%</b><span>Test-set accuracy</span></div>
+				<div class="stat"><b>1,464,537</b><span>Trainable parameters</span></div>
+				<div class="stat"><b>25</b><span>Hand-sign classes</span></div>
+				<div class="stat"><b>7,029</b><span>Images auto-labelled</span></div>
+			</div>
+
+			<h3 class="section-label">The architecture</h3>
+
+			<div class="diagram">
+				<svg viewBox="0 0 1220 250" role="img" aria-label="Network diagram: input 1 by 32 by 32, four convolutional stages with batch norm, ReLU, squeeze-and-excitation blocks and average pooling, then a dropout and fully connected head producing 25 logits.">
+					<defs>
+						<marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+							<path d="M0 0 L10 5 L0 10 z" fill="rgba(255,255,255,0.35)"/>
+						</marker>
+					</defs>
+
+					<!-- stage blocks -->
+					<g font-family="'Space Mono', monospace">
+						<!-- 1 input -->
+						<rect x="10" y="30" width="160" height="120" rx="14" fill="#1b1b1b" stroke="rgba(255,255,255,0.12)"/>
+						<text x="90" y="56" text-anchor="middle" font-size="11" letter-spacing="1" fill="#24d861">INPUT</text>
+						<text x="90" y="84" text-anchor="middle" font-size="11.5" fill="rgba(255,255,255,0.78)">grayscale</text>
+						<text x="90" y="104" text-anchor="middle" font-size="11.5" fill="rgba(255,255,255,0.78)">resize 32 × 32</text>
+						<text x="90" y="124" text-anchor="middle" font-size="11.5" fill="rgba(255,255,255,0.78)">norm 0.5 / 0.5</text>
+						<text x="90" y="182" text-anchor="middle" font-size="11" fill="rgba(255,255,255,0.4)">1 × 32 × 32</text>
+
+						<!-- 2 stage 1 -->
+						<rect x="218" y="30" width="160" height="120" rx="14" fill="#1b1b1b" stroke="rgba(255,255,255,0.12)"/>
+						<text x="298" y="56" text-anchor="middle" font-size="11" letter-spacing="1" fill="#24d861">STAGE 1</text>
+						<text x="298" y="84" text-anchor="middle" font-size="11.5" fill="rgba(255,255,255,0.78)">Conv 3×3 → 32</text>
+						<text x="298" y="104" text-anchor="middle" font-size="11.5" fill="rgba(255,255,255,0.78)">BatchNorm</text>
+						<text x="298" y="124" text-anchor="middle" font-size="11.5" fill="rgba(255,255,255,0.78)">ReLU</text>
+						<text x="298" y="182" text-anchor="middle" font-size="11" fill="rgba(255,255,255,0.4)">32 × 32 × 32</text>
+
+						<!-- 3 stage 2 -->
+						<rect x="426" y="30" width="160" height="120" rx="14" fill="#1b1b1b" stroke="rgba(255,255,255,0.12)"/>
+						<text x="506" y="56" text-anchor="middle" font-size="11" letter-spacing="1" fill="#24d861">STAGE 2</text>
+						<text x="506" y="84" text-anchor="middle" font-size="11.5" fill="rgba(255,255,255,0.78)">Conv 3×3 → 64</text>
+						<text x="506" y="104" text-anchor="middle" font-size="11.5" fill="rgba(255,255,255,0.78)">BN · ReLU</text>
+						<text x="506" y="124" text-anchor="middle" font-size="11.5" fill="#58a6ff">AvgPool 2×2</text>
+						<text x="506" y="182" text-anchor="middle" font-size="11" fill="rgba(255,255,255,0.4)">64 × 16 × 16</text>
+
+						<!-- 4 stage 3 -->
+						<rect x="634" y="30" width="160" height="120" rx="14" fill="#1b1b1b" stroke="rgba(255,255,255,0.12)"/>
+						<text x="714" y="56" text-anchor="middle" font-size="11" letter-spacing="1" fill="#24d861">STAGE 3</text>
+						<text x="714" y="84" text-anchor="middle" font-size="11.5" fill="rgba(255,255,255,0.78)">Conv 3×3 → 128</text>
+						<text x="714" y="104" text-anchor="middle" font-size="11.5" fill="#ff79fd">SE block · r = 8</text>
+						<text x="714" y="124" text-anchor="middle" font-size="11.5" fill="#58a6ff">AvgPool 2×2</text>
+						<text x="714" y="182" text-anchor="middle" font-size="11" fill="rgba(255,255,255,0.4)">128 × 8 × 8</text>
+
+						<!-- 5 stage 4 -->
+						<rect x="842" y="30" width="160" height="120" rx="14" fill="#1b1b1b" stroke="rgba(255,255,255,0.12)"/>
+						<text x="922" y="56" text-anchor="middle" font-size="11" letter-spacing="1" fill="#24d861">STAGE 4</text>
+						<text x="922" y="84" text-anchor="middle" font-size="11.5" fill="rgba(255,255,255,0.78)">Conv 3×3 → 256</text>
+						<text x="922" y="104" text-anchor="middle" font-size="11.5" fill="#ff79fd">SE block · r = 8</text>
+						<text x="922" y="124" text-anchor="middle" font-size="11.5" fill="#58a6ff">AvgPool 2×2</text>
+						<text x="922" y="182" text-anchor="middle" font-size="11" fill="rgba(255,255,255,0.4)">256 × 4 × 4</text>
+
+						<!-- 6 head -->
+						<rect x="1050" y="30" width="160" height="120" rx="14" fill="#1b1b1b" stroke="rgba(36,216,97,0.45)"/>
+						<text x="1130" y="56" text-anchor="middle" font-size="11" letter-spacing="1" fill="#24d861">HEAD</text>
+						<text x="1130" y="84" text-anchor="middle" font-size="11.5" fill="rgba(255,255,255,0.78)">Dropout 0.5</text>
+						<text x="1130" y="104" text-anchor="middle" font-size="11.5" fill="rgba(255,255,255,0.78)">FC 4096 → 256</text>
+						<text x="1130" y="124" text-anchor="middle" font-size="11.5" fill="rgba(255,255,255,0.78)">Dropout · FC → 25</text>
+						<text x="1130" y="182" text-anchor="middle" font-size="11" fill="rgba(255,255,255,0.4)">25 logits</text>
+
+						<!-- arrows -->
+						<g stroke="rgba(255,255,255,0.35)" stroke-width="1.4" marker-end="url(#ar)">
+							<line x1="174" y1="90" x2="212" y2="90"/>
+							<line x1="382" y1="90" x2="420" y2="90"/>
+							<line x1="590" y1="90" x2="628" y2="90"/>
+							<line x1="798" y1="90" x2="836" y2="90"/>
+							<line x1="1006" y1="90" x2="1044" y2="90"/>
+						</g>
+
+						<!-- footer note -->
+						<text x="10" y="222" font-size="11" fill="rgba(255,255,255,0.4)">Kaiming-normal init on every conv and linear layer · BatchNorm γ = 1, β = 0 · cross-entropy loss · 1,464,537 trainable parameters</text>
+					</g>
+				</svg>
+			</div>
+			<p class="figure-caption">Four convolutional stages, two of them channel-gated by squeeze-and-excitation, then a two-layer classifier head.</p>
+
+			<div class="diagram is-narrow">
+				<svg viewBox="0 0 940 130" role="img" aria-label="Squeeze and excitation block: global average pooling, linear bottleneck, ReLU, linear expansion, sigmoid, then per-channel scaling of the input.">
+					<g font-family="'Space Mono', monospace" font-size="11">
+						<rect x="8" y="30" width="118" height="48" rx="10" fill="#1b1b1b" stroke="rgba(255,255,255,0.12)"/>
+						<text x="67" y="52" text-anchor="middle" fill="rgba(255,255,255,0.78)">feature map</text>
+						<text x="67" y="68" text-anchor="middle" fill="rgba(255,255,255,0.4)">C × H × W</text>
+
+						<rect x="148" y="30" width="118" height="48" rx="10" fill="#1b1b1b" stroke="rgba(255,255,255,0.12)"/>
+						<text x="207" y="52" text-anchor="middle" fill="#24d861">squeeze</text>
+						<text x="207" y="68" text-anchor="middle" fill="rgba(255,255,255,0.55)">global avg → C</text>
+
+						<rect x="288" y="30" width="118" height="48" rx="10" fill="#1b1b1b" stroke="rgba(255,255,255,0.12)"/>
+						<text x="347" y="52" text-anchor="middle" fill="rgba(255,255,255,0.78)">Linear C → C/8</text>
+						<text x="347" y="68" text-anchor="middle" fill="rgba(255,255,255,0.4)">bottleneck</text>
+
+						<rect x="428" y="30" width="118" height="48" rx="10" fill="#1b1b1b" stroke="rgba(255,255,255,0.12)"/>
+						<text x="487" y="52" text-anchor="middle" fill="rgba(255,255,255,0.78)">ReLU</text>
+						<text x="487" y="68" text-anchor="middle" fill="rgba(255,255,255,0.4)">non-linearity</text>
+
+						<rect x="568" y="30" width="118" height="48" rx="10" fill="#1b1b1b" stroke="rgba(255,255,255,0.12)"/>
+						<text x="627" y="52" text-anchor="middle" fill="rgba(255,255,255,0.78)">Linear C/8 → C</text>
+						<text x="627" y="68" text-anchor="middle" fill="rgba(255,255,255,0.4)">expand</text>
+
+						<rect x="708" y="30" width="118" height="48" rx="10" fill="#1b1b1b" stroke="rgba(255,255,255,0.12)"/>
+						<text x="767" y="52" text-anchor="middle" fill="#24d861">sigmoid</text>
+						<text x="767" y="68" text-anchor="middle" fill="rgba(255,255,255,0.55)">weights 0 … 1</text>
+
+						<rect x="848" y="30" width="84" height="48" rx="10" fill="#1b1b1b" stroke="rgba(255,121,253,0.45)"/>
+						<text x="890" y="52" text-anchor="middle" fill="#ff79fd">scale ⊗</text>
+						<text x="890" y="68" text-anchor="middle" fill="rgba(255,255,255,0.4)">per channel</text>
+
+						<g stroke="rgba(255,255,255,0.3)" stroke-width="1.3" marker-end="url(#ar)">
+							<line x1="130" y1="54" x2="142" y2="54"/>
+							<line x1="270" y1="54" x2="282" y2="54"/>
+							<line x1="410" y1="54" x2="422" y2="54"/>
+							<line x1="550" y1="54" x2="562" y2="54"/>
+							<line x1="690" y1="54" x2="702" y2="54"/>
+							<line x1="830" y1="54" x2="842" y2="54"/>
+						</g>
+						<path d="M67 82 L67 106 L890 106 L890 82" fill="none" stroke="rgba(255,121,253,0.4)" stroke-width="1.3" stroke-dasharray="4 4" marker-end="url(#ar)"/>
+						<text x="478" y="122" text-anchor="middle" fill="rgba(255,255,255,0.4)">the original feature map is multiplied by its own channel weights</text>
+					</g>
+				</svg>
+			</div>
+			<p class="figure-caption">The squeeze-and-excitation block, after Hu, Shen &amp; Sun (CVPR 2018) — the channels each input actually needs get turned up, the rest get turned down.</p>
+
+			<div class="code">
+				<div class="code-bar"><span>HandSignCNN — channel attention and forward pass</span><span>PyTorch</span></div>
+<pre><span class="c"># squeeze-and-excitation: re-weight channels by their own global statistics</span>
+<span class="k">class</span> <span class="n">SEBlock</span>(nn.Module):
+    <span class="k">def</span> <span class="f">__init__</span>(self, channels: <span class="n">int</span>, reduction: <span class="n">int</span> = <span class="s">8</span>):
+        self.avg_pool = nn.AdaptiveAvgPool2d(<span class="s">1</span>)          <span class="c"># H×W → 1×1</span>
+        self.fc = nn.Sequential(
+            nn.Linear(channels, channels // reduction, bias=<span class="k">False</span>),  <span class="c"># bottleneck</span>
+            nn.ReLU(inplace=<span class="k">True</span>),
+            nn.Linear(channels // reduction, channels, bias=<span class="k">False</span>),  <span class="c"># restore</span>
+            nn.Sigmoid(),                                             <span class="c"># 0…1 gates</span>
+        )
+
+    <span class="k">def</span> <span class="f">forward</span>(self, x):
+        b, c, _, _ = x.size()
+        y = self.avg_pool(x).view(b, c)      <span class="c"># squeeze  → (B, C)</span>
+        y = self.fc(y).view(b, c, <span class="s">1</span>, <span class="s">1</span>)    <span class="c"># excite   → (B, C, 1, 1)</span>
+        <span class="k">return</span> x * y                        <span class="c"># scale    → broadcast multiply</span>
+
+
+<span class="k">class</span> <span class="n">HandSignCNN</span>(nn.Module):
+    <span class="k">def</span> <span class="f">forward</span>(self, x):
+        x = F.relu(self.bn1(self.conv1(x)))  <span class="c"># (1,32,32)   → (32,32,32)</span>
+        x = F.relu(self.bn2(self.conv2(x)))  <span class="c"># (32,32,32)  → (64,32,32)</span>
+        x = self.pool1(x)                    <span class="c"># → (64,16,16)</span>
+        x = F.relu(self.bn3(self.conv3(x)))  <span class="c"># (64,16,16)  → (128,16,16)</span>
+        x = self.se3(x)                      <span class="c"># channel attention</span>
+        x = self.pool2(x)                    <span class="c"># → (128,8,8)</span>
+        x = F.relu(self.bn4(self.conv4(x)))  <span class="c"># (128,8,8)   → (256,8,8)</span>
+        x = self.se4(x)                      <span class="c"># channel attention</span>
+        x = self.pool3(x)                    <span class="c"># → (256,4,4)</span>
+        x = self.dropout_features(x)         <span class="c"># feature-level dropout</span>
+        x = x.view(x.size(<span class="s">0</span>), -<span class="s">1</span>)
+        x = F.relu(self.fc1(x))              <span class="c"># → (B, 256)</span>
+        x = self.dropout_fc(x)
+        <span class="k">return</span> self.fc2(x)                  <span class="c"># → (B, 25) logits</span></pre>
+			</div>
+
+			<h3 class="section-label">Concepts used</h3>
+
+			<div class="concepts">
+				<div class="concept"><b>Channel attention</b><span>Squeeze-and-excitation blocks on stages 3 and 4. Widening the bottleneck (reduction 16 → 8) was the last gain: 92% → 93.1%.</span></div>
+				<div class="concept"><b>Kaiming init</b><span>Fan-out Kaiming-normal on conv and linear layers, zero biases, BatchNorm at γ=1/β=0 — chosen because the network is all ReLU, and it stabilised a suspiciously fast convergence.</span></div>
+				<div class="concept"><b>Average over max pooling</b><span>Swapping max pooling for average pooling kept more of the weak stroke detail in 32×32 grayscale hands.</span></div>
+				<div class="concept"><b>Two-level dropout</b><span>p = 0.5 on the feature map and again before the classifier, added when train/val accuracy ran far ahead of test accuracy.</span></div>
+				<div class="concept"><b>Domain-aware augmentation</b><span>Light affine + jitter on the big archive; a stronger version on the 143 target-domain examples. No flips — a mirrored hand sign is a different letter.</span></div>
+				<div class="concept"><b>Fine-tuning on the target distribution</b><span>Training on the archive alone stalled; fine-tuning on the small augmented target set closed the domain gap and jumped accuracy by ~31 points.</span></div>
+				<div class="concept"><b>Mixed precision</b><span>autocast + GradScaler for the training and fine-tuning loops.</span></div>
+				<div class="concept"><b>Stratified split</b><span>80/20 train/validation, stratified by label, with the validation half deliberately left un-augmented.</span></div>
+			</div>
+
+			<div class="cols" style="margin-top:34px;">
+				<div class="prose">
+					<h3>How it got to 93.1%</h3>
+					<ul>
+						<li><strong>≈ 50%</strong> — three conv layers with batch norm and max pooling, tuned by hand. Hyperparameter sweeps stopped helping.</li>
+						<li><strong>81.6%</strong> — strongly augmenting the 143 labelled target examples and fine-tuning on them: the training archive and the test images simply did not look alike.</li>
+						<li><strong>90%</strong> — a fourth convolution and dropout layers to kill the overfitting that fine-tuning exposed.</li>
+						<li><strong>90.5%</strong> — Kaiming initialisation in place of PyTorch's default, for stabler convergence.</li>
+						<li><strong>92%</strong> — squeeze-and-excitation blocks, and average pooling instead of max.</li>
+						<li><strong>93.1%</strong> — lr 3e-4, weight decay 1e-4, 40 epochs, and an SE reduction ratio of 8 rather than 16.</li>
+					</ul>
+					<p>A last finding worth keeping: identical seeds still moved the score by 1–2 points, because the layers were constructed straight onto the CUDA device while <code>torch.manual_seed</code> had only seeded the host. Passing the device at layer construction made runs comparable again.</p>
+				</div>
+				<div class="prose">
+					<h3>Data</h3>
+					<ul>
+						<li><strong>27,455</strong> labelled archive images — three channels, but only one carried signal, and each image randomly red, green or blue. Converted to single-channel grayscale at 32×32.</li>
+						<li><strong>143</strong> labelled examples from the target set, plus <strong>7,029</strong> unlabelled images to predict.</li>
+						<li>Everything normalised to mean 0.5, std 0.5; predictions written out as CSV.</li>
+					</ul>
+					<dl class="spec">
+						<div><dt>Framework</dt><dd>PyTorch ≥ 2.x, CUDA, mixed precision</dd></div>
+						<div><dt>Input</dt><dd>1 × 32 × 32 grayscale, normalised 0.5 / 0.5</dd></div>
+						<div><dt>Optimiser</dt><dd>Adam, lr 3e-4, weight decay 1e-4</dd></div>
+						<div><dt>Batch / epochs</dt><dd>256 · 40 epochs, then 150 fine-tuning epochs</dd></div>
+						<div><dt>Loss</dt><dd>Cross-entropy (label smoothing tried and dropped)</dd></div>
+						<div><dt>Context</dt><dd>Introduction to Deep Learning, THWS — with Dev Patel</dd></div>
+					</dl>
+				</div>
+			</div>
+		</article>
+
+		<!-- ============ 03 — salary tree ============ -->
+		<article class="proj" id="salary-tree">
+			<div class="proj-head">
+				<span class="proj-num">03 / Live app</span>
+				<h2>Above $65 an hour? A decision tree on IBM HR data.</h2>
+				<p class="proj-sub">A small interactive classifier: set the attributes of an employee and watch the tree decide whether they earn above or below $65 an hour, with the path through the tree shown as it goes.</p>
+				<div class="tags">
+					<span class="tag is-accent">Decision trees</span>
+					<span class="tag">scikit-learn</span>
+					<span class="tag">Live app</span>
+				</div>
+			</div>
+
+			<div class="liveapp">
+				<div class="liveapp-bar">
+					<span>salary-predictor-pink.vercel.app</span>
+					<a href="https://salary-predictor-pink.vercel.app/" target="_blank" rel="noopener">Open full ↗</a>
+				</div>
+				<iframe src="https://salary-predictor-pink.vercel.app/" title="Decision-tree salary predictor" loading="lazy"></iframe>
+			</div>
+			<p class="figure-caption">Running live in the page — the app is embedded, not a screenshot.</p>
+		</article>
+
+		<footer class="pp-foot">
+			<a href="../index.html#projects">← Back to all projects</a>
+			<span>Aditya Patel — machine learning &amp; vision</span>
+			<a href="analysis-tools.html">Analysis tools with GUI →</a>
+		</footer>
+	</main>
+
+</body>
+</html>

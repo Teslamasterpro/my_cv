@@ -160,88 +160,24 @@
 			margin-top: 4px;
 		}
 
-		/* ---------- 3D viewer ---------- */
-		.cad-viewer {
-			position: fixed;
-			inset: 0;
-			z-index: 50;
-			display: none;
-			flex-direction: column;
-			background: var(--bg);
-		}
+		/* ---------- 3D viewer ----------
+		   The viewer is the same floating liquid-glass window as the project
+		   app window on the home page (.app-modal / .app-window in theme.css),
+		   so a model opens over the gallery instead of taking the whole screen. */
+		.cad-viewer .app-clip { background: #eef0f3; }
 
-		.cad-viewer.open { display: flex; animation: fadein 0.2s ease; }
-
-		.cad-viewer-bar {
-			display: flex;
-			align-items: center;
-			justify-content: space-between;
-			gap: 14px;
-			padding: 12px clamp(14px, 3vw, 24px);
-			border-bottom: 1px solid var(--hairline);
-			background: var(--surface-1);
-			flex-shrink: 0;
-		}
-
-		.cad-back {
-			display: inline-flex;
-			align-items: center;
-			gap: 8px;
-			font-family: var(--font-mono);
-			font-size: var(--mono-label);
-			letter-spacing: 0.06em;
-			text-transform: uppercase;
-			color: var(--text-100);
-			background: transparent;
-			border: 1px solid var(--hairline);
-			border-radius: var(--radius-pill);
-			padding: 9px 16px;
-			cursor: pointer;
-			flex-shrink: 0;
-			transition: border-color 0.2s ease, color 0.2s ease;
-		}
-
-		.cad-back:hover { border-color: var(--green); color: var(--green); }
-
-		.cad-viewer-title {
-			font-family: var(--font-display);
-			font-size: 19px;
-			color: var(--text-100);
-			white-space: nowrap;
-			overflow: hidden;
-			text-overflow: ellipsis;
-			text-align: center;
-			flex: 1;
-		}
-
-		.cad-viewer-newtab {
-			font-family: var(--font-mono);
-			font-size: var(--mono-label);
-			letter-spacing: 0.08em;
-			text-transform: uppercase;
-			color: var(--blue);
-			text-decoration: none;
-			border: 1px solid var(--hairline);
-			border-radius: var(--radius-pill);
-			padding: 9px 15px;
-			flex-shrink: 0;
-			transition: border-color 0.2s ease;
-		}
-
-		.cad-viewer-newtab:hover { border-color: var(--blue); }
-
-		.cad-stage { position: relative; flex: 1; background: #eef0f3; }
-
-		.cad-stage iframe {
+		.cad-viewer iframe {
 			width: 100%;
 			height: 100%;
 			border: 0;
 			display: block;
+			background: #eef0f3;
 		}
 
 		.cad-loading {
 			position: absolute;
 			inset: 0;
+			z-index: 1;
 			display: flex;
 			flex-direction: column;
 			align-items: center;
@@ -279,13 +215,11 @@
 
 		@media (max-width: 640px) {
 			.cad-grid { grid-template-columns: 1fr; }
-			.cad-viewer-title { display: none; }
 		}
 
 		@media (prefers-reduced-motion: reduce) {
 			.cad-card, .cad-thumb img { transition: none; }
 			.cad-card:hover { transform: none; }
-			.cad-viewer.open { animation: none; }
 			.cad-spinner { animation-duration: 3s; }
 		}
 	</style>
@@ -304,19 +238,23 @@
 		<p class="cad-hint">Models are eDrawings exports (~7&nbsp;MB each) — the first load of a model takes a moment.</p>
 	</main>
 
-	<!-- ===== 3D viewer ===== -->
-	<div class="cad-viewer" id="cad-viewer" aria-hidden="true">
-		<div class="cad-viewer-bar">
-			<button class="cad-back" id="cad-back" type="button">← All models</button>
-			<span class="cad-viewer-title" id="cad-viewer-title"></span>
-			<a class="cad-viewer-newtab" id="cad-newtab" href="#" target="_blank" rel="noopener">Open full ↗</a>
-		</div>
-		<div class="cad-stage">
-			<div class="cad-loading" id="cad-loading">
-				<div class="cad-spinner" aria-hidden="true"></div>
-				<span>Loading 3D model…</span>
+	<!-- ===== 3D viewer — floating window ===== -->
+	<div class="app-modal cad-viewer" id="cad-viewer" aria-hidden="true">
+		<div class="app-window" role="dialog" aria-modal="true" aria-label="3D model viewer">
+			<div class="app-bar">
+				<span class="app-title" id="cad-viewer-title"></span>
+				<div class="app-actions">
+					<a class="app-newtab" id="cad-newtab" href="#" target="_blank" rel="noopener">Open full ↗</a>
+					<button class="app-close" id="cad-close" type="button" aria-label="Close the 3D viewer">×</button>
+				</div>
 			</div>
-			<iframe id="cad-frame" src="about:blank" title="3D CAD viewer" allowfullscreen></iframe>
+			<div class="app-clip">
+				<div class="cad-loading" id="cad-loading">
+					<div class="cad-spinner" aria-hidden="true"></div>
+					<span>Loading 3D model…</span>
+				</div>
+				<iframe id="cad-frame" src="about:blank" title="3D CAD viewer" allowfullscreen></iframe>
+			</div>
 		</div>
 	</div>
 
@@ -415,7 +353,7 @@
 		var loading = document.getElementById("cad-loading");
 		var titleEl = document.getElementById("cad-viewer-title");
 		var newTab = document.getElementById("cad-newtab");
-		var backBtn = document.getElementById("cad-back");
+		var closeBtn = document.getElementById("cad-close");
 		var lastFocus = null;
 
 		/* ---------- build the grid ---------- */
@@ -485,7 +423,7 @@
 			viewer.setAttribute("aria-hidden", "false");
 			document.body.style.overflow = "hidden";
 			setUrl(m.id);
-			backBtn.focus();
+			closeBtn.focus();
 		}
 
 		function closeViewer() {
@@ -500,7 +438,12 @@
 			if (frame.getAttribute("src") !== "about:blank") loading.hidden = true;
 		});
 
-		backBtn.addEventListener("click", closeViewer);
+		closeBtn.addEventListener("click", closeViewer);
+
+		/* click the dimmed backdrop to dismiss, same as the app window */
+		viewer.addEventListener("click", function (e) {
+			if (e.target === viewer) closeViewer();
+		});
 
 		document.addEventListener("keydown", function (e) {
 			if (e.key === "Escape" && viewer.classList.contains("open")) {

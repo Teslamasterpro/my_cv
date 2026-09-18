@@ -487,7 +487,7 @@
     var dots = slides.map(function (_, i) {
       var dot = document.createElement("button");
       dot.className = "slider-dot" + (i === 0 ? " active" : "");
-      dot.setAttribute("aria-label", "Go to project " + (i + 1));
+      dot.setAttribute("aria-label", "Go to category " + (i + 1));
       dot.addEventListener("click", function () { goTo(i + 1); });
       dotsWrap.appendChild(dot);
       return dot;

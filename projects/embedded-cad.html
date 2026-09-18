@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Embedded &amp; CAD — Aditya Patel</title>
+	<meta name="description" content="Embedded hardware and mechanical design by Aditya Patel — a custom AM243x breakout PCB you can rotate in 3D, nine CAD parts and assemblies, and instrument firmware.">
+	<meta name="theme-color" content="#0b0b0b">
+
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Hedvig+Letters+Serif:opsz@12..24&family=Instrument+Sans:wght@400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+
+	<link rel="stylesheet" href="../css/theme.css">
+	<link rel="stylesheet" href="../css/projects.css">
+
+	<script type="importmap">
+	{
+		"imports": {
+			"three": "../js/vendor/three/three.module.min.js",
+			"three/addons/": "../js/vendor/three/"
+		}
+	}
+	</script>
+</head>
+<body>
+
+	<div class="pp-bar">
+		<a class="pp-back" href="../index.html#projects">← All projects</a>
+		<span class="pp-bar-title">03 — Embedded &amp; CAD</span>
+		<a class="pp-bar-link" href="ml-vision.html">ML &amp; vision →</a>
+	</div>
+
+	<main class="pp-page">
+		<header class="pp-head">
+			<span class="eyebrow">Category 03</span>
+			<h1>Embedded hardware &amp; CAD.</h1>
+			<p class="lede">The physical half of the work: boards that break a dense processor port out into something a machine can actually be wired to, parts and assemblies drawn to be manufactured, and the firmware that makes lab instruments move.</p>
+			<ul class="pp-jump">
+				<li><a href="#am243x-pcb">01 — AM243x breakout PCB</a></li>
+				<li><a href="#cad">02 — CAD parts &amp; assemblies</a></li>
+				<li><a href="#firmware">03 — Firmware &amp; instrument control</a></li>
+			</ul>
+		</header>
+
+		<!-- ============ 01 — PCB ============ -->
+		<article class="proj" id="am243x-pcb">
+			<div class="proj-head">
+				<span class="proj-num">01 / Custom PCB</span>
+				<h2>Breaking 40 usable pins out of a 150-pin processor port.</h2>
+				<p class="proj-sub">A Texas Instruments AM243x AVM board brings its I/O out on a single 150-position high-speed multiplexed array connector — dense, fragile, and impossible to wire a machine to directly. This board sits on that port and turns 40 of those pins into screw terminals that can drive actuators and relays and read analogue sensors.</p>
+				<div class="tags">
+					<span class="tag is-accent">KiCad</span>
+					<span class="tag">TI AM243x</span>
+					<span class="tag">Samtec SEAM-30</span>
+					<span class="tag">2-layer</span>
+					<span class="tag">Interactive 3D</span>
+				</div>
+			</div>
+
+			<div class="viewer3d" id="pcb-viewer" data-model="../media/pcb/autopronano.glb">
+				<div class="viewer3d-bar">
+					<span>Autopronano — board assembly · 101 × 81 mm</span>
+					<div class="viewer3d-btns">
+						<button class="v3-btn" type="button" data-v3="reset">Reset view</button>
+						<button class="v3-btn" type="button" data-v3="spin" aria-pressed="false">Auto-rotate</button>
+						<button class="v3-btn" type="button" data-v3="wire" aria-pressed="false">Wireframe</button>
+					</div>
+				</div>
+				<div class="viewer3d-stage">
+					<div class="v3-status">
+						<div class="v3-spinner" aria-hidden="true"></div>
+						<span>Loading 3D model…</span>
+					</div>
+				</div>
+			</div>
+			<p class="figure-caption">Drag to orbit, scroll to zoom, right-drag to pan. Converted from the KiCad STEP export — the same geometry used to check mechanical fit.</p>
+
+			<div class="shots">
+				<figure class="shot">
+					<img src="../media/pcb/schematic.png" alt="KiCad schematic showing the 150-position array connector split into three units, fanned out to four ten-way terminal connectors" loading="lazy">
+					<figcaption><b>Schematic</b>The array connector drawn as three units — rows A/B, C/D and E — with the selected nets pulled out to J2–J5.</figcaption>
+				</figure>
+				<figure class="shot">
+					<img src="../media/pcb/routing.png" alt="KiCad board layout showing red top-layer and blue bottom-layer traces fanning out from a dense pad field to four terminal blocks" loading="lazy">
+					<figcaption><b>Routing</b>Two layers, red on top and blue underneath, fanning the dense pad field out to the terminal blocks and around the mounting cut-outs.</figcaption>
+				</figure>
+			</div>
+
+			<div class="cols">
+				<div class="prose">
+					<h3>The problem</h3>
+					<p>The AM243x AVM board exposes its peripherals through a Samtec high-density array — 150 positions on a 0.50&nbsp;mm pitch, five rows of thirty, with most pins multiplexed between several functions. Nothing in a machine cabinet plugs into that. Getting a relay, a valve or a 0–10&nbsp;V sensor onto it needs an adapter that picks the right subset of pins and presents them in a form a wiring harness can be screwed into.</p>
+
+					<h3>The board</h3>
+					<ul>
+						<li><strong>Mating connector:</strong> Samtec SEAM-30-03.5-L-05-2-A-K-TR, all 150 positions landed, drawn in the schematic as three units (rows A/B, C/D and E) so the pin selection stays readable.</li>
+						<li><strong>Field side:</strong> four ten-way 250-410 pluggable terminal connectors, J2–J5 — the 40 pins the application needs, grouped by function rather than by processor pin order.</li>
+						<li><strong>Board:</strong> 101 × 81&nbsp;mm, 1.5&nbsp;mm thick, two copper layers, with mounting holes and an outline cut back to clear the hardware it stacks onto.</li>
+						<li><strong>Routing:</strong> hand-routed fan-out from the pad field, top layer for the long runs around the perimeter, bottom layer to cross underneath.</li>
+					</ul>
+				</div>
+				<div class="prose">
+					<h3>Design notes</h3>
+					<p>The interesting part of a breakout board is the pin choice, not the copper. Each of the 40 nets had to be a pin whose multiplexed function matched what it would drive — digital out for the relays, analogue-capable inputs for the sensors — and had to stay reachable once the fan-out from a 0.50&nbsp;mm pad field had eaten the space around the connector.</p>
+					<p>Grouping the terminals by machine function rather than by processor order means the harness can be made without a pin map open next to it, and a channel can be traced from the terminal block straight through to the schematic sheet.</p>
+
+					<h3>Toolchain</h3>
+					<dl class="spec">
+						<div><dt>EDA</dt><dd>KiCad 10.0.6 — schematic, layout and 3D export</dd></div>
+						<div><dt>Target</dt><dd>TI AM243x AVM development board</dd></div>
+						<div><dt>Connectors</dt><dd>1 × Samtec SEAM-30 (150 pos.) · 4 × 250-410 (10-way)</dd></div>
+						<div><dt>Breakout</dt><dd>40 signals — actuators, relays, analogue sensors</dd></div>
+						<div><dt>Stack-up</dt><dd>2 layers, 1.5 mm FR4, 101 × 81 mm</dd></div>
+						<div><dt>3D source</dt><dd>STEP export, converted to glTF for the viewer above</dd></div>
+					</dl>
+				</div>
+			</div>
+		</article>
+
+		<!-- ============ 02 — CAD ============ -->
+		<article class="proj" id="cad">
+			<div class="proj-head">
+				<span class="proj-num">02 / Mechanical design</span>
+				<h2>Nine parts and assemblies, rotatable in the browser.</h2>
+				<p class="proj-sub">Mechanical design work from SolidWorks, Fusion 360 and Creo — tooling, flow-cell hardware, and the classic clamp and vise assemblies — exported straight from CAD so they can be rotated, panned and exploded in the page rather than flattened into screenshots.</p>
+				<div class="tags">
+					<span class="tag is-accent">SolidWorks</span>
+					<span class="tag">Fusion 360</span>
+					<span class="tag">Creo</span>
+					<span class="tag">Interactive 3D</span>
+				</div>
+			</div>
+
+			<div class="shots">
+				<figure class="shot is-link" data-nozoom>
+					<a href="../cad/index.html"><img src="../cad/thumbs/titanium_spiral_bender.jpg" alt="Titanium spiral bending jig" loading="lazy"></a>
+					<figcaption><b>Tooling</b>Forming plate with a spiral groove that bends titanium tube to a fixed radius in one pass.</figcaption>
+				</figure>
+				<figure class="shot is-link" data-nozoom>
+					<a href="../cad/index.html"><img src="../cad/thumbs/cell_assembly.jpg" alt="Cell housing assembly" loading="lazy"></a>
+					<figcaption><b>Assembly</b>Cylindrical housing with a threaded gland, slotted barrel and end plug, shown pulled apart.</figcaption>
+				</figure>
+				<figure class="shot is-link" data-nozoom>
+					<a href="../cad/index.html"><img src="../cad/thumbs/assem2.jpg" alt="Drill-press vise assembly" loading="lazy"></a>
+					<figcaption><b>Assembly</b>Base, sliding jaw and lead screw with a T-handle — a full working assembly with mates.</figcaption>
+				</figure>
+			</div>
+
+			<div class="cta-row">
+				<a class="cta" href="../cad/index.html">Open the 3D gallery — all nine models →</a>
+			</div>
+		</article>
+
+		<!-- ============ 03 — firmware ============ -->
+		<article class="proj" id="firmware">
+			<div class="proj-head">
+				<span class="proj-num">03 / Firmware &amp; control</span>
+				<h2>Firmware and instrument control.</h2>
+				<p class="proj-sub">The software that sits behind the boards: microcontroller firmware on Texas Instruments hardware for a custom nanoparticle-dialysis system built for medical research, the control logic for the same system on a Siemens ET200SP PLC, and the sensor and actuator interfacing around both.</p>
+				<div class="tags">
+					<span class="tag">TI hardware</span>
+					<span class="tag">Siemens ET200SP</span>
+					<span class="tag">AD5940 front end</span>
+					<span class="tag">Sensor interfacing</span>
+				</div>
+			</div>
+
+			<div class="prose">
+				<p>Related instrument work: the 24-sample impedance measuring device built on an EVAL-AD5940ELCZ front end, where I characterised the precision and accuracy of the hardware and rebuilt the Python GUI that drives it — one experiment, twenty-four samples, unattended.</p>
+				<p class="note">Detailed write-ups for this group are still being put together — much of it belongs to the labs it was built for. The boards and models above are the parts I can show in full.</p>
+			</div>
+		</article>
+
+		<footer class="pp-foot">
+			<a href="../index.html#projects">← Back to all projects</a>
+			<span>Aditya Patel — embedded &amp; CAD</span>
+			<a href="analysis-tools.html">Analysis tools with GUI →</a>
+		</footer>
+	</main>
+
+	<!-- image lightbox -->
+	<div class="pp-lightbox" id="pp-lightbox" role="dialog" aria-modal="true" aria-label="Image viewer">
+		<button class="pp-lightbox-close" type="button" aria-label="Close">✕</button>
+		<img src="" alt="">
+	</div>
+
+	<script type="module" src="../js/pcb-viewer.js"></script>
+	<script>
+	(function () {
+		"use strict";
+		var box = document.getElementById("pp-lightbox");
+		var img = box.querySelector("img");
+		var close = box.querySelector(".pp-lightbox-close");
+
+		document.querySelectorAll(".shot:not([data-nozoom]) img").forEach(function (thumb) {
+			thumb.parentElement.addEventListener("click", function () {
+				img.src = thumb.src;
+				img.alt = thumb.alt;
+				box.classList.add("open");
+				document.body.style.overflow = "hidden";
+				close.focus();
+			});
+		});
+
+		function hide() {
+			box.classList.remove("open");
+			document.body.style.overflow = "";
+		}
+
+		box.addEventListener("click", hide);
+		document.addEventListener("keydown", function (e) {
+			if (e.key === "Escape" && box.classList.contains("open")) hide();
+		});
+	})();
+	</script>
+
+</body>
+</html>

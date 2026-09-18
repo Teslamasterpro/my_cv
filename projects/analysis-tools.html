@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Analysis tools with GUI — Aditya Patel</title>
+	<meta name="description" content="Interactive analysis tools by Aditya Patel — a design-of-experiments visualiser for electrolyte impedance spectroscopy, running live in the browser.">
+	<meta name="theme-color" content="#0b0b0b">
+
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Hedvig+Letters+Serif:opsz@12..24&family=Instrument+Sans:wght@400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+
+	<link rel="stylesheet" href="../css/theme.css">
+	<link rel="stylesheet" href="../css/projects.css">
+</head>
+<body>
+
+	<div class="pp-bar">
+		<a class="pp-back" href="../index.html#projects">← All projects</a>
+		<span class="pp-bar-title">02 — Analysis tools with GUI</span>
+		<a class="pp-bar-link" href="ml-vision.html">ML &amp; vision →</a>
+	</div>
+
+	<main class="pp-page">
+		<header class="pp-head">
+			<span class="eyebrow">Category 02</span>
+			<h1>Analysis tools with a GUI.</h1>
+			<p class="lede">Measurement work produces spreadsheets nobody wants to read. These are the small interfaces I build around that data — plan the experiment, see the design space, catch the runs that were never going to work before the lab time is spent.</p>
+			<ul class="pp-jump">
+				<li><a href="#eis-doe">01 — EIS electrolyte DoE visualiser</a></li>
+			</ul>
+		</header>
+
+		<article class="proj" id="eis-doe">
+			<div class="proj-head">
+				<span class="proj-num">01 / Live app</span>
+				<h2>EIS electrolyte DoE visualiser.</h2>
+				<p class="proj-sub">My master's thesis runs impedance spectroscopy over salt solutions, which means deciding — before touching the bench — which combinations of NaCl, KCl and MgCl₂ are actually worth measuring. This tool builds that experiment design in the browser, computes the chemistry behind each run, and shows the whole design space at once.</p>
+				<div class="tags">
+					<span class="tag is-accent">Design of experiments</span>
+					<span class="tag">Impedance spectroscopy</span>
+					<span class="tag">Interactive plots</span>
+					<span class="tag">CSV export</span>
+					<span class="tag">Live app</span>
+				</div>
+			</div>
+
+			<div class="liveapp">
+				<div class="liveapp-bar">
+					<span>eis-doe-visualizer.vercel.app</span>
+					<a href="https://eis-doe-visualizer.vercel.app/" target="_blank" rel="noopener">Open full ↗</a>
+				</div>
+				<iframe src="https://eis-doe-visualizer.vercel.app/" title="EIS electrolyte DoE visualiser" loading="lazy"></iframe>
+			</div>
+			<p class="figure-caption">The real app, embedded — set the design parameters and the grid regenerates as you go.</p>
+
+			<div class="cols">
+				<div class="prose">
+					<h3>What it does</h3>
+					<ul>
+						<li><strong>Three-axis full-factorial design.</strong> Pick salt A, salt B and the water volume, give each a range and a number of levels, and the complete run grid is generated for you.</li>
+						<li><strong>Chemistry, not just numbers.</strong> Every run carries its molarity and ionic strength, computed from the masses you entered — in grams, millimolar or molar, whichever you think in.</li>
+						<li><strong>Saturation guard.</strong> Runs that exceed the solubility limit at 20 °C are flagged and drawn as red diamonds, so impossible mixtures are visible in the design space rather than discovered at the bench.</li>
+						<li><strong>Custom salts and custom runs.</strong> Any salt can be defined with its molecular weight and solubility; one-off runs can be added by hand alongside the generated grid.</li>
+						<li><strong>Colour by what matters.</strong> The design space can be coloured by ionic strength, total molarity or a single salt's concentration.</li>
+						<li><strong>Run sheet out.</strong> The finished table downloads as CSV and goes straight to the measurement automation.</li>
+					</ul>
+				</div>
+				<div class="prose">
+					<h3>Why it exists</h3>
+					<p>The thesis question is what electrolyte impedance spectra can tell us once machine learning is pointed at them — and that only works if the spectra come from a design that covers the space evenly. Building the grid in a spreadsheet was slow and silently produced mixtures that would not dissolve.</p>
+					<p>Putting it behind a GUI moved that judgement forward: the design, the ionic strength it spans, and the runs that violate solubility are all on screen before a single measurement is queued. The CSV it exports is the same run sheet the automated measuring system consumes.</p>
+
+					<h3>Context</h3>
+					<dl class="spec">
+						<div><dt>Built for</dt><dd>M.Eng. thesis — data-driven analysis of electrolyte impedance spectra</dd></div>
+						<div><dt>With</dt><dd>THWS · IMES, in collaboration with Fresenius Medical Care</dd></div>
+						<div><dt>Salts</dt><dd>NaCl, KCl, MgCl₂ — or any salt you define</dd></div>
+						<div><dt>Output</dt><dd>Run sheet as CSV, with molarity, ionic strength and saturation status</dd></div>
+						<div><dt>Deployed</dt><dd>Static web app on Vercel</dd></div>
+					</dl>
+				</div>
+			</div>
+
+			<div class="cta-row">
+				<a class="cta" href="https://eis-doe-visualizer.vercel.app/" target="_blank" rel="noopener">Open the visualiser ↗</a>
+			</div>
+		</article>
+
+		<p class="note">More tools sit in this category than are published here — the Python measurement GUIs from my thesis work (a 24-sample impedance rig on an EVAL-AD5940ELCZ front end, and the automation around it) belong to the labs they were built for. Write-ups are in progress.</p>
+
+		<footer class="pp-foot">
+			<a href="../index.html#projects">← Back to all projects</a>
+			<span>Aditya Patel — analysis tools</span>
+			<a href="embedded-cad.html">Embedded &amp; CAD →</a>
+		</footer>
+	</main>
+
+</body>
+</html>
