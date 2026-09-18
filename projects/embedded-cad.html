@@ -27,8 +27,11 @@
 
 	<div class="pp-bar">
 		<a class="pp-back" href="../index.html#projects">← All projects</a>
-		<span class="pp-bar-title">03 — Embedded &amp; CAD</span>
-		<a class="pp-bar-link" href="ml-vision.html">ML &amp; vision →</a>
+		<nav class="pp-switch" aria-label="Project categories">
+			<a href="ml-vision.html"><i>01</i>ML &amp; vision</a>
+			<a href="analysis-tools.html"><i>02</i>Analysis tools</a>
+			<a href="embedded-cad.html" aria-current="page"><i>03</i>Embedded &amp; CAD</a>
+		</nav>
 	</div>
 
 	<main class="pp-page">
@@ -174,8 +177,10 @@
 
 		<footer class="pp-foot">
 			<a href="../index.html#projects">← Back to all projects</a>
-			<span>Aditya Patel — embedded &amp; CAD</span>
-			<a href="analysis-tools.html">Analysis tools with GUI →</a>
+			<nav class="pp-foot-links" aria-label="Other categories">
+				<a href="ml-vision.html">Machine learning &amp; vision →</a>
+				<a href="analysis-tools.html">Analysis tools with GUI →</a>
+			</nav>
 		</footer>
 	</main>
 
@@ -185,35 +190,8 @@
 		<img src="" alt="">
 	</div>
 
+	<script src="../js/project-page.js"></script>
 	<script type="module" src="../js/pcb-viewer.js"></script>
-	<script>
-	(function () {
-		"use strict";
-		var box = document.getElementById("pp-lightbox");
-		var img = box.querySelector("img");
-		var close = box.querySelector(".pp-lightbox-close");
-
-		document.querySelectorAll(".shot:not([data-nozoom]) img").forEach(function (thumb) {
-			thumb.parentElement.addEventListener("click", function () {
-				img.src = thumb.src;
-				img.alt = thumb.alt;
-				box.classList.add("open");
-				document.body.style.overflow = "hidden";
-				close.focus();
-			});
-		});
-
-		function hide() {
-			box.classList.remove("open");
-			document.body.style.overflow = "";
-		}
-
-		box.addEventListener("click", hide);
-		document.addEventListener("keydown", function (e) {
-			if (e.key === "Escape" && box.classList.contains("open")) hide();
-		});
-	})();
-	</script>
 
 </body>
 </html>

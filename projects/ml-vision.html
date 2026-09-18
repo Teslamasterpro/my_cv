@@ -18,8 +18,11 @@
 
 	<div class="pp-bar">
 		<a class="pp-back" href="../index.html#projects">← All projects</a>
-		<span class="pp-bar-title">01 — Machine learning &amp; vision</span>
-		<a class="pp-bar-link" href="embedded-cad.html">Embedded &amp; CAD →</a>
+		<nav class="pp-switch" aria-label="Project categories">
+			<a href="ml-vision.html" aria-current="page"><i>01</i>ML &amp; vision</a>
+			<a href="analysis-tools.html"><i>02</i>Analysis tools</a>
+			<a href="embedded-cad.html"><i>03</i>Embedded &amp; CAD</a>
+		</nav>
 	</div>
 
 	<main class="pp-page">
@@ -380,10 +383,14 @@
 
 		<footer class="pp-foot">
 			<a href="../index.html#projects">← Back to all projects</a>
-			<span>Aditya Patel — machine learning &amp; vision</span>
-			<a href="analysis-tools.html">Analysis tools with GUI →</a>
+			<nav class="pp-foot-links" aria-label="Other categories">
+				<a href="analysis-tools.html">Analysis tools with GUI →</a>
+				<a href="embedded-cad.html">Embedded &amp; CAD →</a>
+			</nav>
 		</footer>
 	</main>
+
+	<script src="../js/project-page.js"></script>
 
 </body>
 </html>
