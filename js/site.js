@@ -346,7 +346,13 @@
       gestureOrientation: "vertical",
       smoothTouch: false
     });
-    document.documentElement.classList.add("lenis-active");
+    /* Lenis rewrites <html>'s class list and its cleanup regex, /lenis(-\w+)?/,
+       eats any class of ours that starts with "lenis" — so the stylesheet's
+       html.lenis-active hook never survived. Kill native smooth scrolling
+       inline instead, where nothing can strip it: with scroll-behavior:smooth
+       still live, ScrollTrigger's measure-at-scroll-0 never actually reaches
+       0 and every trigger refreshed mid-page gets a bogus start. */
+    document.documentElement.style.scrollBehavior = "auto";
     function raf(time) {
       lenis.raf(time);
       requestAnimationFrame(raf);
@@ -370,7 +376,24 @@
     gsap.registerPlugin(ScrollTrigger);
     if (window.SplitText) gsap.registerPlugin(SplitText);
     document.documentElement.classList.add("gsap-on");
-    if (lenis) lenis.on("scroll", ScrollTrigger.update);
+    if (lenis) {
+      lenis.on("scroll", ScrollTrigger.update);
+
+      /* ScrollTrigger measures with the page sent to scroll 0, but Lenis
+         writes the scroll position back every frame — so a refresh that
+         happens while the page sits mid-document (returning from a project
+         page, an image settling, a phone rotating) measured every trigger
+         against the wrong origin and left starts far in the negative. The
+         avatar flight then reported progress 1 forever and stayed docked
+         mid-page however far you scrolled back up. Park Lenis for the
+         measurement, then hand it the position ScrollTrigger restored. */
+      ScrollTrigger.addEventListener("refreshInit", function () { lenis.stop(); });
+      ScrollTrigger.addEventListener("refresh", function () {
+        lenis.resize();
+        lenis.scrollTo(window.scrollY, { immediate: true, force: true });
+        lenis.start();
+      });
+    }
 
     var splitHeading = function (el) {
       if (!window.SplitText) return null;
@@ -382,7 +405,10 @@
       var hero = document.querySelector(".hero");
       if (hero) {
         var tl = gsap.timeline({ defaults: { ease: "power4.out" } });
-        tl.from("#hero-avatar", { y: 24, opacity: 0, duration: 0.7 })
+        /* yPercent, not y: the scroll-scrubbed avatar flight below owns x/y,
+           and if this intro is still running when that tween records its
+           start value, the avatar never finds its way back into the hero */
+        tl.from("#hero-avatar", { yPercent: 14, opacity: 0, duration: 0.7 })
           .from(".hero-status", { y: 16, opacity: 0, duration: 0.6 }, "-=0.4");
         var heroTitle = hero.querySelector("h1");
         var heroSplit = splitHeading(heroTitle);
@@ -409,19 +435,35 @@
         // the dock only renders >=769px (see CSS); match that here so
         // phones keep the avatar in the hero
         gsap.matchMedia().add("(min-width: 769px)", function () {
-          gsap.to(heroAvatar, {
-            x: function () { return untransformedCenter(dock).x - untransformedCenter(heroAvatar).x; },
-            y: function () { return untransformedCenter(dock).y - untransformedCenter(heroAvatar).y; },
-            scale: function () { return dock.offsetWidth / heroAvatar.offsetWidth; },
-            ease: "none",
-            scrollTrigger: {
-              trigger: "#about",
-              start: "top bottom",
-              end: "top 40%",
-              scrub: 0.6,
-              invalidateOnRefresh: true
+          /* fromTo, not to: the hero start has to be stated outright.
+             A plain .to() takes its start from whatever is on screen when
+             the trigger records values, and a refresh while the page sits
+             below #about — which is what coming back from a project page
+             does — would record the docked position as "home" and strand
+             the avatar mid-page for the rest of the session. */
+          gsap.fromTo(heroAvatar,
+            { x: 0, y: 0, scale: 1 },
+            {
+              x: function () { return untransformedCenter(dock).x - untransformedCenter(heroAvatar).x; },
+              y: function () { return untransformedCenter(dock).y - untransformedCenter(heroAvatar).y; },
+              scale: function () { return dock.offsetWidth / heroAvatar.offsetWidth; },
+              ease: "none",
+              immediateRender: false,
+              scrollTrigger: {
+                trigger: "#about",
+                start: "top bottom",
+                end: "top 40%",
+                scrub: 0.6,
+                invalidateOnRefresh: true
+              }
             }
-          });
+          );
+        });
+
+        /* a restored scroll position leaves Lenis reading 0 while the page
+           sits mid-document — hand it what the browser actually restored */
+        window.addEventListener("pageshow", function (e) {
+          if (e.persisted && lenis) lenis.scrollTo(window.scrollY, { immediate: true, force: true });
         });
       }
 

@@ -1236,7 +1236,11 @@ button:focus-visible {
    When the animation libraries load, .gsap-on is set on <html>:
    CSS-driven entrances step aside so GSAP owns them, and native
    smooth scrolling is disabled in favor of Lenis. */
-html.lenis-active { scroll-behavior: auto; }
+/* .lenis is Lenis's own class; .lenis-active was ours, but Lenis's class
+   cleanup strips anything matching lenis-*, so site.js also sets
+   scroll-behavior inline. Native smooth scrolling and ScrollTrigger's
+   measurement pass do not mix. */
+html.lenis, html.lenis-active { scroll-behavior: auto; }
 
 html.gsap-on .hero-seq { animation: none; opacity: 1; transform: none; }
 
